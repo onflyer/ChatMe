@@ -34,9 +34,22 @@
 		309FCF712D97136500BBFB09 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		309FCF742D9713C600BBFB09 /* Exceptions for "ChatMe" folder in "ChatMe" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 309FCF3D2D97129000BBFB09 /* ChatMe */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		309FCF402D97129000BBFB09 /* ChatMe */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				309FCF742D9713C600BBFB09 /* Exceptions for "ChatMe" folder in "ChatMe" target */,
+			);
 			path = ChatMe;
 			sourceTree = "<group>";
 		};
@@ -278,6 +291,7 @@
 /* Begin XCBuildConfiguration section */
 		309FCF602D97129100BBFB09 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 309FCF712D97136500BBFB09 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -406,6 +420,7 @@
 				DEVELOPMENT_TEAM = FQWAP959Y3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ChatMe/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -435,6 +450,7 @@
 				DEVELOPMENT_TEAM = FQWAP959Y3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ChatMe/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
