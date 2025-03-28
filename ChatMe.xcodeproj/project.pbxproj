@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		309FCF6C2D9712D000BBFB09 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 309FCF6B2D9712D000BBFB09 /* Config.xcconfig */; };
+		309FCF722D97136500BBFB09 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 309FCF712D97136500BBFB09 /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,7 +31,7 @@
 		309FCF3E2D97129000BBFB09 /* ChatMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		309FCF4E2D97129100BBFB09 /* ChatMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		309FCF582D97129100BBFB09 /* ChatMeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatMeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		309FCF6B2D9712D000BBFB09 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		309FCF712D97136500BBFB09 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -80,7 +80,7 @@
 		309FCF352D97129000BBFB09 = {
 			isa = PBXGroup;
 			children = (
-				309FCF6B2D9712D000BBFB09 /* Config.xcconfig */,
+				309FCF712D97136500BBFB09 /* Config.xcconfig */,
 				309FCF402D97129000BBFB09 /* ChatMe */,
 				309FCF512D97129100BBFB09 /* ChatMeTests */,
 				309FCF5B2D97129100BBFB09 /* ChatMeUITests */,
@@ -218,7 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				309FCF6C2D9712D000BBFB09 /* Config.xcconfig in Resources */,
+				309FCF722D97136500BBFB09 /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
