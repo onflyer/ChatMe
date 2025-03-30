@@ -19,13 +19,16 @@ typealias AnyLoggableEvent = SwiftfulLogging.AnyLoggableEvent
 struct Dependencies {
     let container: DependencyContainer
     let logManager: LogManager
-
-    
+    let appState: AppState
     
     init() {
         logManager = LogManager(services: [ConsoleService(printParameters: true)])
+        appState = AppState()
+        
+        
         let container = DependencyContainer()
         container.register(LogManager.self, service: logManager)
+        container.register(AppState.self, service: appState)
 
         self.container = container
     }
@@ -35,17 +38,18 @@ struct Dependencies {
 class DevPreview {
     static let shared = DevPreview()
     let logManager: LogManager
+    let appState: AppState
 
     
-    init() {
+    init(isSignedIn: Bool = true) {
         self.logManager = LogManager(services: [])
-
+        self.appState = AppState()
     }
     
     func container() -> DependencyContainer {
         let container = DependencyContainer()
         container.register(LogManager.self, service: logManager)
-
+        container.register(AppState.self, service: appState)
         
         return container
     }

@@ -11,5 +11,17 @@ import SwiftUI
 struct CoreBuilder {
     let interactor: CoreInteractor
     
-   
+    func appView() -> some View {
+        AppView(
+            presenter: AppViewPresenter(
+                interactor: interactor
+            ),
+            tabbarView: {
+                Text(verbatim: "TAB BAR View")            },
+            onboardingView: {
+                Text(verbatim: "ONBOARDING View")
+            }
+        )
+    }
+    
 }

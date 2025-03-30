@@ -115,7 +115,7 @@ public struct RootView: View {
         RootView(
             delegate: RootDelegate(
                 onApplicationDidAppear: {
-                    
+
                 },
                 onApplicationWillEnterForeground: { _ in
                     
