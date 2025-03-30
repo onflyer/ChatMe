@@ -22,7 +22,7 @@ class AppViewPresenter {
     }
 
     func onViewAppear() {
-        
+        interactor.trackScreenEvent(event: Event.onAppear)
     }
     
     func onViewDisappear() {
