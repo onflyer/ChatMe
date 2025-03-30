@@ -14,7 +14,7 @@ struct ChatMeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            delegate.builder.appView()
         }
     }
 }
