@@ -49,4 +49,14 @@ struct CoreBuilder {
         )
     }
     
+    func welcomeView(router: AnyRouter, delegate: WelcomeDelegate) -> some View {
+        WelcomeView(
+            presenter: WelcomePresenter(
+                interactor: interactor,
+                router: CoreRouter(router: router, builder: self)
+            ),
+            delegate: delegate
+        )
+    }
+    
 }
