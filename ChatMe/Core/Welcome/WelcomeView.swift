@@ -14,28 +14,22 @@ struct WelcomeView: View {
     var body: some View {
         VStack {
             headerText
-            
             Spacer()
-            
             content
-            
             Spacer()
-            VStack {
-                ZStack {
-                    Rectangle()
-                        .foregroundColor(.primary)
-                        .cornerRadius(12)
-                        .frame(height: 54)
-                    Text("Continue")
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
+            
+            Text("Continue")
+                .callToActionButton()
+                .anyButton(.press) {
+                    //                    presenter.onContinueButtonPressed()
                 }
-            }
-            .padding(.top, 15)
-            .padding(.bottom, 50)
-            .padding(.horizontal,15)
+                .accessibilityIdentifier("ContinueButton")
+                .padding(.top, 15)
+                .padding(.bottom, 50)
+                .padding(.horizontal,15)
         }
         .padding()
+        
         .onAppear {
             presenter.onViewAppear(delegate: delegate)
         }
@@ -59,7 +53,7 @@ struct WelcomeView: View {
 
 extension WelcomeView {
     var headerText: some View {
-        Text("Welcome to ChatME")
+        Text("Welcome to ChatMe")
             .font(.largeTitle)
             .fontWeight(.bold)
             .padding(.vertical, 50)
@@ -144,8 +138,8 @@ extension WelcomeView {
             
         }
         .padding(.bottom, 30)
-
+        
     }
-
+    
     
 }
