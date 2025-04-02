@@ -12,7 +12,7 @@ struct WelcomeView: View {
     let delegate: WelcomeDelegate
     
     var body: some View {
-        Text("Hello, World!")
+        Text("WelcomeView")
             .onAppear {
                 presenter.onViewAppear(delegate: delegate)
             }

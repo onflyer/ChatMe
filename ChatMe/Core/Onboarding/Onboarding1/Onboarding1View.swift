@@ -53,7 +53,7 @@ struct Onboarding1View: View {
 
 extension Onboarding1View {
     var headerText: some View {
-        Text("Onboarding1 to ChatMe")
+        Text("First screen title")
             .font(.largeTitle)
             .fontWeight(.bold)
             .padding(.vertical, 50)
