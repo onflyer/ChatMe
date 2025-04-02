@@ -27,7 +27,7 @@ struct CoreRouter {
         router.dismissScreen()
     }
     
-    func showOnboarding1View(delegate: Onboarding1Delegate) {
+    func showOnboarding1View(delegate: Onboarding1ViewDelegate) {
         router.showScreen(.push) { router in
             builder.onboarding1View(router: router, delegate: delegate)
         }

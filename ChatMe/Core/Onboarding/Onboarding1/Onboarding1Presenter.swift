@@ -12,11 +12,11 @@ class Onboarding1Presenter {
         self.router = router
     }
     
-    func onViewAppear(delegate: Onboarding1Delegate) {
+    func onViewAppear(delegate: Onboarding1ViewDelegate) {
         interactor.trackScreenEvent(event: Event.onAppear(delegate: delegate))
     }
     
-    func onViewDisappear(delegate: Onboarding1Delegate) {
+    func onViewDisappear(delegate: Onboarding1ViewDelegate) {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
     }
 }
@@ -24,8 +24,8 @@ class Onboarding1Presenter {
 extension Onboarding1Presenter {
     
     enum Event: LoggableEvent {
-        case onAppear(delegate: Onboarding1Delegate)
-        case onDisappear(delegate: Onboarding1Delegate)
+        case onAppear(delegate: Onboarding1ViewDelegate)
+        case onDisappear(delegate: Onboarding1ViewDelegate)
 
         var eventName: String {
             switch self {

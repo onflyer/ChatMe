@@ -12,13 +12,19 @@ struct WelcomeView: View {
     let delegate: WelcomeDelegate
     
     var body: some View {
-        Text("WelcomeView")
-            .onAppear {
-                presenter.onViewAppear(delegate: delegate)
-            }
-            .onDisappear {
-                presenter.onViewDisappear(delegate: delegate)
-            }
+        VStack {
+            Text("Welcome to ChatMe")
+            getStartedButton
+        }
+        .padding(16)
+       
+        
+        .onAppear {
+            presenter.onViewAppear(delegate: delegate)
+        }
+        .onDisappear {
+            presenter.onViewDisappear(delegate: delegate)
+        }
     }
 }
 
@@ -32,6 +38,19 @@ struct WelcomeView: View {
         builder.welcomeView(delegate: delegate)
     }
 }
-    
 
-
+extension WelcomeView {
+    private var getStartedButton: some View {
+        VStack(spacing: 8) {
+            Text("Get Started")
+                .callToActionButton()
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+                .anyButton(.press, action: {
+                    presenter.onGetStartedPressed()
+                })
+                .accessibilityIdentifier("StartButton")
+                .frame(maxWidth: 500)
+        }
+    }
+}

@@ -1,15 +1,15 @@
 import SwiftUI
 
-struct Onboarding1ViewDelegate {
+struct Onboarding2Delegate {
     var eventParameters: [String: Any]? {
         nil
     }
 }
 
-struct Onboarding1View: View {
+struct Onboarding2View: View {
     
-    @State var presenter: Onboarding1Presenter
-    let delegate: Onboarding1ViewDelegate
+    @State var presenter: Onboarding2Presenter
+    let delegate: Onboarding2Delegate
     
     var body: some View {
         VStack {
@@ -24,9 +24,11 @@ struct Onboarding1View: View {
                     //presenter.onContinueButtonPressed()
                 }
                 .accessibilityIdentifier("ContinueButton")
+                .padding(.top, 15)
+                .padding(.bottom, 50)
+                .padding(.horizontal,15)
         }
-        .padding(24)
-        .toolbar(.hidden, for: .navigationBar)
+        .padding()
         
         .onAppear {
             presenter.onViewAppear(delegate: delegate)
@@ -41,17 +43,40 @@ struct Onboarding1View: View {
     let container = DevPreview.shared.container()
     let interactor = CoreInteractor(container: container)
     let builder = CoreBuilder(interactor: interactor)
-    let delegate = Onboarding1ViewDelegate()
+    let delegate = Onboarding2Delegate()
     
     return RouterView { router in
-        builder.onboarding1View(router: router, delegate: delegate)
+        builder.onboarding2ViewView(router: router, delegate: delegate)
     }
 }
 
+extension CoreBuilder {
+    
+    func onboarding2ViewView(router: AnyRouter, delegate: Onboarding2Delegate) -> some View {
+        Onboarding2View(
+            presenter: Onboarding2Presenter(
+                interactor: interactor,
+                router: CoreRouter(router: router, builder: self)
+            ),
+            delegate: delegate
+        )
+    }
+    
+}
 
-extension Onboarding1View {
+extension CoreRouter {
+    
+    func showOnboarding2View(delegate: Onboarding2Delegate) {
+        router.showScreen(.push) { router in
+            builder.onboarding2ViewView(router: router, delegate: delegate)
+        }
+    }
+    
+}
+
+extension Onboarding2View {
     var headerText: some View {
-        Text("First screen title")
+        Text("Second screen title")
             .font(.largeTitle)
             .fontWeight(.bold)
             .padding(.vertical, 50)

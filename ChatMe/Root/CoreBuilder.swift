@@ -36,7 +36,7 @@ struct CoreBuilder {
         }
     }
     
-    func onboarding1View(router: AnyRouter, delegate: Onboarding1Delegate) -> some View {
+    func onboarding1View(router: AnyRouter, delegate: Onboarding1ViewDelegate) -> some View {
         Onboarding1View(
             presenter: Onboarding1Presenter(
                 interactor: interactor,
