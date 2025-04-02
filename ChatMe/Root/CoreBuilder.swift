@@ -49,9 +49,9 @@ struct CoreBuilder {
         )
     }
     
-    func welcomeView(router: AnyRouter, delegate: WelcomeDelegate) -> some View {
-        WelcomeView(
-            presenter: WelcomePresenter(
+    func onboarding1View(router: AnyRouter, delegate: Onboarding1Delegate) -> some View {
+         Onboarding1View(
+            presenter: Onboarding1Presenter(
                 interactor: interactor,
                 router: CoreRouter(router: router, builder: self)
             ),

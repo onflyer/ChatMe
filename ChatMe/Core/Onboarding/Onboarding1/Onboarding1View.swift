@@ -1,15 +1,15 @@
 import SwiftUI
 
-struct WelcomeDelegate {
+struct Onboarding1Delegate {
     var eventParameters: [String: Any]? {
         nil
     }
 }
 
-struct WelcomeView: View {
+struct Onboarding1View: View {
     
-    @State var presenter: WelcomePresenter
-    let delegate: WelcomeDelegate
+    @State var presenter: Onboarding1Presenter
+    let delegate: Onboarding1Delegate
     
     var body: some View {
         VStack {
@@ -21,7 +21,7 @@ struct WelcomeView: View {
             Text("Continue")
                 .callToActionButton()
                 .anyButton(.press) {
-                    //                    presenter.onContinueButtonPressed()
+                    //presenter.onContinueButtonPressed()
                 }
                 .accessibilityIdentifier("ContinueButton")
                 .padding(.top, 15)
@@ -43,17 +43,17 @@ struct WelcomeView: View {
     let container = DevPreview.shared.container()
     let interactor = CoreInteractor(container: container)
     let builder = CoreBuilder(interactor: interactor)
-    let delegate = WelcomeDelegate()
+    let delegate = Onboarding1Delegate()
     
     return RouterView { router in
-        builder.welcomeView(router: router, delegate: delegate)
+        builder.onboarding1View(router: router, delegate: delegate)
     }
 }
 
 
-extension WelcomeView {
+extension Onboarding1View {
     var headerText: some View {
-        Text("Welcome to ChatMe")
+        Text("Onboarding1 to ChatMe")
             .font(.largeTitle)
             .fontWeight(.bold)
             .padding(.vertical, 50)

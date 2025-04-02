@@ -2,35 +2,35 @@ import SwiftUI
 
 @Observable
 @MainActor
-class WelcomePresenter {
+class Onboarding1Presenter {
     
-    private let interactor: WelcomeInteractor
-    private let router: WelcomeRouter
+    private let interactor: Onboarding1Interactor 
+    private let router: Onboarding1Router
     
-    init(interactor: WelcomeInteractor, router: WelcomeRouter) {
+    init(interactor: Onboarding1Interactor, router: Onboarding1Router) {
         self.interactor = interactor
         self.router = router
     }
     
-    func onViewAppear(delegate: WelcomeDelegate) {
+    func onViewAppear(delegate: Onboarding1Delegate) {
         interactor.trackScreenEvent(event: Event.onAppear(delegate: delegate))
     }
     
-    func onViewDisappear(delegate: WelcomeDelegate) {
+    func onViewDisappear(delegate: Onboarding1Delegate) {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
     }
 }
 
-extension WelcomePresenter {
+extension Onboarding1Presenter {
     
     enum Event: LoggableEvent {
-        case onAppear(delegate: WelcomeDelegate)
-        case onDisappear(delegate: WelcomeDelegate)
+        case onAppear(delegate: Onboarding1Delegate)
+        case onDisappear(delegate: Onboarding1Delegate)
 
         var eventName: String {
             switch self {
-            case .onAppear:                 return "WelcomeView_Appear"
-            case .onDisappear:              return "WelcomeView_Disappear"
+            case .onAppear:                 return "Onboarding1View_Appear"
+            case .onDisappear:              return "Onboarding1View_Disappear"
             }
         }
         

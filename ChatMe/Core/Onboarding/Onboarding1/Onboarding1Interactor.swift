@@ -1,9 +1,9 @@
 import SwiftUI
 
 @MainActor
-protocol WelcomeInteractor {
+protocol Onboarding1Interactor {
     func trackEvent(event: LoggableEvent)
     func trackScreenEvent(event: LoggableEvent)
 }
 
-extension CoreInteractor: WelcomeInteractor { }
+extension CoreInteractor: Onboarding1Interactor { }
