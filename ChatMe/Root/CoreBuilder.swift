@@ -19,8 +19,30 @@ struct CoreBuilder {
             tabbarView: {
                 tabbarView()       },
             onboardingView: {
-                Text(verbatim: "ONBOARDING View")
+                welcomeView()
             }
+        )
+    }
+    
+    func welcomeView(delegate: WelcomeDelegate = WelcomeDelegate()) -> some View {
+        RouterView { router in
+            WelcomeView(
+                presenter: WelcomePresenter(
+                    interactor: interactor,
+                    router: CoreRouter(router: router, builder: self)
+                ),
+                delegate: delegate
+            )
+        }
+    }
+    
+    func onboarding1View(router: AnyRouter, delegate: Onboarding1Delegate) -> some View {
+        Onboarding1View(
+            presenter: Onboarding1Presenter(
+                interactor: interactor,
+                router: CoreRouter(router: router, builder: self)
+            ),
+            delegate: delegate
         )
     }
     
@@ -29,7 +51,7 @@ struct CoreBuilder {
             tabs: [
                 TabBarScreen(title: "Home", systemImage: "house.fill", screen: {
                     RouterView { router in
-//                        homeView(router: router, delegate: HomeDelegate())
+                        //                        homeView(router: router, delegate: HomeDelegate())
                     }
                     .any()
                 }),
@@ -41,21 +63,11 @@ struct CoreBuilder {
                 }),
                 TabBarScreen(title: "Profile", systemImage: "person.fill", screen: {
                     RouterView { router in
-//                        profileView(router: router, delegate: ProfileDelegate())
+                        //                        profileView(router: router, delegate: ProfileDelegate())
                     }
                     .any()
                 })
             ]
-        )
-    }
-    
-    func onboarding1View(router: AnyRouter, delegate: Onboarding1Delegate) -> some View {
-         Onboarding1View(
-            presenter: Onboarding1Presenter(
-                interactor: interactor,
-                router: CoreRouter(router: router, builder: self)
-            ),
-            delegate: delegate
         )
     }
     
