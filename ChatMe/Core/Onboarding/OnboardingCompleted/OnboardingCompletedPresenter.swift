@@ -49,11 +49,17 @@ extension OnboardingCompletedPresenter {
     enum Event: LoggableEvent {
         case onAppear(delegate: OnboardingCompletedDelegate)
         case onDisappear(delegate: OnboardingCompletedDelegate)
+        case finishStart
+        case finishSuccess
+        case finishFail(error: Error)
 
         var eventName: String {
             switch self {
-            case .onAppear:                 return "OnboardingCompletedView_Appear"
-            case .onDisappear:              return "OnboardingCompletedView_Disappear"
+            case .onAppear:            return "OnboardingCompletedView_Appear"
+            case .onDisappear:         return "OnboardingCompletedView_Disappear"
+            case .finishStart:         return "OnboardingCompletedView_Finish_Start"
+            case .finishSuccess:       return "OnboardingCompletedView_Finish_Success"
+            case .finishFail:          return "OnboardingCompletedView_Finish_Fail"
             }
         }
         
@@ -61,13 +67,17 @@ extension OnboardingCompletedPresenter {
             switch self {
             case .onAppear(delegate: let delegate), .onDisappear(delegate: let delegate):
                 return delegate.eventParameters
-//            default:
-//                return nil
+            case .finishFail(error: let error):
+                return error.eventParameters
+            default:
+                return nil
             }
         }
         
         var type: LogType {
             switch self {
+            case .finishFail:
+                return .severe
             default:
                 return .analytic
             }
