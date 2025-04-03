@@ -17,28 +17,27 @@ struct OnboardingCompletedView: View {
             Spacer()
             content
             Spacer()
-            
                 .safeAreaInset(edge: .bottom, content: {
                     AsyncCallToActionButton(
                         isLoading: presenter.isCompletingProfileSetup,
                         title: "Finish",
                         action: {
-                            
+                            presenter.onFinishButtonPressed()
                         }
                     )
                     .accessibilityIdentifier("FinishButton")
                 })
-
+            
         }
         .padding(24)
         .toolbar(.hidden, for: .navigationBar)
-
-            .onAppear {
-                presenter.onViewAppear(delegate: delegate)
-            }
-            .onDisappear {
-                presenter.onViewDisappear(delegate: delegate)
-            }
+        
+        .onAppear {
+            presenter.onViewAppear(delegate: delegate)
+        }
+        .onDisappear {
+            presenter.onViewDisappear(delegate: delegate)
+        }
     }
 }
 

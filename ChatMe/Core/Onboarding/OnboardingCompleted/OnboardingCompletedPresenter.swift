@@ -27,6 +27,8 @@ class OnboardingCompletedPresenter {
         
         Task {
             do {
+                // mark onboarding completed
+                
 //                try await interactor.markOnboardingCompleteForCurrentUser()
 //                interactor.trackEvent(event: Event.finishSuccess())
                 
@@ -37,7 +39,7 @@ class OnboardingCompletedPresenter {
                 interactor.updateAppState(showTabBarView: true)
             } catch {
                 router.showAlert(error: error)
-//                interactor.trackEvent(event: Event.finishFail(error: error))
+                interactor.trackEvent(event: Event.finishFail(error: error))
             }
         }
     }
