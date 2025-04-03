@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct Onboarding2Delegate {
+struct Onboarding2ViewDelegate {
     var eventParameters: [String: Any]? {
         nil
     }
@@ -9,7 +9,7 @@ struct Onboarding2Delegate {
 struct Onboarding2View: View {
     
     @State var presenter: Onboarding2Presenter
-    let delegate: Onboarding2Delegate
+    let delegate: Onboarding2ViewDelegate
     
     var body: some View {
         VStack {
@@ -21,14 +21,12 @@ struct Onboarding2View: View {
             Text("Continue")
                 .callToActionButton()
                 .anyButton(.press) {
-                    //presenter.onContinueButtonPressed()
+                    presenter.onContinueButtonPressed()
                 }
                 .accessibilityIdentifier("ContinueButton")
-                .padding(.top, 15)
-                .padding(.bottom, 50)
-                .padding(.horizontal,15)
         }
-        .padding()
+        .padding(24)
+        .toolbar(.hidden, for: .navigationBar)
         
         .onAppear {
             presenter.onViewAppear(delegate: delegate)
@@ -43,36 +41,14 @@ struct Onboarding2View: View {
     let container = DevPreview.shared.container()
     let interactor = CoreInteractor(container: container)
     let builder = CoreBuilder(interactor: interactor)
-    let delegate = Onboarding2Delegate()
+    let delegate = Onboarding2ViewDelegate()
     
     return RouterView { router in
-        builder.onboarding2ViewView(router: router, delegate: delegate)
+        builder.onboarding2View(router: router, delegate: delegate)
     }
 }
 
-extension CoreBuilder {
-    
-    func onboarding2ViewView(router: AnyRouter, delegate: Onboarding2Delegate) -> some View {
-        Onboarding2View(
-            presenter: Onboarding2Presenter(
-                interactor: interactor,
-                router: CoreRouter(router: router, builder: self)
-            ),
-            delegate: delegate
-        )
-    }
-    
-}
 
-extension CoreRouter {
-    
-    func showOnboarding2View(delegate: Onboarding2Delegate) {
-        router.showScreen(.push) { router in
-            builder.onboarding2ViewView(router: router, delegate: delegate)
-        }
-    }
-    
-}
 
 extension Onboarding2View {
     var headerText: some View {

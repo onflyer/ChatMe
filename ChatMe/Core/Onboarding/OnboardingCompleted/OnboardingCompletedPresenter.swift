@@ -7,6 +7,8 @@ class OnboardingCompletedPresenter {
     private let interactor: OnboardingCompletedInteractor
     private let router: OnboardingCompletedRouter
     
+    private(set) var isCompletingProfileSetup: Bool = false
+    
     init(interactor: OnboardingCompletedInteractor, router: OnboardingCompletedRouter) {
         self.interactor = interactor
         self.router = router
@@ -19,6 +21,27 @@ class OnboardingCompletedPresenter {
     func onViewDisappear(delegate: OnboardingCompletedDelegate) {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
     }
+    
+    func onFinishButtonPressed() {
+        isCompletingProfileSetup = true
+        
+        Task {
+            do {
+//                try await interactor.markOnboardingCompleteForCurrentUser()
+//                interactor.trackEvent(event: Event.finishSuccess())
+                
+                // dismiss screen
+                isCompletingProfileSetup = false
+                
+                // Show tabbar view
+                interactor.updateAppState(showTabBarView: true)
+            } catch {
+                router.showAlert(error: error)
+//                interactor.trackEvent(event: Event.finishFail(error: error))
+            }
+        }
+    }
+   
 }
 
 extension OnboardingCompletedPresenter {

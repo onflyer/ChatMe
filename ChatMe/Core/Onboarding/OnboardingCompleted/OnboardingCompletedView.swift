@@ -12,7 +12,27 @@ struct OnboardingCompletedView: View {
     let delegate: OnboardingCompletedDelegate
     
     var body: some View {
-        Text("Hello, World!")
+        VStack {
+            headerText
+            Spacer()
+            content
+            Spacer()
+            
+                .safeAreaInset(edge: .bottom, content: {
+                    AsyncCallToActionButton(
+                        isLoading: presenter.isCompletingProfileSetup,
+                        title: "Finish",
+                        action: {
+                            
+                        }
+                    )
+                    .accessibilityIdentifier("FinishButton")
+                })
+
+        }
+        .padding(24)
+        .toolbar(.hidden, for: .navigationBar)
+
             .onAppear {
                 presenter.onViewAppear(delegate: delegate)
             }
@@ -29,30 +49,101 @@ struct OnboardingCompletedView: View {
     let delegate = OnboardingCompletedDelegate()
     
     return RouterView { router in
-        builder.onboardingCompletedViewView(router: router, delegate: delegate)
+        builder.onboardingCompletedView(router: router, delegate: delegate)
     }
 }
 
-extension CoreBuilder {
-    
-    func onboardingCompletedViewView(router: AnyRouter, delegate: OnboardingCompletedDelegate) -> some View {
-        OnboardingCompletedView(
-            presenter: OnboardingCompletedPresenter(
-                interactor: interactor,
-                router: CoreRouter(router: router, builder: self)
-            ),
-            delegate: delegate
-        )
+
+
+extension OnboardingCompletedView {
+    var headerText: some View {
+        Text("Finish setup screen title")
+            .font(.largeTitle)
+            .fontWeight(.bold)
+            .padding(.vertical, 50)
+            .multilineTextAlignment(.center)
     }
     
-}
-
-extension CoreRouter {
-    
-    func showOnboardingCompletedView(delegate: OnboardingCompletedDelegate) {
-        router.showScreen(.push) { router in
-            builder.onboardingCompletedViewView(router: router, delegate: delegate)
+    var content: some View {
+        VStack {
+            VStack(alignment: .leading) {
+                HStack {
+                    Image(systemName: "bubble.left.and.bubble.right.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 45, alignment: .center)
+                        .clipped()
+                        .foregroundColor(.primary)
+                        .padding(.trailing, 15)
+                        .padding(.vertical, 10)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Title")
+                            .fontWeight(.bold)
+                            .font(.system(size: 16))
+                        Text("Description")
+                            .font(.system(size: 15))
+                    }
+                    Spacer()
+                }
+            }
+            .padding(.horizontal,20)
+            .padding(.bottom, 20)
+            
+            VStack(alignment: .leading) {
+                HStack {
+                    Image(systemName: "bubble.left.and.bubble.right.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 45, alignment: .center)
+                        .clipped()
+                        .foregroundColor(.primary)
+                        .padding(.trailing, 15)
+                        .padding(.vertical, 10)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Title")
+                            .fontWeight(.bold)
+                            .font(.system(size: 16))
+                        Text("Description")
+                            .font(.system(size: 15))
+                    }
+                    Spacer()
+                }
+            }
+            .padding(.horizontal,20)
+            .padding(.bottom, 20)
+            
+            VStack(alignment: .leading) {
+                HStack {
+                    Image(systemName: "bubble.left.and.bubble.right.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 45, alignment: .center)
+                        .clipped()
+                        .foregroundColor(.primary)
+                        .padding(.trailing, 15)
+                        .padding(.vertical, 10)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Title")
+                            .fontWeight(.bold)
+                            .font(.system(size: 16))
+                        Text("Description")
+                            .font(.system(size: 15))
+                    }
+                    Spacer()
+                }
+            }
+            .padding(.horizontal,20)
+            .padding(.bottom, 20)
+            
+            
+            
         }
+        .padding(.bottom, 30)
+        
     }
+    
     
 }

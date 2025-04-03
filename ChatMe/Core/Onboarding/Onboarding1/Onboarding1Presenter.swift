@@ -19,6 +19,10 @@ class Onboarding1Presenter {
     func onViewDisappear(delegate: Onboarding1ViewDelegate) {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
     }
+    
+    func onContinueButtonPressed() {
+        router.showOnboarding2View(delegate: Onboarding2ViewDelegate())
+    }
 }
 
 extension Onboarding1Presenter {

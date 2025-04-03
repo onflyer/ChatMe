@@ -21,7 +21,7 @@ struct Onboarding1View: View {
             Text("Continue")
                 .callToActionButton()
                 .anyButton(.press) {
-                    //presenter.onContinueButtonPressed()
+                    presenter.onContinueButtonPressed()
                 }
                 .accessibilityIdentifier("ContinueButton")
         }

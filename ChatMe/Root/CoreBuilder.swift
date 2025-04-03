@@ -46,6 +46,26 @@ struct CoreBuilder {
         )
     }
     
+    func onboarding2View(router: AnyRouter, delegate: Onboarding2ViewDelegate) -> some View {
+        Onboarding2View(
+            presenter: Onboarding2Presenter(
+                interactor: interactor,
+                router: CoreRouter(router: router, builder: self)
+            ),
+            delegate: delegate
+        )
+    }
+    
+    func onboardingCompletedView(router: AnyRouter, delegate: OnboardingCompletedDelegate) -> some View {
+        OnboardingCompletedView(
+            presenter: OnboardingCompletedPresenter(
+                interactor: interactor,
+                router: CoreRouter(router: router, builder: self)
+            ),
+            delegate: delegate
+        )
+    }
+    
     func tabbarView() -> some View {
         TabBarView(
             tabs: [

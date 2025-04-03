@@ -12,20 +12,24 @@ class Onboarding2Presenter {
         self.router = router
     }
     
-    func onViewAppear(delegate: Onboarding2Delegate) {
+    func onViewAppear(delegate: Onboarding2ViewDelegate) {
         interactor.trackScreenEvent(event: Event.onAppear(delegate: delegate))
     }
     
-    func onViewDisappear(delegate: Onboarding2Delegate) {
+    func onViewDisappear(delegate: Onboarding2ViewDelegate) {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
+    }
+    
+    func onContinueButtonPressed() {
+        router.showOnboardingCompletedView(delegate: OnboardingCompletedDelegate())
     }
 }
 
 extension Onboarding2Presenter {
     
     enum Event: LoggableEvent {
-        case onAppear(delegate: Onboarding2Delegate)
-        case onDisappear(delegate: Onboarding2Delegate)
+        case onAppear(delegate: Onboarding2ViewDelegate)
+        case onDisappear(delegate: Onboarding2ViewDelegate)
 
         var eventName: String {
             switch self {
