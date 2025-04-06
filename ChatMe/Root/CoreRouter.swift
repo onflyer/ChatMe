@@ -47,6 +47,18 @@ struct CoreRouter {
         }
     }
     
+    func showProfileView(delegate: ProfileDelegate) {
+        router.showScreen(.push) { router in
+            builder.profileView(router: router, delegate: delegate)
+        }
+    }
+    
+    func showSettingsView() {
+        router.showScreen(.sheet) { router in
+            builder.settingsView(router: router)
+        }
+    }
+    
     //MARK: Alerts
     
     func showAlert(_ option: DialogOption, title: String, subtitle: String?, buttons: (@Sendable () -> AnyView)?) {

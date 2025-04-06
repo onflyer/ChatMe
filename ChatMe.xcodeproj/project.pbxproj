@@ -12,6 +12,7 @@
 		3065A4E62D98858D003AD583 /* SwiftfulLogging in Frameworks */ = {isa = PBXBuildFile; productRef = 3065A4E52D98858D003AD583 /* SwiftfulLogging */; };
 		309FCF722D97136500BBFB09 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 309FCF712D97136500BBFB09 /* Config.xcconfig */; };
 		30AD47262DA28DBD0072EF22 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 30AD47252DA28DBD0072EF22 /* FirebaseAuth */; };
+		30AD47562DA31E9C0072EF22 /* SwiftfulUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 30AD47552DA31E9C0072EF22 /* SwiftfulUtilities */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30AD47562DA31E9C0072EF22 /* SwiftfulUtilities in Frameworks */,
 				3065A4DC2D98830A003AD583 /* SDWebImageSwiftUI in Frameworks */,
 				3065A4E62D98858D003AD583 /* SwiftfulLogging in Frameworks */,
 				3065A1DE2D987EBE003AD583 /* SwiftfulRouting in Frameworks */,
@@ -143,6 +145,7 @@
 				3065A4DB2D98830A003AD583 /* SDWebImageSwiftUI */,
 				3065A4E52D98858D003AD583 /* SwiftfulLogging */,
 				30AD47252DA28DBD0072EF22 /* FirebaseAuth */,
+				30AD47552DA31E9C0072EF22 /* SwiftfulUtilities */,
 			);
 			productName = ChatMe;
 			productReference = 309FCF3E2D97129000BBFB09 /* ChatMe.app */;
@@ -231,6 +234,7 @@
 				3065A4DA2D98830A003AD583 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				3065A4E42D98858D003AD583 /* XCRemoteSwiftPackageReference "SwiftfulLogging" */,
 				30AD47242DA28DBD0072EF22 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				30AD47542DA31E9C0072EF22 /* XCRemoteSwiftPackageReference "SwiftfulUtilities" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 309FCF3F2D97129000BBFB09 /* Products */;
@@ -633,6 +637,14 @@
 				minimumVersion = 11.11.0;
 			};
 		};
+		30AD47542DA31E9C0072EF22 /* XCRemoteSwiftPackageReference "SwiftfulUtilities" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftfulThinking/SwiftfulUtilities";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -655,6 +667,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 30AD47242DA28DBD0072EF22 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		30AD47552DA31E9C0072EF22 /* SwiftfulUtilities */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30AD47542DA31E9C0072EF22 /* XCRemoteSwiftPackageReference "SwiftfulUtilities" */;
+			productName = SwiftfulUtilities;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -83,11 +83,30 @@ struct CoreBuilder {
                 }),
                 TabBarScreen(title: "Profile", systemImage: "person.fill", screen: {
                     RouterView { router in
-                        //                        profileView(router: router, delegate: ProfileDelegate())
+                        profileView(router: router, delegate: ProfileDelegate())
                     }
                     .any()
                 })
             ]
+        )
+    }
+    
+    func profileView(router: AnyRouter, delegate: ProfileDelegate = ProfileDelegate()) -> some View {
+        ProfileView(
+            presenter: ProfilePresenter(
+                interactor: interactor,
+                router: CoreRouter(router: router, builder: self)
+            ),
+            delegate: delegate
+        )
+    }
+    
+    func settingsView(router: AnyRouter) -> some View {
+        SettingsView(
+            presenter: SettingsPresenter(
+                interactor: interactor,
+                router: CoreRouter(router: router, builder: self)
+            )
         )
     }
     
