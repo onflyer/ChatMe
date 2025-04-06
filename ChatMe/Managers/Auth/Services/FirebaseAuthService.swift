@@ -41,6 +41,33 @@ struct FirebaseAuthService: AuthService {
         return authDataResult.asAuthInfo()
     }
     
+    func signOut() throws {
+        try Auth.auth().signOut()
+    }
+
+    func deleteAccount() async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw AuthError.userNotFound
+        }
+
+        try await user.delete()
+    }
+}
+
+extension FirebaseAuthService {
+    private enum AuthError: LocalizedError {
+        case noResponse
+        case userNotFound
+
+        var errorDescription: String? {
+            switch self {
+            case .noResponse:
+                return "Bad response."
+            case .userNotFound:
+                return "Current user not found."
+            }
+        }
+    }
 }
 
 extension AuthDataResult {

@@ -38,6 +38,20 @@ struct CoreInteractor {
     func signInAnonymously() async throws -> (user: UserAuthInfo, isNewUser: Bool) {
         try await authManager.signInAnonymously()
     }
+    
+    func signOut() async throws {
+        try authManager.signOut()
+//        try await purchaseManager.logOut()
+//        userManager.signOut()
+    }
+    
+    func deleteAccount() async throws {
+        _ = try authManager.getAuthId()
+//        try await userManager.deleteCurrentUser()
+        try await authManager.deleteAccount()
+//        try await purchaseManager.logOut()
+//        logManager.deleteUserProfile()
+    }
 }
 
 

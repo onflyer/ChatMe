@@ -21,6 +21,14 @@ class AuthManager {
         self.auth = service.getAuthenticatedUser()
     }
     
+    public func getAuthId() throws -> String {
+        guard let uid = auth?.uid else {
+            throw AuthError.notSignedIn
+        }
+
+        return uid
+    }
+    
     private func setCurrentAuth(auth value: UserAuthInfo?) {
         self.auth = value
     }
@@ -53,6 +61,34 @@ class AuthManager {
             throw error
         }
     }
+    
+    func signOut() throws {
+        self.logger?.trackEvent(event: Event.signOutStart)
+
+        do {
+            try service.signOut()
+            auth = nil
+            logger?.trackEvent(event: Event.signOutSuccess)
+        } catch {
+            logger?.trackEvent(event: Event.signOutFail(error: error))
+            throw error
+        }
+    }
+
+    func deleteAccount() async throws {
+        self.logger?.trackEvent(event: Event.deleteAccountStart)
+
+        do {
+            try await service.deleteAccount()
+            auth = nil
+            logger?.trackEvent(event: Event.deleteAccountSuccess)
+        } catch {
+            logger?.trackEvent(event: Event.deleteAccountFail(error: error))
+            throw error
+        }
+    }
+    
+    
     
 }
 
@@ -115,5 +151,9 @@ extension AuthManager {
                 return .info
             }
         }
+    }
+    
+    public enum AuthError: Error {
+        case notSignedIn
     }
 }

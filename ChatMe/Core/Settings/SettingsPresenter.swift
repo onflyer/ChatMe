@@ -37,7 +37,7 @@ class SettingsPresenter {
     
     func onContactUsPressed() {
         interactor.trackEvent(event: Event.contactUsPressed)
-        let email = "hello@swiftful-thinking.com"
+        let email = "hello@aleksandar-milidrag.com"
         let emailString = "mailto:\(email)"
         
         guard let url = URL(string: emailString), UIApplication.shared.canOpenURL(url) else {
@@ -52,18 +52,18 @@ class SettingsPresenter {
         
         Task {
             do {
-//                try await interactor.signOut()
+                try await interactor.signOut()
                 interactor.trackEvent(event: Event.signOutSuccess)
                 await dismissScreen()
             } catch {
-//                router.showAlert(error: error)
+                router.showAlert(error: error)
                 interactor.trackEvent(event: Event.signOutFail(error: error))
             }
         }
     }
     
     private func dismissScreen() async {
-//        router.dismissScreen()
+        router.dismissScreen()
         try? await Task.sleep(for: .seconds(1))
         interactor.updateAppState(showTabBarView: false)
     }
@@ -71,18 +71,18 @@ class SettingsPresenter {
     func onDeleteAccountPressed() {
         interactor.trackEvent(event: Event.deleteAccountStart)
 
-//        router.showAlert(
-//            .alert,
-//            title: "Delete Account?",
-//            subtitle: "This action is permanent and cannot be undone. Your data will be deleted from our server forever.",
-//            buttons: {
-//                AnyView(
-//                    Button("Delete", role: .destructive, action: {
-//                        self.onDeleteAccountConfirmed()
-//                    })
-//                )
-//            }
-//        )
+        router.showAlert(
+            .alert,
+            title: "Delete Account?",
+            subtitle: "This action is permanent and cannot be undone. Your data will be deleted from our server forever.",
+            buttons: {
+                AnyView(
+                    Button("Delete", role: .destructive, action: {
+                        self.onDeleteAccountConfirmed()
+                    })
+                )
+            }
+        )
     }
     
     private func onDeleteAccountConfirmed() {
@@ -90,7 +90,7 @@ class SettingsPresenter {
 
         Task {
             do {
-//                try await interactor.deleteAccount()
+                try await interactor.deleteAccount()
                 interactor.trackEvent(event: Event.deleteAccountSuccess)
                 await dismissScreen()
             } catch {
