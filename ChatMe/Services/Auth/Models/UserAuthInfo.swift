@@ -109,19 +109,24 @@ struct UserAuthInfo: Codable, Sendable {
 }
 
 extension UserAuthInfo {
-    
-    init(user: User) {
-        self.uid = user.uid
-        self.email = user.email
-        self.isAnonymous = user.isAnonymous
-        self.authProviders = []
-        self.displayName = user.displayName
-        self.firstName = nil
-        self.lastName = nil
-        self.phoneNumber = user.phoneNumber
-        self.photoURL = user.photoURL
-        self.creationDate = nil
-        self.lastSignInDate = nil
-    }
 
+    /// Initialze from Firebase Auth User
+    init(user: User, firstName: String? = nil, lastName: String? = nil) {
+        self.init(
+            uid: user.uid,
+            email: user.email,
+            isAnonymous: user.isAnonymous,
+            authProviders: user.providerData.compactMap({ AuthProviderOption(providerId: $0.providerID) }),
+            displayName: user.displayName,
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: user.phoneNumber,
+            photoURL: user.photoURL,
+            creationDate: user.metadata.creationDate,
+            lastSignInDate: user.metadata.lastSignInDate
+        )
+    }
+    
 }
+
+
