@@ -9,22 +9,34 @@ import Foundation
 @MainActor
 struct CoreInteractor {
     
-    let logManager: LogManager
-    let appState: AppState
+    private let authManager: AuthManager
+    private let logManager: LogManager
+    private let appState: AppState
     
     init(container: DependencyContainer) {
+        self.authManager = container.resolve(AuthManager.self)!
         self.logManager = container.resolve(LogManager.self)!
         self.appState = container.resolve(AppState.self)!
     }
     
     // MARK: AppState
     
+    func updateAppState(showTabBarView: Bool) {
+        appState.updateViewState(showTabBarView: showTabBarView)
+    }
+    
     var showTabBar: Bool {
         appState.showTabBar
     }
     
-    func updateAppState(showTabBarView: Bool) {
-        appState.updateViewState(showTabBarView: showTabBarView)
+    // MARK: AuthManager
+    
+    var auth: UserAuthInfo? {
+        authManager.auth
+    }
+    
+    func signInAnonymously() async throws -> (user: UserAuthInfo, isNewUser: Bool) {
+        try await authManager.signInAnonymously()
     }
 }
 
@@ -38,7 +50,7 @@ extension CoreInteractor {
     func trackEvent(event: AnyLoggableEvent) {
         logManager.trackEvent(event: event)
     }
-
+    
     func trackEvent(event: LoggableEvent) {
         logManager.trackEvent(event: event)
     }

@@ -46,3 +46,28 @@ enum AuthLogType: Int, CaseIterable, Sendable {
         }
     }
 }
+
+extension LogManager: AuthLogger {
+    
+    func trackEvent(event: any AuthLogEvent) {
+        trackEvent(eventName: event.eventName, parameters: event.parameters, type: event.type.type)
+    }
+    
+}
+
+extension AuthLogType {
+    
+    var type: LogType {
+        switch self {
+        case .info:
+            return .info
+        case .analytic:
+            return .analytic
+        case .warning:
+            return .warning
+        case .severe:
+            return .severe
+        }
+    }
+    
+}

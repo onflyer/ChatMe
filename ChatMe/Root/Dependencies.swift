@@ -18,18 +18,21 @@ typealias AnyLoggableEvent = SwiftfulLogging.AnyLoggableEvent
 @MainActor
 struct Dependencies {
     let container: DependencyContainer
+    let authManager: AuthManager
     let logManager: LogManager
     let appState: AppState
     
     init() {
         logManager = LogManager(services: [ConsoleService(printParameters: true)])
+        authManager = AuthManager(service: FirebaseAuthService(), logger: logManager)
         appState = AppState()
         
         
         let container = DependencyContainer()
+        container.register(AuthManager.self, service: authManager)
         container.register(LogManager.self, service: logManager)
         container.register(AppState.self, service: appState)
-
+        
         self.container = container
     }
 }
@@ -37,21 +40,26 @@ struct Dependencies {
 @MainActor
 class DevPreview {
     static let shared = DevPreview()
-    let logManager: LogManager
-    let appState: AppState
-
-    
-    init(isSignedIn: Bool = true) {
-        self.logManager = LogManager(services: [])
-        self.appState = AppState()
-    }
     
     func container() -> DependencyContainer {
         let container = DependencyContainer()
+        container.register(AuthManager.self, service: authManager)
         container.register(LogManager.self, service: logManager)
         container.register(AppState.self, service: appState)
         
         return container
     }
+    
+    let authManager: AuthManager
+    let logManager: LogManager
+    let appState: AppState
+    
+    init(isSignedIn: Bool = true) {
+        self.authManager = AuthManager(service: MockAuthService(user: isSignedIn ? .mock() : nil))
+        self.logManager = LogManager(services: [])
+        self.appState = AppState()
+    }
+    
+    
 }
 
