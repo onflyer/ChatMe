@@ -18,7 +18,7 @@ struct AppView<TabbarView: View, OnboardingView: View>: View {
                 onApplicationDidAppear: nil,
                 onApplicationWillEnterForeground: { _ in
                     Task {
-//                        await presenter.checkUserStatus()
+                        await presenter.checkUserStatus()
                     }
                 },
                 onApplicationDidBecomeActive: nil,
@@ -37,7 +37,7 @@ struct AppView<TabbarView: View, OnboardingView: View>: View {
                     }
                 )
                 .task {
-//                   await presenter.checkUserStatus()
+                   await presenter.checkUserStatus()
                 }
                 .task {
                     try? await Task.sleep(for: .seconds(2))
@@ -46,7 +46,7 @@ struct AppView<TabbarView: View, OnboardingView: View>: View {
                 .onChange(of: presenter.showTabBar) { _, showTabBar in
                     if !showTabBar {
                         Task {
-//                            await presenter.checkUserStatus()
+                            await presenter.checkUserStatus()
                         }
                     }
                 }
