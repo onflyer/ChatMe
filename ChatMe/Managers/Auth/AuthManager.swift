@@ -10,12 +10,14 @@ import SwiftUI
 @MainActor
 @Observable
 class AuthManager {
+    let logger: AuthLogger?
     let service: AuthService
     
     private(set) var auth: UserAuthInfo?
     
-    init(service: AuthService) {
+    init(service: AuthService, logger: AuthLogger? = nil) {
         self.service = service
+        self.logger = logger
         self.auth = service.getAuthenticatedUser()
     }
     
@@ -52,4 +54,66 @@ class AuthManager {
         }
     }
     
+}
+
+
+extension AuthManager {
+    enum Event: AuthLogEvent {
+        case authListenerSuccess(user: UserAuthInfo)
+        case authlistenerEmpty
+        case signInStart(option: SignInOption)
+        case signInSuccess(option: SignInOption, user: UserAuthInfo, isNewUser: Bool)
+        case signInFail(error: Error)
+        case signOutStart
+        case signOutSuccess
+        case signOutFail(error: Error)
+        case deleteAccountStart
+        case deleteAccountSuccess
+        case deleteAccountFail(error: Error)
+
+        var eventName: String {
+            switch self {
+            case .authListenerSuccess: return         "Auth_Listener_Success"
+            case .authlistenerEmpty: return           "Auth_Listener_Empty"
+            case .signInStart: return                 "Auth_SignIn_Start"
+            case .signInSuccess: return               "Auth_SignIn_Success"
+            case .signInFail: return                  "Auth_SignIn_Fail"
+            case .signOutStart: return                "Auth_SignOut_Start"
+            case .signOutSuccess: return              "Auth_SignOut_Success"
+            case .signOutFail: return                 "Auth_SignOut_Fail"
+            case .deleteAccountStart: return          "Auth_DeleteAccount_Start"
+            case .deleteAccountSuccess: return        "Auth_DeleteAccount_Success"
+            case .deleteAccountFail: return           "Auth_DeleteAccount_Fail"
+            }
+        }
+
+        var parameters: [String: Any]? {
+            switch self {
+            case .authListenerSuccess(user: let user):
+                return user.eventParameters
+            case .signInStart(option: let option):
+                return option.eventParameters
+            case .signInSuccess(option: let option, user: let user, isNewUser: let isNewUser):
+                var dict = user.eventParameters
+                dict.merge(option.eventParameters)
+                dict["is_new_user"] = isNewUser
+                return dict
+            case .signInFail(error: let error), .signOutFail(error: let error), .deleteAccountFail(error: let error):
+                return error.eventParameters
+            default:
+                return nil
+            }
+        }
+
+        var type: AuthLogType {
+            switch self {
+            case .signInFail, .signOutFail, .deleteAccountFail:
+                return .severe
+            case .authlistenerEmpty:
+                return .warning
+            default:
+                return .info
+            }
+        }
+    }
 }
