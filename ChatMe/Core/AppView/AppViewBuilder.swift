@@ -36,13 +36,20 @@ private struct PreviewView: View {
             tabbarView: {
                 ZStack {
                     Color.red.ignoresSafeArea()
-                    Text("Tabbar")
+                    VStack {
+                        Text("Tabbar")
+                        Text("Click to change to onboarding")
+                    }
+
                 }
             },
             onboardingView: {
                 ZStack {
                     Color.blue.ignoresSafeArea()
-                    Text("Onboarding")
+                    VStack {
+                        Text("Onboarding")
+                        Text("Click to change to tabbar")
+                    }
                 }
             }
         )

@@ -10,7 +10,7 @@ import FirebaseAuth
 
 struct FirebaseAuthService: AuthService {
     
-    public func getAuthenticatedUser() -> UserAuthInfo? {
+    func getAuthenticatedUser() -> UserAuthInfo? {
         if let currentUser = Auth.auth().currentUser {
             return UserAuthInfo(user: currentUser)
         }
@@ -18,7 +18,9 @@ struct FirebaseAuthService: AuthService {
         return nil
     }
     
-    public func signIn(option: SignInOption) async throws -> (user: UserAuthInfo, isNewUser: Bool) {
+    
+    
+    func signIn(option: SignInOption) async throws -> (user: UserAuthInfo, isNewUser: Bool) {
         switch option {
         case .apple:
             return try await authenticateUser_Anonymous()
@@ -31,7 +33,7 @@ struct FirebaseAuthService: AuthService {
         }
     }
     
-    private func authenticateUser_Anonymous() async throws -> (user: UserAuthInfo, isNewUser: Bool) {
+    func authenticateUser_Anonymous() async throws -> (user: UserAuthInfo, isNewUser: Bool) {
         // Sign in to Firebase
         let authDataResult = try await Auth.auth().signInAnonymously()
         
