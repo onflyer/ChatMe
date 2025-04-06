@@ -20,7 +20,7 @@ class AppViewPresenter {
     init(interactor: AppViewInteractor) {
         self.interactor = interactor
     }
-
+    
     func onViewAppear() {
         interactor.trackScreenEvent(event: Event.onAppear)
     }
@@ -29,11 +29,28 @@ class AppViewPresenter {
         interactor.trackEvent(event: Event.onDisappear)
     }
     
+    func checkUserStatus() async {
+        if let user = interactor.auth {
+            //user is authenticated
+            print("User is already authenticated \(user.uid)")
+        } else {
+            //User is not authenticated
+            do {
+                let result = try await interactor.signInAnonymously()
+                
+                //log in to the app
+                print("Sign in anonymous success \(result.user.uid)")
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
 }
 
 
 extension AppViewPresenter {
-
+    
     enum Event: LoggableEvent {
         case onAppear
         case onDisappear
@@ -46,7 +63,7 @@ extension AppViewPresenter {
         case fcmStart
         case fcmSuccess
         case fcmFail(error: Error)
-
+        
         var eventName: String {
             switch self {
             case .onAppear:             return "AppView_Appear"
