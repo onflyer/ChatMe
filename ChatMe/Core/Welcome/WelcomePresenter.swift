@@ -23,6 +23,25 @@ class WelcomePresenter {
     func onGetStartedPressed() {
         router.showOnboarding1View(delegate: Onboarding1ViewDelegate())
     }
+    
+    func onSignInApplePressed(delegate: WelcomeDelegate) {
+        interactor.trackEvent(event: Event.appleAuthStart)
+        
+        Task {
+            do {
+                let result = try await interactor.signInApple()
+                interactor.trackEvent(event: Event.appleAuthSuccess(user: result.user, isNewUser: result.isNewUser))
+
+//                try await interactor.logIn(user: result.user, isNewUser: result.isNewUser)
+                interactor.trackEvent(event: Event.appleAuthLoginSuccess(user: result.user, isNewUser: result.isNewUser))
+
+                delegate.onDidSignIn?(result.isNewUser)
+//                router.dismissScreen()
+            } catch {
+                interactor.trackEvent(event: Event.appleAuthFail(error: error))
+            }
+        }
+    }
 }
 
 extension WelcomePresenter {
@@ -38,8 +57,8 @@ extension WelcomePresenter {
 
         var eventName: String {
             switch self {
-            case .onAppear:                 return "WelcomeView_Appear"
-            case .onDisappear:              return "WelcomeView_Disappear"
+            case .onAppear:                return "WelcomeView_Appear"
+            case .onDisappear:             return "WelcomeView_Disappear"
             case .appleAuthStart:          return "CreateAccountView_AppleAuth_Start"
             case .appleAuthSuccess:        return "CreateAccountView_AppleAuth_Success"
             case .appleAuthLoginSuccess:   return "CreateAccountView_AppleAuth_LoginSuccess"

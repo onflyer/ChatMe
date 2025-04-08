@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct WelcomeDelegate {
+    var onDidSignIn: ((_ isNewUser: Bool) -> Void)?
     var eventParameters: [String: Any]? {
         nil
     }
@@ -21,7 +22,7 @@ struct WelcomeView: View {
             .frame(height: 55)
             .frame(maxWidth: 400)
             .anyButton(.press) {
-//                presenter.onSignInApplePressed(delegate: delegate)
+                presenter.onSignInApplePressed(delegate: delegate)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
