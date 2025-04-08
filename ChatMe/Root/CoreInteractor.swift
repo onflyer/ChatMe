@@ -39,6 +39,10 @@ struct CoreInteractor {
         try await authManager.signInAnonymously()
     }
     
+    func signInApple() async throws -> (user: UserAuthInfo, isNewUser: Bool) {
+        try await authManager.signInApple()
+    }
+    
     func signOut() async throws {
         try authManager.signOut()
 //        try await purchaseManager.logOut()

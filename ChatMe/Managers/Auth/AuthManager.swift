@@ -21,7 +21,7 @@ class AuthManager {
         self.auth = service.getAuthenticatedUser()
     }
     
-    public func getAuthId() throws -> String {
+    func getAuthId() throws -> String {
         guard let uid = auth?.uid else {
             throw AuthError.notSignedIn
         }
@@ -34,10 +34,15 @@ class AuthManager {
     }
     
     @discardableResult
-    public func signInAnonymously() async throws -> (user: UserAuthInfo, isNewUser: Bool) {
+    func signInAnonymously() async throws -> (user: UserAuthInfo, isNewUser: Bool) {
         let result = try await signIn(option: .anonymous)
         setCurrentAuth(auth: result.user)
         return result
+    }
+    
+    @discardableResult
+    func signInApple() async throws -> (user: UserAuthInfo, isNewUser: Bool) {
+        try await signIn(option: .apple)
     }
     
     private func signIn(option: SignInOption) async throws -> (user: UserAuthInfo, isNewUser: Bool) {

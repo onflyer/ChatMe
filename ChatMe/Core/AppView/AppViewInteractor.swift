@@ -12,6 +12,7 @@ protocol AppViewInteractor {
     var auth: UserAuthInfo? { get }
     var showTabBar: Bool { get }
     func signInAnonymously() async throws -> (user: UserAuthInfo, isNewUser: Bool)
+    func signInApple() async throws -> (user: UserAuthInfo, isNewUser: Bool)
     func trackEvent(event: LoggableEvent)
     func trackScreenEvent(event: LoggableEvent)
  

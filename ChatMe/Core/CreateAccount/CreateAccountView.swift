@@ -39,7 +39,7 @@ struct CreateAccountView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            SignInAnonymousButtonView()
+            SignInAnonymousButtonView(type: .signIn, style: .whiteOutline)
                 .frame(height: 55)
                 .frame(maxWidth: 400)
                 .anyButton(.press) {
@@ -47,7 +47,7 @@ struct CreateAccountView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            SignInGoogleButtonView(type: .continue, backgroundColor: .googleRed, borderColor: .black, foregroundColor: .white, cornerRadius: 10)
+            SignInGoogleButtonView(type: .signIn, backgroundColor: .white, borderColor: .black, foregroundColor: .primary, cornerRadius: 10)
                 .frame(height: 55)
                 .frame(maxWidth: 400)
                 .anyButton(.press) {
@@ -55,9 +55,9 @@ struct CreateAccountView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            SignInAnonymousButtonView(
+            SignInWithAppleButtonView(
                 type: .signIn,
-                style: .black,
+                style: .whiteOutline,
                 cornerRadius: 10
             )
             .frame(height: 55)
