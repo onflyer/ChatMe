@@ -2,7 +2,7 @@
 //  AuthManager.swift
 //  ChatMe
 //
-//  Created by Aleksandar Milidrag on 6. 4. 2025..
+//  Created by Aleksandar Milidrag on 6. 4. 2025.
 //
 
 import SwiftUI

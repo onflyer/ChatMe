@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 enum AuthProviderOption: String, Codable, Sendable, CaseIterable {
     case google
@@ -17,14 +18,14 @@ enum AuthProviderOption: String, Codable, Sendable, CaseIterable {
     case github
     
     init?(providerId: String) {
-        if let value = AuthProviderOption.allCases.first(where: { $0.providerId == providerId }) {
+        if let value = AuthProviderOption.allCases.first(where: { $0.providerIdString == providerId }) {
             self = value
         } else {
             return nil
         }
     }
 
-    var providerId: String {
+    var providerIdString: String {
         switch self {
         case .google:       return "google.com"
         case .apple:        return "apple.com"
@@ -35,5 +36,26 @@ enum AuthProviderOption: String, Codable, Sendable, CaseIterable {
         case .github:       return "github.com"
         }
     }
+    
+    var providerId: AuthProviderID {
+        switch self {
+        case .google:
+            return .google
+        case .apple:
+            return .apple
+        case .email:
+            return .email
+        case .phone:
+            return .phone
+        case .facebook:
+            return .facebook
+        case .gameCenter:
+            return .gameCenter
+        case .github:
+            return .gitHub
+        }
+    }
 
 }
+
+
