@@ -13,6 +13,18 @@ struct WelcomeView: View {
     
     var body: some View {
         VStack {
+            SignInWithAppleButtonView(
+                type: .signIn,
+                style: .whiteOutline,
+                cornerRadius: 10
+            )
+            .frame(height: 55)
+            .frame(maxWidth: 400)
+            .anyButton(.press) {
+//                presenter.onSignInApplePressed(delegate: delegate)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
             Text("Welcome to ChatMe")
             getStartedButton
         }
