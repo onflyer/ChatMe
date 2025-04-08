@@ -2,7 +2,7 @@
 //  UserDefaultPropertyWrapper.swift
 //  AIChatCourse
 //
-//  Created by Nick Sarno on 10/31/24.
+//  Created by Aleksandar Milidrag on 10/31/24.
 //
 import SwiftUI
 

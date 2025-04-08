@@ -2,7 +2,7 @@
 //  AnyNotificationListenerViewModifier.swift
 //  AIChatCourse
 //
-//  Created by Nick Sarno on 10/28/24.
+//  Created by Aleksandar Milidrag on 10/28/24.
 //
 import Foundation
 import SwiftUI

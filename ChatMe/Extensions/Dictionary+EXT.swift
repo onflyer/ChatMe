@@ -2,7 +2,7 @@
 //  File.swift
 //  SwiftfulAuthenticating
 //
-//  Created by Nick Sarno on 9/28/24.
+//  Created by Aleksandar Milidrag on 9/28/24.
 //
 import Foundation
 

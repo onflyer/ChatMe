@@ -2,7 +2,7 @@
 //  SignInWithAppleButtonView.swift
 //  AIChatCourse
 //
-//  Created by Nick Sarno on 10/9/24.
+//  Created by Aleksandar Milidrag on 10/9/24.
 //
 import SwiftUI
 import AuthenticationServices
