@@ -7,8 +7,13 @@
 
 import Foundation
 import FirebaseAuth
+import Firebase
 
 struct FirebaseAuthService: AuthService {
+    
+    public static var clientId: String? {
+        FirebaseApp.app()?.options.clientID
+    }
     
     func getAuthenticatedUser() -> UserAuthInfo? {
         if let currentUser = Auth.auth().currentUser {
@@ -18,7 +23,26 @@ struct FirebaseAuthService: AuthService {
         return nil
     }
     
+    func addAuthenticatedUserListener() -> AsyncStream<UserAuthInfo?> {
+        AsyncStream { continuation in
+            let listener = Auth.auth().addStateDidChangeListener { _, currentUser in
+                if let currentUser {
+                    let user = UserAuthInfo(user: currentUser)
+                    continuation.yield(user)
+                } else {
+                    continuation.yield(nil)
+                }
+            }
+            
+            continuation.onTermination = { @Sendable _ in
+                Auth.auth().removeStateDidChangeListener(listener)
+            }
+        }
+    }
     
+    func removeAuthenticatedUserListener(listener: any NSObjectProtocol) {
+        Auth.auth().removeStateDidChangeListener(listener)
+    }
     
     func signIn(option: SignInOption) async throws -> (user: UserAuthInfo, isNewUser: Bool) {
         switch option {

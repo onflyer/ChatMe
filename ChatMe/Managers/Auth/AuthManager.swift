@@ -14,6 +14,7 @@ class AuthManager {
     let service: AuthService
     
     private(set) var auth: UserAuthInfo?
+    private var taskListener: Task<Void, Error>?
     
     init(service: AuthService, logger: AuthLogger? = nil) {
         self.service = service
@@ -29,8 +30,26 @@ class AuthManager {
         return uid
     }
     
+    private func addAuthListener() {
+        // Attach new listener
+        taskListener?.cancel()
+        taskListener = Task {
+            for await value in service.addAuthenticatedUserListener() {
+                setCurrentAuth(auth: value)
+            }
+        }
+    }
+    
     private func setCurrentAuth(auth value: UserAuthInfo?) {
         self.auth = value
+        
+        if let value {
+            self.logger?.identifyUser(userId: value.uid, name: value.displayName, email: value.email)
+            self.logger?.addUserProperties(dict: value.eventParameters, isHighPriority: true)
+            self.logger?.trackEvent(event: Event.authListenerSuccess(user: value))
+        } else {
+            self.logger?.trackEvent(event: Event.authlistenerEmpty)
+        }
     }
     
     @discardableResult

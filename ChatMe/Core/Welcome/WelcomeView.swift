@@ -26,7 +26,6 @@ struct WelcomeView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            Text("Welcome to ChatMe")
             getStartedButton
         }
         .padding(16)
