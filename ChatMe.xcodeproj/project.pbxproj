@@ -13,6 +13,8 @@
 		309FCF722D97136500BBFB09 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 309FCF712D97136500BBFB09 /* Config.xcconfig */; };
 		30AD47262DA28DBD0072EF22 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 30AD47252DA28DBD0072EF22 /* FirebaseAuth */; };
 		30AD47562DA31E9C0072EF22 /* SwiftfulUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 30AD47552DA31E9C0072EF22 /* SwiftfulUtilities */; };
+		30AD47932DA6D8F90072EF22 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 30AD47922DA6D8F90072EF22 /* FirebaseFirestore */; };
+		30AD47A02DA6DB140072EF22 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 30AD479F2DA6DB140072EF22 /* FirebaseStorage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,7 +81,9 @@
 				3065A4DC2D98830A003AD583 /* SDWebImageSwiftUI in Frameworks */,
 				3065A4E62D98858D003AD583 /* SwiftfulLogging in Frameworks */,
 				3065A1DE2D987EBE003AD583 /* SwiftfulRouting in Frameworks */,
+				30AD47A02DA6DB140072EF22 /* FirebaseStorage in Frameworks */,
 				30AD47262DA28DBD0072EF22 /* FirebaseAuth in Frameworks */,
+				30AD47932DA6D8F90072EF22 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +111,7 @@
 				309FCF402D97129000BBFB09 /* ChatMe */,
 				309FCF512D97129100BBFB09 /* ChatMeTests */,
 				309FCF5B2D97129100BBFB09 /* ChatMeUITests */,
+				30AD47912DA6D8F90072EF22 /* Frameworks */,
 				309FCF3F2D97129000BBFB09 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -119,6 +124,13 @@
 				309FCF582D97129100BBFB09 /* ChatMeUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		30AD47912DA6D8F90072EF22 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,6 +158,8 @@
 				3065A4E52D98858D003AD583 /* SwiftfulLogging */,
 				30AD47252DA28DBD0072EF22 /* FirebaseAuth */,
 				30AD47552DA31E9C0072EF22 /* SwiftfulUtilities */,
+				30AD47922DA6D8F90072EF22 /* FirebaseFirestore */,
+				30AD479F2DA6DB140072EF22 /* FirebaseStorage */,
 			);
 			productName = ChatMe;
 			productReference = 309FCF3E2D97129000BBFB09 /* ChatMe.app */;
@@ -674,6 +688,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 30AD47542DA31E9C0072EF22 /* XCRemoteSwiftPackageReference "SwiftfulUtilities" */;
 			productName = SwiftfulUtilities;
+		};
+		30AD47922DA6D8F90072EF22 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30AD47242DA28DBD0072EF22 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		30AD479F2DA6DB140072EF22 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30AD47242DA28DBD0072EF22 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
