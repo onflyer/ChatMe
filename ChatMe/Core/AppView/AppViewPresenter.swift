@@ -33,15 +33,37 @@ class AppViewPresenter {
         if let user = interactor.auth {
             //user is authenticated
             print("User is already authenticated \(user.uid)")
+            interactor.trackEvent(event: Event.existingAuthStart)
+            
+            do {
+                try await interactor.logIn(user: user, isNewUser: false)
+            } catch {
+                interactor.trackEvent(event: Event.existingAuthFail(error: error))
+                try? await Task.sleep(for: .seconds(5))
+                await checkUserStatus()
+            }
         } else {
             //User is not authenticated
+            interactor.trackEvent(event: Event.anonAuthStart)
+
             do {
                 let result = try await interactor.signInAnonymously()
                 
-                //log in to the app
-                print("Sign in anonymous success \(result.user.uid)")
+                // log in to app
+                interactor.trackEvent(event: Event.anonAuthSuccess)
+                print("Sign up anonimyous user \(result.user.uid)")
+                
+                // Log in
+                try await interactor.logIn(user: result.user, isNewUser: result.isNewUser)
+                
+                // Save push token
+//                if let token = try? await Messaging.messaging().token() {
+//                    savePushToken(token: token)
+//                }
             } catch {
-                print(error)
+                interactor.trackEvent(event: Event.anonAuthFail(error: error))
+                try? await Task.sleep(for: .seconds(5))
+                await checkUserStatus()
             }
         }
     }

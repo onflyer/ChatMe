@@ -44,19 +44,31 @@ struct CoreInteractor {
     func signInApple() async throws -> (user: UserAuthInfo, isNewUser: Bool) {
         try await authManager.signInApple()
     }
+    func logIn(user: UserAuthInfo, isNewUser: Bool) async throws {
+        try await userManager.logIn(auth: user, isNewUser: isNewUser)
+//        try await purchaseManager.logIn(
+//            userId: user.uid,
+//            userAttributes: PurchaseProfileAttributes(
+//                email: user.email,
+//                mixpanelDistinctId: Constants.mixpanelDistinctId,
+//                firebaseAppInstanceId: Constants.firebaseAnalyticsAppInstanceID
+//            )
+//        )
+        logManager.addUserProperties(dict: Utilities.eventParameters, isHighPriority: false)
+    }
     
     func signOut() async throws {
         try authManager.signOut()
 //        try await purchaseManager.logOut()
-//        userManager.signOut()
+        userManager.signOut()
     }
     
     func deleteAccount() async throws {
         _ = try authManager.getAuthId()
-//        try await userManager.deleteCurrentUser()
+        try await userManager.deleteCurrentUser()
         try await authManager.deleteAccount()
 //        try await purchaseManager.logOut()
-//        logManager.deleteUserProfile()
+        logManager.deleteUserProfile()
     }
     
     //MARK: User Manager
