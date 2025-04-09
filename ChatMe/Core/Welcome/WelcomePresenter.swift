@@ -40,6 +40,7 @@ class WelcomePresenter {
                 //MARK: TO DO: see about showing onboarding if its new user
                 interactor.updateAppState(showTabBarView: true)
             } catch {
+                router.showAlert(error: error)
                 interactor.trackEvent(event: Event.appleAuthFail(error: error))
             }
         }
