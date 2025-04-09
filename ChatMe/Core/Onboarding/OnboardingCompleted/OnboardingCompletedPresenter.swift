@@ -29,8 +29,8 @@ class OnboardingCompletedPresenter {
             do {
                 // mark onboarding completed
                 
-//                try await interactor.markOnboardingCompleteForCurrentUser()
-//                interactor.trackEvent(event: Event.finishSuccess())
+                try await interactor.saveOnboardingComplete()
+                interactor.trackEvent(event: Event.finishSuccess)
                 
                 // dismiss screen
                 isCompletingProfileSetup = false
