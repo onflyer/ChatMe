@@ -20,6 +20,7 @@ class AuthManager {
         self.service = service
         self.logger = logger
         self.auth = service.getAuthenticatedUser()
+        self.addAuthListener()
     }
     
     func getAuthId() throws -> String {
