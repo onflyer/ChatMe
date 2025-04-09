@@ -4,17 +4,19 @@
 //  Created by Aleksandar Milidrag on 21. 12. 2024..
 //
 
-import Foundation
+import SwiftUI
 
 @MainActor
 struct CoreInteractor {
     
     private let authManager: AuthManager
+    private let userManager: UserManager
     private let logManager: LogManager
     private let appState: AppState
     
     init(container: DependencyContainer) {
         self.authManager = container.resolve(AuthManager.self)!
+        self.userManager = container.resolve(UserManager.self)!
         self.logManager = container.resolve(LogManager.self)!
         self.appState = container.resolve(AppState.self)!
     }
@@ -55,6 +57,36 @@ struct CoreInteractor {
         try await authManager.deleteAccount()
 //        try await purchaseManager.logOut()
 //        logManager.deleteUserProfile()
+    }
+    
+    //MARK: User Manager
+    
+    var currentUser: UserModel? {
+        userManager.currentUser
+    }
+    
+    func getUser(userId: String) async throws -> UserModel {
+        try await userManager.getUser(userId: userId)
+    }
+    
+    func saveOnboardingComplete() async throws {
+        try await userManager.saveOnboardingCompleteForCurrentUser()
+    }
+    
+    func saveUserName(name: String) async throws {
+        try await userManager.saveUserName(name: name)
+    }
+    
+    func saveUserEmail(email: String) async throws {
+        try await userManager.saveUserEmail(email: email)
+    }
+    
+    func saveUserProfileImage(image: UIImage) async throws {
+        try await userManager.saveUserProfileImage(image: image)
+    }
+    
+    func saveUserFCMToken(token: String) async throws {
+        try await userManager.saveUserFCMToken(token: token)
     }
 }
 

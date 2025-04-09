@@ -19,17 +19,20 @@ typealias AnyLoggableEvent = SwiftfulLogging.AnyLoggableEvent
 struct Dependencies {
     let container: DependencyContainer
     let authManager: AuthManager
+    let userManager: UserManager
     let logManager: LogManager
     let appState: AppState
     
     init() {
         logManager = LogManager(services: [ConsoleService(printParameters: true)])
         authManager = AuthManager(service: FirebaseAuthService(), logger: logManager)
+        userManager = UserManager(services: ProductionUserServices(), logManager: logManager)
         appState = AppState()
         
         
         let container = DependencyContainer()
         container.register(AuthManager.self, service: authManager)
+        container.register(UserManager.self, service: userManager)
         container.register(LogManager.self, service: logManager)
         container.register(AppState.self, service: appState)
         
@@ -44,6 +47,7 @@ class DevPreview {
     func container() -> DependencyContainer {
         let container = DependencyContainer()
         container.register(AuthManager.self, service: authManager)
+        container.register(UserManager.self, service: userManager)
         container.register(LogManager.self, service: logManager)
         container.register(AppState.self, service: appState)
         
@@ -51,11 +55,13 @@ class DevPreview {
     }
     
     let authManager: AuthManager
+    let userManager: UserManager
     let logManager: LogManager
     let appState: AppState
     
     init(isSignedIn: Bool = true) {
         self.authManager = AuthManager(service: MockAuthService(user: isSignedIn ? .mock() : nil))
+        self.userManager = UserManager(services: MockUserServices(user: isSignedIn ? .mock : nil))
         self.logManager = LogManager(services: [])
         self.appState = AppState()
     }
