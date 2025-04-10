@@ -14,6 +14,7 @@ struct FirebaseAuthService: AuthService {
     public static var clientId: String? {
         FirebaseApp.app()?.options.clientID
     }
+
     
     func getAuthenticatedUser() -> UserAuthInfo? {
         if let currentUser = Auth.auth().currentUser {
@@ -49,8 +50,7 @@ struct FirebaseAuthService: AuthService {
         case .apple:
             return try await authenticateUser_Apple()
         case .google(GIDClientID: let GIDClientID):
-            return try await authenticateUser_Anonymous()
-//            return try await authenticateUser_Google(GIDClientID: GIDClientID)
+            return try await authenticateUser_Google(GIDClientID: GIDClientID)
         case .anonymous:
             return try await authenticateUser_Anonymous()
         }
@@ -92,6 +92,26 @@ extension FirebaseAuthService {
             providerID: AuthProviderOption.apple.providerId,
             idToken: response.token,
             rawNonce: response.nonce
+        )
+        
+        return try await handleConnectToFirebase(
+            credential: credential,
+            firstName: response.firstName,
+            lastName: response.lastName
+        )
+    }
+    
+    @MainActor
+    private func authenticateUser_Google(GIDClientID: String) async throws -> (user: UserAuthInfo, isNewUser: Bool) {
+        let helper = SignInWithGoogleHelper(GIDClientID: GIDClientID)
+
+        // Sign in to Apple
+        let response = try await helper.signIn()
+        
+        // Convert SSO tokens to Firebase credential
+        let credential = GoogleAuthProvider.credential(
+            withIDToken: response.idToken,
+            accessToken: response.accessToken
         )
         
         return try await handleConnectToFirebase(

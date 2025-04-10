@@ -46,6 +46,28 @@ class WelcomePresenter {
         }
     }
     
+    func onSignInGooglePressed(delegate: WelcomeDelegate) {
+        interactor.trackEvent(event: Event.appleAuthStart)
+        
+        Task {
+            do {
+                let result = try await interactor.signInGoogle()
+                interactor.trackEvent(event: Event.appleAuthSuccess(user: result.user, isNewUser: result.isNewUser))
+                
+                try await interactor.logIn(user: result.user, isNewUser: result.isNewUser)
+                interactor.trackEvent(event: Event.appleAuthLoginSuccess(user: result.user, isNewUser: result.isNewUser))
+                
+                delegate.onDidSignIn?(result.isNewUser)
+                //                router.dismissScreen()
+                //MARK: TO DO: see about showing onboarding if its new user
+                interactor.updateAppState(showTabBarView: true)
+            } catch {
+                router.showAlert(error: error)
+                interactor.trackEvent(event: Event.appleAuthFail(error: error))
+            }
+        }
+    }
+    
 }
 
 extension WelcomePresenter {

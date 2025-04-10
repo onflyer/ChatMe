@@ -4,7 +4,7 @@ import AuthenticationServices
 import UIKit
 
 @MainActor
-public final class SignInWithAppleHelper: NSObject {
+final class SignInWithAppleHelper: NSObject {
 
     private var completionHandler: ((Result<SignInWithAppleResult, Error>) -> Void)?
     private var currentNonce: String?

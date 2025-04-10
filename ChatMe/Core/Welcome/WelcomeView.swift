@@ -26,6 +26,14 @@ struct WelcomeView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
+            SignInGoogleButtonView(type: .signIn, backgroundColor: .white, borderColor: .black, foregroundColor: .primary, cornerRadius: 10)
+                .frame(height: 55)
+                .frame(maxWidth: 400)
+                .anyButton(.press) {
+                    presenter.onSignInGooglePressed(delegate: delegate)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
             getStartedButton
         }
         .padding(16)

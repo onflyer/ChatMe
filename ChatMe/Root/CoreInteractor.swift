@@ -44,6 +44,14 @@ struct CoreInteractor {
     func signInApple() async throws -> (user: UserAuthInfo, isNewUser: Bool) {
         try await authManager.signInApple()
     }
+    
+    func signInGoogle() async throws -> (user: UserAuthInfo, isNewUser: Bool) {
+        guard let clientId = FirebaseAuthService.clientId else {
+            throw AppError("Firebase not configured or clientID missing")
+        }
+        return try await authManager.signInGoogle(GIDClientID: clientId)
+    }
+    
     func logIn(user: UserAuthInfo, isNewUser: Bool) async throws {
         try await userManager.logIn(auth: user, isNewUser: isNewUser)
 //        try await purchaseManager.logIn(

@@ -34,7 +34,26 @@ class CreateAccountPresenter {
                 let result = try await interactor.signInApple()
                 interactor.trackEvent(event: Event.appleAuthSuccess(user: result.user, isNewUser: result.isNewUser))
 
-//                try await interactor.logIn(user: result.user, isNewUser: result.isNewUser)
+                try await interactor.logIn(user: result.user, isNewUser: result.isNewUser)
+                interactor.trackEvent(event: Event.appleAuthLoginSuccess(user: result.user, isNewUser: result.isNewUser))
+
+                delegate.onDidSignIn?(result.isNewUser)
+                router.dismissScreen()
+            } catch {
+                interactor.trackEvent(event: Event.appleAuthFail(error: error))
+            }
+        }
+    }
+    
+    func onSignInGooglePressed(delegate: CreateAccountDelegate) {
+        interactor.trackEvent(event: Event.appleAuthStart)
+        
+        Task {
+            do {
+                let result = try await interactor.signInGoogle()
+                interactor.trackEvent(event: Event.appleAuthSuccess(user: result.user, isNewUser: result.isNewUser))
+
+                try await interactor.logIn(user: result.user, isNewUser: result.isNewUser)
                 interactor.trackEvent(event: Event.appleAuthLoginSuccess(user: result.user, isNewUser: result.isNewUser))
 
                 delegate.onDidSignIn?(result.isNewUser)

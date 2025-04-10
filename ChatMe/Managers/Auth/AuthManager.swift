@@ -65,16 +65,21 @@ class AuthManager {
         try await signIn(option: .apple)
     }
     
+    @discardableResult
+    public func signInGoogle(GIDClientID: String) async throws -> (user: UserAuthInfo, isNewUser: Bool) {
+        try await signIn(option: .google(GIDClientID: GIDClientID))
+    }
+    
     private func signIn(option: SignInOption) async throws -> (user: UserAuthInfo, isNewUser: Bool) {
 //        self.logger?.trackEvent(event: Event.signInStart(option: option))
         
-//        defer {
-//            // After user's auth changes, re-attach auth listener.
-//            // This isn't usually necessary, but if the user is "linking" to an anonymous account,
-//            // The Firebase auth listener does not auto-publish new value (since it's the same UID).
-//            // Re-adding a new listener should catch any catch edge cases.
-//            addAuthListener()
-//        }
+        defer {
+            // After user's auth changes, re-attach auth listener.
+            // This isn't usually necessary, but if the user is "linking" to an anonymous account,
+            // The Firebase auth listener does not auto-publish new value (since it's the same UID).
+            // Re-adding a new listener should catch any catch edge cases.
+            addAuthListener()
+        }
 
         do {
             let result = try await service.signIn(option: option)

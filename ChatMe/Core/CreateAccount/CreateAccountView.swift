@@ -51,7 +51,7 @@ struct CreateAccountView: View {
                 .frame(height: 55)
                 .frame(maxWidth: 400)
                 .anyButton(.press) {
-                    presenter.onSignInApplePressed(delegate: delegate)
+                    presenter.onSignInGooglePressed(delegate: delegate)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             
