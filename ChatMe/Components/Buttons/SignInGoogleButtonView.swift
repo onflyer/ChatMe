@@ -63,8 +63,9 @@ public struct SignInGoogleButtonView: View {
                     .frame(width: 16, height: 16)
                 
                 Text("\(buttonText) Google")
-                    .font(.system(size: 20))
-                    .fontWeight(.medium)
+                    .font(.system(size: 21, weight: .medium, design: .default))
+//                    .fontWeight(.medium)
+                    
             }
             .foregroundColor(foregroundColor)
         }
@@ -76,8 +77,19 @@ public struct SignInGoogleButtonView: View {
 #Preview("SignInWithGoogleButtonView") {
     ScrollView {
         VStack(spacing: 24) {
+            SignInWithAppleButtonView(
+                type: .signIn,
+                style: .whiteOutline,
+                cornerRadius: 10
+            )
+            .frame(height: 55)
+            .frame(maxWidth: 400)
+            .anyButton(.press) {
+//                presenter.onSignInApplePressed(delegate: delegate)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
             ForEach(ASAuthorizationAppleIDButton.ButtonType.allCases, id: \.rawValue) { type in
-                SignInGoogleButtonView(type: type, backgroundColor: .googleRed)
+                SignInGoogleButtonView(type: type, backgroundColor: .white, foregroundColor: .primary)
                     .frame(height: 60)
             }
             Divider()

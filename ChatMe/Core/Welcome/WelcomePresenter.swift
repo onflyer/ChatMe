@@ -24,6 +24,17 @@ class WelcomePresenter {
         router.showOnboarding1View(delegate: Onboarding1ViewDelegate())
     }
     
+    private func handleDidSignIn(isNewUser: Bool) {
+        interactor.trackEvent(event: Event.didSignIn(isNewUser: isNewUser))
+        
+        if isNewUser {
+            router.showOnboarding1View(delegate: Onboarding1ViewDelegate())
+        } else {
+            // Push into tabbar view
+            interactor.updateAppState(showTabBarView: true)
+        }
+    }
+    
     func onSignInApplePressed(delegate: WelcomeDelegate) {
         interactor.trackEvent(event: Event.appleAuthStart)
         
@@ -35,10 +46,8 @@ class WelcomePresenter {
                 try await interactor.logIn(user: result.user, isNewUser: result.isNewUser)
                 interactor.trackEvent(event: Event.appleAuthLoginSuccess(user: result.user, isNewUser: result.isNewUser))
                 
-                delegate.onDidSignIn?(result.isNewUser)
-                //                router.dismissScreen()
-                //MARK: TO DO: see about showing onboarding if its new user
-                interactor.updateAppState(showTabBarView: true)
+                // if its new user show onboarding , else show tab bar view
+                handleDidSignIn(isNewUser: result.isNewUser)
             } catch {
                 router.showAlert(error: error)
                 interactor.trackEvent(event: Event.appleAuthFail(error: error))
@@ -57,10 +66,7 @@ class WelcomePresenter {
                 try await interactor.logIn(user: result.user, isNewUser: result.isNewUser)
                 interactor.trackEvent(event: Event.appleAuthLoginSuccess(user: result.user, isNewUser: result.isNewUser))
                 
-                delegate.onDidSignIn?(result.isNewUser)
-                //                router.dismissScreen()
-                //MARK: TO DO: see about showing onboarding if its new user
-                interactor.updateAppState(showTabBarView: true)
+                handleDidSignIn(isNewUser: result.isNewUser)
             } catch {
                 router.showAlert(error: error)
                 interactor.trackEvent(event: Event.appleAuthFail(error: error))
