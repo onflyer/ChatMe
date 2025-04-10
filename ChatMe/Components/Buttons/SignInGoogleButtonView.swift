@@ -36,7 +36,7 @@ public struct SignInGoogleButtonView: View {
     public init(
         type: ASAuthorizationAppleIDButton.ButtonType = .signIn,
         backgroundColor: Color = .googleRedd,
-        borderColor: Color = .googleRedd,
+        borderColor: Color = .black,
         foregroundColor: Color = .white,
         cornerRadius: CGFloat = 10
     ) {
@@ -51,6 +51,7 @@ public struct SignInGoogleButtonView: View {
         ZStack {
             RoundedRectangle(cornerRadius: cornerRadius)
                 .fill(borderColor)
+                
             
             RoundedRectangle(cornerRadius: cornerRadius)
                 .fill(backgroundColor)
@@ -64,7 +65,6 @@ public struct SignInGoogleButtonView: View {
                 
                 Text("\(buttonText) Google")
                     .font(.system(size: 21, weight: .medium, design: .default))
-//                    .fontWeight(.medium)
                     
             }
             .foregroundColor(foregroundColor)
