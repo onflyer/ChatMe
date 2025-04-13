@@ -31,5 +31,5 @@ struct AIChatModel: Codable {
 }
 
 enum AIChatRole: String, Codable {
-    case system, user, assistant, tool
+    case system, user
 }

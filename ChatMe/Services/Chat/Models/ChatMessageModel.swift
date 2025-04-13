@@ -102,7 +102,7 @@ struct ChatMessageModel: Identifiable, Codable, StringIdentifiable {
                 id: "msg2",
                 chatId: "2",
 //                authorId: AvatarModel.mock.avatarId,
-                content: AIChatModel(role: .assistant, content: "I'm doing well, thanks for asking!"),
+                content: AIChatModel(role: .system, content: "I'm doing well, thanks for asking!"),
                 seenByIds: ["user1"],
                 dateCreated: now.addingTimeInterval(minutes: -5)
             ),
@@ -118,7 +118,7 @@ struct ChatMessageModel: Identifiable, Codable, StringIdentifiable {
                 id: "msg4",
                 chatId: "1",
 //                authorId: AvatarModel.mock.avatarId,
-                content: AIChatModel(role: .assistant, content: "Sure, count me in!"),
+                content: AIChatModel(role: .system, content: "Sure, count me in!"),
                 seenByIds: nil,
                 dateCreated: now.addingTimeInterval(hours: -2, minutes: -15)
             )
