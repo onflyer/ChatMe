@@ -110,4 +110,15 @@ struct CoreBuilder {
         )
     }
     
+    func chatView(router: AnyRouter, delegate: ChatDelegate) -> some View {
+        ChatView(
+            presenter: ChatPresenter(
+                interactor: interactor,
+                router: CoreRouter(router: router, builder: self)
+            ),
+            delegate: delegate
+        )
+    }
+    
+    
 }

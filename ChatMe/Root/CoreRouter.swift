@@ -59,6 +59,12 @@ struct CoreRouter {
         }
     }
     
+    func showChatView(delegate: ChatDelegate) {
+        router.showScreen(.push) { router in
+            builder.chatView(router: router, delegate: delegate)
+        }
+    }
+    
     //MARK: Alerts
     
     func showAlert(_ option: DialogOption, title: String, subtitle: String?, buttons: (@Sendable () -> AnyView)?) {
