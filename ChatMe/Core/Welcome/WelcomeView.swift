@@ -62,7 +62,7 @@ struct WelcomeView: View {
 extension WelcomeView {
     private var getStartedButton: some View {
         VStack(spacing: 8) {
-            Text("Get Started")
+            Text("Get started as Guest")
                 .callToActionButton()
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
