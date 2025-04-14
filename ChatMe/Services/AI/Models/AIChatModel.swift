@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GoogleGenerativeAI
 
 struct AIChatModel: Codable {
     let role: AIChatRole
@@ -14,6 +15,14 @@ struct AIChatModel: Codable {
     init(role: AIChatRole, content: String) {
         self.role = role
         self.message = content
+    }
+    
+    init(chat: GenerateContentResponse) {
+        
+    }
+    
+    func toModelContent() -> ModelContent {
+        ModelContent(role: role.rawValue, parts: message)
     }
     
     enum CodingKeys: String, CodingKey {
@@ -32,4 +41,5 @@ struct AIChatModel: Codable {
 
 enum AIChatRole: String, Codable {
     case system, user
+   
 }

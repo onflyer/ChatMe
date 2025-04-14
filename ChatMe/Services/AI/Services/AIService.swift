@@ -8,5 +8,5 @@
 import Foundation
 
 protocol AIService {
-    func generateText(chats: [AIChatModel]) async throws -> AIChatModel
+    func generateText(chats: AIChatModel) async throws -> AIChatModel
 }
