@@ -17,10 +17,6 @@ struct AIChatModel: Codable {
         self.message = content
     }
     
-    init(chat: GenerateContentResponse) {
-        
-    }
-    
     func toModelContent() -> ModelContent {
         ModelContent(role: role.rawValue, parts: message)
     }
