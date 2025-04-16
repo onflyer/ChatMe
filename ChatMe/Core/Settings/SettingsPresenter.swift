@@ -94,7 +94,7 @@ class SettingsPresenter {
                 interactor.trackEvent(event: Event.deleteAccountSuccess)
                 await dismissScreen()
             } catch {
-//                router.showAlert(error: error)
+                router.showAlert(error: error)
                 interactor.trackEvent(event: Event.deleteAccountFail(error: error))
             }
         }
