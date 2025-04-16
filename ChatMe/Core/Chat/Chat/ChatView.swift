@@ -57,10 +57,13 @@ struct ChatView: View {
             .padding(12)
             .padding(.trailing, 60)
             .overlay(
-                Image(systemName: "arrow.up.circle.fill")
-                    .font(.system(size: 32))
-                    .padding(.trailing, 4)
-                    .foregroundStyle(.blue)
+                Image(systemName: "paperplane.fill")
+                    .font(.system(size: 28))
+                    .padding(5)
+                    .padding(.trailing, 5)
+                    .foregroundStyle(.white)
+                    .background(.blue)
+                    .clipShape(Circle())
                     .anyButton(.plain, action: {
                         presenter.onSendMessagePressed()
                     })

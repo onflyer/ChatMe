@@ -7,7 +7,7 @@ class ChatPresenter {
     private let interactor: ChatInteractor
     private let router: ChatRouter
     
-    private(set) var chatMessages: [ChatMessageModel] = ChatMessageModel.mocks
+    private(set) var chatMessages: [ChatMessageModel] = []
     private(set) var currentUser: UserModel? = .mock
    
     var textFieldText: String = ""
@@ -53,8 +53,8 @@ class ChatPresenter {
                 
                 let aiChats = chatMessages.compactMap({ $0.content })
                 
-//                let response = try await aiManager.generateText(chats: aiChats)
-                let response = AIChatModel(role: .system, content: "This is a response from AI")
+                let response = try await interactor.generateText(chats: aiChats)
+//                let chat = AIChatModel(role: .assistant, content: response.message)
                 let newAIMessage = ChatMessageModel(
                     id: UUID().uuidString,
                     chatId: UUID().uuidString,

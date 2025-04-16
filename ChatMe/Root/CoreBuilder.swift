@@ -75,9 +75,9 @@ struct CoreBuilder {
                     }
                     .any()
                 }),
-                TabBarScreen(title: "Beta", systemImage: "heart.fill", screen: {
-                    RouterView { _ in
-                        Text("Beta")
+                TabBarScreen(title: "Beta", systemImage: "bubble.left.and.bubble.right.fill", screen: {
+                    RouterView { router in
+                        chatView(router: router, delegate: ChatDelegate())
                     }
                     .any()
                 }),

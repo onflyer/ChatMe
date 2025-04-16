@@ -20,7 +20,7 @@ struct GeminiAIService: AIService {
         guard let text = response.text else {
             throw URLError(.badServerResponse)
         }
-        let model = AIChatModel(role: .system, content: text)
+        let model = AIChatModel(role: .assistant, content: text)
         return model
     }
     

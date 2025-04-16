@@ -11,14 +11,22 @@ struct CoreInteractor {
     
     private let authManager: AuthManager
     private let userManager: UserManager
+    private let aiManager: AIManager
     private let logManager: LogManager
     private let appState: AppState
     
     init(container: DependencyContainer) {
         self.authManager = container.resolve(AuthManager.self)!
         self.userManager = container.resolve(UserManager.self)!
+        self.aiManager = container.resolve(AIManager.self)!
         self.logManager = container.resolve(LogManager.self)!
         self.appState = container.resolve(AppState.self)!
+    }
+    
+    // MARK: AIManager
+    
+    func generateText(chats: [AIChatModel]) async throws -> AIChatModel {
+        try await aiManager.generateText(chats: chats)
     }
     
     // MARK: AppState
