@@ -71,7 +71,7 @@ struct CoreBuilder {
             tabs: [
                 TabBarScreen(title: "Home", systemImage: "house.fill", screen: {
                     RouterView { router in
-                        //                        homeView(router: router, delegate: HomeDelegate())
+                        conversationView(router: router, delegate: ConversationDelegate())
                     }
                     .any()
                 }),

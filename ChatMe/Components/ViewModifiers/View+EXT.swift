@@ -27,7 +27,7 @@ extension View {
             .padding(.horizontal, 8)
             .padding(.vertical, 6)
             .background(Color.blue)
-            .cornerRadius(6)
+            .cornerRadius(10)
     }
     
     func tappableBackground() -> some View {
