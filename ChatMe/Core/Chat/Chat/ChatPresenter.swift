@@ -33,18 +33,10 @@ class ChatPresenter {
         
         Task {
             do {
-//                try TextValidationHelper.checkIfTextIsValid(text: content)
-                
+                let uid = try interactor.getAuthId()
                 let newChatMessage = AIChatModel(role: .user, content: content)
-                
-                let message = ChatMessageModel(
-                    id: UUID().uuidString,
-                    chatId: UUID().uuidString,
-//                    authorId: currentUser.userId,
-                    content: newChatMessage,
-                    seenByIds: nil,
-                    dateCreated: .now
-                )
+                let chatId = UUID().uuidString
+                let message = ChatMessageModel.newUserMessage(chatId: chatId, userId: uid, message: newChatMessage)
                 chatMessages.append(message)
                 
                 scrollPosition = message.id
@@ -54,15 +46,9 @@ class ChatPresenter {
                 let aiChats = chatMessages.compactMap({ $0.content })
                 
                 let response = try await interactor.generateText(chats: aiChats)
-//                let chat = AIChatModel(role: .assistant, content: response.message)
-                let newAIMessage = ChatMessageModel(
-                    id: UUID().uuidString,
-                    chatId: UUID().uuidString,
-//                    authorId: avatarId,
-                    content: response,
-                    seenByIds: nil,
-                    dateCreated: .now
-                )
+                
+                // newAIMessage is with role of assistant
+                let newAIMessage = ChatMessageModel.newAIMessage(chatId: chatId, avatarId: uid, message: response)
                 chatMessages.append(newAIMessage)
 
             } catch {

@@ -45,6 +45,10 @@ struct CoreInteractor {
         authManager.auth
     }
     
+    func getAuthId() throws -> String {
+        try authManager.getAuthId()
+    }
+    
     func signInAnonymously() async throws -> (user: UserAuthInfo, isNewUser: Bool) {
         try await authManager.signInAnonymously()
     }

@@ -91,6 +91,16 @@ struct CoreBuilder {
         )
     }
     
+    func conversationView(router: AnyRouter, delegate: ConversationDelegate) -> some View {
+        ConversationView(
+            presenter: ConversationPresenter(
+                interactor: interactor,
+                router: CoreRouter(router: router, builder: self)
+            ),
+            delegate: delegate
+        )
+    }
+    
     func profileView(router: AnyRouter, delegate: ProfileDelegate = ProfileDelegate()) -> some View {
         ProfileView(
             presenter: ProfilePresenter(
