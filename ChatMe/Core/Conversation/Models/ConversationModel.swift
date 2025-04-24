@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChatModel: Identifiable, Codable, Hashable, StringIdentifiable {
+struct ConversationModel: Identifiable, Codable, Hashable, StringIdentifiable {
     let id: String
     let userId: String
 //    let avatarId: String
@@ -33,13 +33,13 @@ struct ChatModel: Identifiable, Codable, Hashable, StringIdentifiable {
         return dict.compactMapValues({ $0 })
     }
     
-    static func chatId(userId: String, id: String) -> String {
+    static func conversationId(userId: String, id: String) -> String {
         "\(userId)_\(id)"
     }
     
-    static func new(userId: String, id: String) -> Self {
-        ChatModel(
-            id: chatId(userId: userId, id: id),
+    static func new(userId: String) -> Self {
+        ConversationModel(
+            id: conversationId(userId: userId, id: UUID().uuidString),
             userId: userId,
 //            avatarId: avatarId,
             dateCreated: .now,
@@ -54,14 +54,14 @@ struct ChatModel: Identifiable, Codable, Hashable, StringIdentifiable {
     static var mocks: [Self] {
         let now = Date()
         return [
-            ChatModel(
+            ConversationModel(
                 id: "mock_chat_1",
                 userId: UserAuthInfo.mock().uid,
 //                avatarId: AvatarModel.mocks.randomElement()!.avatarId,
                 dateCreated: now,
                 dateModified: now
             ),
-            ChatModel(
+            ConversationModel(
                 id: "mock_chat_2",
                 userId: UserAuthInfo.mock().uid,
 //                avatarId: AvatarModel.mocks.randomElement()!.avatarId,
@@ -72,7 +72,7 @@ struct ChatModel: Identifiable, Codable, Hashable, StringIdentifiable {
                     minutes: -30
                 )
             ),
-            ChatModel(
+            ConversationModel(
                 id: "mock_chat_3",
                 userId: UserAuthInfo.mock().uid,
 //                avatarId: AvatarModel.mocks.randomElement()!.avatarId,
@@ -83,7 +83,7 @@ struct ChatModel: Identifiable, Codable, Hashable, StringIdentifiable {
                     hours: -1
                 )
             ),
-            ChatModel(
+            ConversationModel(
                 id: "mock_chat_4",
                 userId: UserAuthInfo.mock().uid,
 //                avatarId: AvatarModel.mocks.randomElement()!.avatarId,
