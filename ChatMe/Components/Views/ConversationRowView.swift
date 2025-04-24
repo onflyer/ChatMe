@@ -55,6 +55,7 @@ struct ConversationRowView: View {
                     .frame(maxWidth: 50)
             }
         }
+        .frame(minHeight: 50)
         .padding(.vertical, 12)
         .padding(.horizontal, 8)
         .background(colorScheme.backgroundPrimary)
@@ -62,5 +63,20 @@ struct ConversationRowView: View {
 }
 
 #Preview {
-    ConversationRowView()
+    ZStack {
+        Color.gray.ignoresSafeArea()
+        
+        List {
+            ConversationRowView()
+                .removeListRowFormatting()
+            ConversationRowView(hasNewChat: false)
+                .removeListRowFormatting()
+            ConversationRowView()
+                .removeListRowFormatting()
+            ConversationRowView(headline: nil, hasNewChat: false)
+                .removeListRowFormatting()
+            ConversationRowView(subheadline: nil, hasNewChat: false)
+                .removeListRowFormatting()
+        }
+    }
 }
