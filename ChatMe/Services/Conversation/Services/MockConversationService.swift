@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+struct MockConversationService: ConversationService {
+    func createNewConversation(conversation: ConversationModel) async throws {
+        
+    }
+    
+    
+}

@@ -16,4 +16,8 @@ class ConversationManager {
     init(service: ConversationService) {
         self.service = service
     }
+    
+    func createNewConversation(conversation: ConversationModel) async throws {
+        try await service.createNewConversation(conversation: conversation)
+    }
 }

@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol ConversationService {
-    
+protocol ConversationService: Sendable {
+    func createNewConversation(conversation: ConversationModel) async throws
 }
