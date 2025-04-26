@@ -12,6 +12,7 @@ struct CoreInteractor {
     private let authManager: AuthManager
     private let userManager: UserManager
     private let aiManager: AIManager
+    private let conversationManager: ConversationManager
     private let logManager: LogManager
     private let appState: AppState
     
@@ -19,6 +20,7 @@ struct CoreInteractor {
         self.authManager = container.resolve(AuthManager.self)!
         self.userManager = container.resolve(UserManager.self)!
         self.aiManager = container.resolve(AIManager.self)!
+        self.conversationManager = container.resolve(ConversationManager.self)!
         self.logManager = container.resolve(LogManager.self)!
         self.appState = container.resolve(AppState.self)!
     }
@@ -27,6 +29,12 @@ struct CoreInteractor {
     
     func generateText(chats: [AIChatModel]) async throws -> AIChatModel {
         try await aiManager.generateText(chats: chats)
+    }
+    
+    // MARK: ConversationManager
+    
+    func createNewConversation(conversation: ConversationModel) async throws {
+        try await conversationManager.createNewConversation(conversation: conversation)
     }
     
     // MARK: AppState

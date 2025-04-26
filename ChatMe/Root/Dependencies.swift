@@ -22,6 +22,7 @@ struct Dependencies {
     let userManager: UserManager
     let logManager: LogManager
     let aiManager: AIManager
+    let conversationManager: ConversationManager
     let appState: AppState
     
     init() {
@@ -29,6 +30,7 @@ struct Dependencies {
         authManager = AuthManager(service: FirebaseAuthService(), logger: logManager)
         userManager = UserManager(services: ProductionUserServices(), logManager: logManager)
         aiManager = AIManager(service: GeminiAIService())
+        conversationManager = ConversationManager(service: FirebaseConversationService())
         appState = AppState()
         
         
@@ -36,6 +38,7 @@ struct Dependencies {
         container.register(AuthManager.self, service: authManager)
         container.register(UserManager.self, service: userManager)
         container.register(AIManager.self, service: aiManager)
+        container.register(ConversationManager.self, service: conversationManager)
         container.register(LogManager.self, service: logManager)
         container.register(AppState.self, service: appState)
         
@@ -52,6 +55,7 @@ class DevPreview {
         container.register(AuthManager.self, service: authManager)
         container.register(UserManager.self, service: userManager)
         container.register(AIManager.self, service: aiManager)
+        container.register(ConversationManager.self, service: conversationManager)
         container.register(LogManager.self, service: logManager)
         container.register(AppState.self, service: appState)
         
@@ -61,6 +65,7 @@ class DevPreview {
     let authManager: AuthManager
     let userManager: UserManager
     let aiManager: AIManager
+    let conversationManager: ConversationManager
     let logManager: LogManager
     let appState: AppState
     
@@ -68,6 +73,7 @@ class DevPreview {
         self.authManager = AuthManager(service: MockAuthService(user: isSignedIn ? .mock() : nil))
         self.userManager = UserManager(services: MockUserServices(user: isSignedIn ? .mock : nil))
         self.aiManager = AIManager(service: MockAIService())
+        self.conversationManager = ConversationManager(service: MockConversationService())
         self.logManager = LogManager(services: [])
         self.appState = AppState()
     }

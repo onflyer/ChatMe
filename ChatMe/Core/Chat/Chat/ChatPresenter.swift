@@ -9,7 +9,8 @@ class ChatPresenter {
     
     private(set) var chatMessages: [ChatMessageModel] = []
     private(set) var currentUser: UserModel? = .mock
-   
+    private(set) var conversation: ConversationModel?
+
     var textFieldText: String = ""
     var scrollPosition: String?
     
@@ -19,6 +20,7 @@ class ChatPresenter {
     }
     
     func onViewAppear(delegate: ChatDelegate) {
+        
         interactor.trackScreenEvent(event: Event.onAppear(delegate: delegate))
     }
     
@@ -34,6 +36,14 @@ class ChatPresenter {
         Task {
             do {
                 let uid = try interactor.getAuthId()
+                
+                if conversation == nil {
+                    // create new conversation
+                    let newConversation = ConversationModel.new(userId: uid)
+                    try await interactor.createNewConversation(conversation: newConversation)
+                    conversation = newConversation
+                }
+                
                 let newChatMessage = AIChatModel(role: .user, content: content)
                 let chatId = UUID().uuidString
                 let message = ChatMessageModel.newUserMessage(chatId: chatId, userId: uid, message: newChatMessage)
