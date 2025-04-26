@@ -8,7 +8,7 @@ class ChatPresenter {
     private let router: ChatRouter
     
     private(set) var chatMessages: [ChatMessageModel] = []
-    private(set) var currentUser: UserModel? = .mock
+    private(set) var currentUser: UserModel?
     private(set) var conversation: ConversationModel?
 
     var textFieldText: String = ""
@@ -20,12 +20,16 @@ class ChatPresenter {
     }
     
     func onViewAppear(delegate: ChatDelegate) {
-        
         interactor.trackScreenEvent(event: Event.onAppear(delegate: delegate))
+        currentUser = interactor.currentUser
     }
     
     func onViewDisappear(delegate: ChatDelegate) {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
+    }
+    
+    func messageIsCurrentUser(message: ChatMessageModel) -> Bool {
+        message.authorId == interactor.auth?.uid
     }
     
     func onSendMessagePressed() {
@@ -58,7 +62,7 @@ class ChatPresenter {
                 let response = try await interactor.generateText(chats: aiChats)
                 
                 // newAIMessage is with role of assistant
-                let newAIMessage = ChatMessageModel.newAIMessage(chatId: chatId, avatarId: uid, message: response)
+                let newAIMessage = ChatMessageModel.newAIMessage(chatId: chatId, message: response)
                 chatMessages.append(newAIMessage)
 
             } catch {

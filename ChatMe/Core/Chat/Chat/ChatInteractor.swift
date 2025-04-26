@@ -2,6 +2,8 @@ import SwiftUI
 
 @MainActor
 protocol ChatInteractor {
+    var auth: UserAuthInfo? { get }
+    var currentUser: UserModel? { get }
     func trackEvent(event: LoggableEvent)
     func trackScreenEvent(event: LoggableEvent)
     func getAuthId() throws -> String

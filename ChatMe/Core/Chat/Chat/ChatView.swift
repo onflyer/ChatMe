@@ -30,7 +30,7 @@ struct ChatView: View {
         ScrollView {
             LazyVStack(spacing: 24) {
                 ForEach(presenter.chatMessages) { message in
-                    let isCurrentUser = message.content?.role == .user
+                    let isCurrentUser = presenter.messageIsCurrentUser(message: message)
                     ChatBubbleViewBuilder(
                         message: message,
                         isCurrentUser: isCurrentUser,

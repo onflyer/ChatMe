@@ -72,11 +72,11 @@ struct ChatMessageModel: Identifiable, Codable, StringIdentifiable {
         )
     }
     
-    static func newAIMessage(chatId: String, avatarId: String, message: AIChatModel) -> Self {
+    static func newAIMessage(chatId: String, message: AIChatModel) -> Self {
         ChatMessageModel(
             id: UUID().uuidString,
             chatId: chatId,
-            authorId: avatarId,
+            authorId: message.role.rawValue,
             content: message,
             seenByIds: [],
             dateCreated: .now
