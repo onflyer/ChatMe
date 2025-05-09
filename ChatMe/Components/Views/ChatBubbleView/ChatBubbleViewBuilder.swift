@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChatBubbleViewBuilder: View {
     
-    var message: ChatMessageModel = .mock
+    var message: ConversationMessageModel = .mock
     var isCurrentUser: Bool = false
     var currentUserProfileColor: Color = .blue
     var imageName: String?
@@ -36,7 +36,7 @@ struct ChatBubbleViewBuilder: View {
             ChatBubbleViewBuilder()
             ChatBubbleViewBuilder(isCurrentUser: true)
             ChatBubbleViewBuilder(
-                message: ChatMessageModel(
+                message: ConversationMessageModel(
                     id: UUID().uuidString,
                     chatId: UUID().uuidString,
 //                    authorId: UUID().uuidString,
@@ -46,7 +46,7 @@ struct ChatBubbleViewBuilder: View {
                 )
             )
             ChatBubbleViewBuilder(
-                message: ChatMessageModel(
+                message: ConversationMessageModel(
                     id: UUID().uuidString,
                     chatId: UUID().uuidString,
 //                    authorId: UUID().uuidString,

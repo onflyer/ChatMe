@@ -9,6 +9,7 @@ protocol ChatInteractor {
     func getAuthId() throws -> String
     func generateText(chats: [AIChatModel]) async throws -> AIChatModel
     func createNewConversation(conversation: ConversationModel) async throws
+    func addConversationMessage(conversationId: String, message: ConversationMessageModel) async throws
 }
 
 extension CoreInteractor: ChatInteractor { }

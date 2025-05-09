@@ -20,4 +20,9 @@ class ConversationManager {
     func createNewConversation(conversation: ConversationModel) async throws {
         try await service.createNewConversation(conversation: conversation)
     }
+    
+    func addConversationMessage(conversationId: String, message: ConversationMessageModel) async throws {
+        try await service.addConversationMessage(conversationId: conversationId, message: message)
+    }
+
 }

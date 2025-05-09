@@ -33,13 +33,9 @@ struct ConversationModel: Identifiable, Codable, Hashable, StringIdentifiable {
         return dict.compactMapValues({ $0 })
     }
     
-    static func conversationId(userId: String, id: String) -> String {
-        "\(userId)_\(id)"
-    }
-    
     static func new(userId: String) -> Self {
         ConversationModel(
-            id: conversationId(userId: userId, id: UUID().uuidString),
+            id:  UUID().uuidString,
             userId: userId,
 //            avatarId: avatarId,
             dateCreated: .now,

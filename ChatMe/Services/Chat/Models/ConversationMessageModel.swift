@@ -1,5 +1,5 @@
 //
-//  ChatMessageModel.swift
+//  ConversationMessageModel.swift
 //  ChatMe
 //
 //  Created by Aleksandar Milidrag on 13. 4. 2025..
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChatMessageModel: Identifiable, Codable, StringIdentifiable {
+struct ConversationMessageModel: Identifiable, Codable, StringIdentifiable {
     let id: String
     let chatId: String
     let authorId: String?
@@ -62,7 +62,7 @@ struct ChatMessageModel: Identifiable, Codable, StringIdentifiable {
     }
     
     static func newUserMessage(chatId: String, userId: String, message: AIChatModel) -> Self {
-        ChatMessageModel(
+        ConversationMessageModel(
             id: UUID().uuidString,
             chatId: chatId,
             authorId: userId,
@@ -73,7 +73,7 @@ struct ChatMessageModel: Identifiable, Codable, StringIdentifiable {
     }
     
     static func newAIMessage(chatId: String, message: AIChatModel) -> Self {
-        ChatMessageModel(
+        ConversationMessageModel(
             id: UUID().uuidString,
             chatId: chatId,
             authorId: message.role.rawValue,
@@ -83,14 +83,14 @@ struct ChatMessageModel: Identifiable, Codable, StringIdentifiable {
         )
     }
     
-    static var mock: ChatMessageModel {
+    static var mock: ConversationMessageModel {
         mocks[0]
     }
     
-    static var mocks: [ChatMessageModel] {
+    static var mocks: [ConversationMessageModel] {
         let now = Date()
         return [
-            ChatMessageModel(
+            ConversationMessageModel(
                 id: "msg1",
                 chatId: "1",
                 authorId: UserAuthInfo.mock().uid,
@@ -98,7 +98,7 @@ struct ChatMessageModel: Identifiable, Codable, StringIdentifiable {
                 seenByIds: ["user2", "user3"],
                 dateCreated: now
             ),
-            ChatMessageModel(
+            ConversationMessageModel(
                 id: "msg2",
                 chatId: "2",
                 authorId: UserAuthInfo.mock().uid,
@@ -106,7 +106,7 @@ struct ChatMessageModel: Identifiable, Codable, StringIdentifiable {
                 seenByIds: ["user1"],
                 dateCreated: now.addingTimeInterval(minutes: -5)
             ),
-            ChatMessageModel(
+            ConversationMessageModel(
                 id: "msg3",
                 chatId: "3",
                 authorId: UserAuthInfo.mock().uid,
@@ -114,7 +114,7 @@ struct ChatMessageModel: Identifiable, Codable, StringIdentifiable {
                 seenByIds: ["user1", "user2", "user4"],
                 dateCreated: now.addingTimeInterval(hours: -1)
             ),
-            ChatMessageModel(
+            ConversationMessageModel(
                 id: "msg4",
                 chatId: "1",
                 authorId: UserAuthInfo.mock().uid,

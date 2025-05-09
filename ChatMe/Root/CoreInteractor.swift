@@ -37,6 +37,10 @@ struct CoreInteractor {
         try await conversationManager.createNewConversation(conversation: conversation)
     }
     
+    func addConversationMessage(conversationId: String, message: ConversationMessageModel) async throws {
+        try await conversationManager.addConversationMessage(conversationId: conversationId, message: message)
+    }
+
     // MARK: AppState
     
     func updateAppState(showTabBarView: Bool) {

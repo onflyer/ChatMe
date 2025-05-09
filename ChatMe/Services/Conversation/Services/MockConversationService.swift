@@ -12,5 +12,9 @@ struct MockConversationService: ConversationService {
         
     }
     
+    func addConversationMessage(conversationId: String, message: ConversationMessageModel) {
+        
+    }
+    
     
 }

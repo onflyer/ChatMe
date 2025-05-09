@@ -7,7 +7,7 @@ class ChatPresenter {
     private let interactor: ChatInteractor
     private let router: ChatRouter
     
-    private(set) var chatMessages: [ChatMessageModel] = []
+    private(set) var chatMessages: [ConversationMessageModel] = []
     private(set) var currentUser: UserModel?
     private(set) var conversation: ConversationModel?
 
@@ -28,29 +28,34 @@ class ChatPresenter {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
     }
     
-    func messageIsCurrentUser(message: ChatMessageModel) -> Bool {
+    func messageIsCurrentUser(message: ConversationMessageModel) -> Bool {
         message.authorId == interactor.auth?.uid
     }
     
+    func createNewConversation(userId: String) async throws -> ConversationModel {
+        // create new conversation
+        let newConversation = ConversationModel.new(userId: userId)
+        try await interactor.createNewConversation(conversation: newConversation)
+        return newConversation
+    }
+    
     func onSendMessagePressed() {
-        guard let currentUser else { return }
         
         let content = textFieldText
         
         Task {
             do {
-                let uid = try interactor.getAuthId()
+                //Get userId
+                let userId = try interactor.getAuthId()
                 
+                //If chat is nil, then create a new chat
                 if conversation == nil {
-                    // create new conversation
-                    let newConversation = ConversationModel.new(userId: uid)
-                    try await interactor.createNewConversation(conversation: newConversation)
-                    conversation = newConversation
+                    conversation = try await createNewConversation(userId: userId)
                 }
                 
                 let newChatMessage = AIChatModel(role: .user, content: content)
                 let chatId = UUID().uuidString
-                let message = ChatMessageModel.newUserMessage(chatId: chatId, userId: uid, message: newChatMessage)
+                let message = ConversationMessageModel.newUserMessage(chatId: chatId, userId: userId, message: newChatMessage)
                 chatMessages.append(message)
                 
                 scrollPosition = message.id
@@ -62,7 +67,7 @@ class ChatPresenter {
                 let response = try await interactor.generateText(chats: aiChats)
                 
                 // newAIMessage is with role of assistant
-                let newAIMessage = ChatMessageModel.newAIMessage(chatId: chatId, message: response)
+                let newAIMessage = ConversationMessageModel.newAIMessage(chatId: chatId, message: response)
                 chatMessages.append(newAIMessage)
 
             } catch {
