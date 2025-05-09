@@ -10,6 +10,8 @@ class ChatPresenter {
     private(set) var chatMessages: [ConversationMessageModel] = []
     private(set) var currentUser: UserModel?
     private(set) var conversation: ConversationModel?
+    private(set) var isGeneratingResponse: Bool = false
+
 
     var textFieldText: String = ""
     var scrollPosition: String?
@@ -53,27 +55,43 @@ class ChatPresenter {
                     conversation = try await createNewConversation(userId: userId)
                 }
                 
+                guard let conversation else {
+                    throw ChatViewError.noChat
+                }
+                
+                //Create user chat
                 let newChatMessage = AIChatModel(role: .user, content: content)
-                let chatId = UUID().uuidString
-                let message = ConversationMessageModel.newUserMessage(chatId: chatId, userId: userId, message: newChatMessage)
+                let message = ConversationMessageModel.newUserMessage(chatId: conversation.id, userId: userId, message: newChatMessage)
+                
+                //Upload user chat
+                try await interactor.addConversationMessage(conversationId: conversation.id, message: message)
                 chatMessages.append(message)
                 
+                //clear textfield and scroll to bottom
                 scrollPosition = message.id
-                
                 textFieldText = ""
                 
+                // generate AI response
+                isGeneratingResponse = true
                 let aiChats = chatMessages.compactMap({ $0.content })
-                
                 let response = try await interactor.generateText(chats: aiChats)
                 
-                // newAIMessage is with role of assistant
-                let newAIMessage = ConversationMessageModel.newAIMessage(chatId: chatId, message: response)
+                // create new AI message
+                let newAIMessage = ConversationMessageModel.newAIMessage(chatId: conversation.id, message: response)
+                
+                //upload new AI message
+                try await interactor.addConversationMessage(conversationId: conversation.id, message: newAIMessage)
                 chatMessages.append(newAIMessage)
 
             } catch {
-//                showAlert = AnyAppAlert(error: error)
+                router.showAlert(error: error)
             }
+            isGeneratingResponse = false
         }
+    }
+    
+    enum ChatViewError: Error {
+        case noChat
     }
 }
 
