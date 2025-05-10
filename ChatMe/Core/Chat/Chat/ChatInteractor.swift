@@ -10,6 +10,7 @@ protocol ChatInteractor {
     func generateText(chats: [AIChatModel]) async throws -> AIChatModel
     func createNewConversation(conversation: ConversationModel) async throws
     func addConversationMessage(conversationId: String, message: ConversationMessageModel) async throws
+    func getConversation(userId: String) async throws -> ConversationModel?
 }
 
 extension CoreInteractor: ChatInteractor { }

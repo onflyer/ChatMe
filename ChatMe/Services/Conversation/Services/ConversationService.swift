@@ -10,4 +10,5 @@ import Foundation
 protocol ConversationService: Sendable {
     func createNewConversation(conversation: ConversationModel) async throws
     func addConversationMessage(conversationId: String, message: ConversationMessageModel) async throws
+    func getConversation(userId: String) async throws -> ConversationModel?
 }

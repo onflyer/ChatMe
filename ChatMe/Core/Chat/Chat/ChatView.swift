@@ -18,12 +18,15 @@ struct ChatView: View {
         }
         .navigationTitle("Chat")
         .toolbarTitleDisplayMode(.inline)
-            .onAppear {
-                presenter.onViewAppear(delegate: delegate)
-            }
-            .onDisappear {
-                presenter.onViewDisappear(delegate: delegate)
-            }
+        .task {
+            await presenter.loadConversation()
+        }
+        .onAppear {
+            presenter.onViewAppear(delegate: delegate)
+        }
+        .onDisappear {
+            presenter.onViewDisappear(delegate: delegate)
+        }
     }
     
     private var scrollViewSection: some View {

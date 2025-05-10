@@ -31,6 +31,10 @@ struct FirebaseConversationService: ConversationService {
         ])
     }
     
-    
+    func getConversation(userId: String) async throws -> ConversationModel? {
+        let result: [ConversationModel] = try await conversationsCollection.whereField(ConversationModel.CodingKeys.userId.rawValue, isEqualTo: userId)
+            .order(by: ConversationModel.CodingKeys.dateModified.rawValue, descending: true).getDocuments(as: [ConversationModel].self)
+        return result.first
+    }
     
 }

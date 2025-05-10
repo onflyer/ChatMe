@@ -24,5 +24,9 @@ class ConversationManager {
     func addConversationMessage(conversationId: String, message: ConversationMessageModel) async throws {
         try await service.addConversationMessage(conversationId: conversationId, message: message)
     }
+    
+    func getConversation(userId: String) async throws -> ConversationModel? {
+        try await service.getConversation(userId: userId)
+    }
 
 }

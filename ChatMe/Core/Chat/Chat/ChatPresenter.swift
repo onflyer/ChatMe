@@ -12,7 +12,6 @@ class ChatPresenter {
     private(set) var conversation: ConversationModel?
     private(set) var isGeneratingResponse: Bool = false
 
-
     var textFieldText: String = ""
     var scrollPosition: String?
     
@@ -30,6 +29,19 @@ class ChatPresenter {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
     }
     
+    func loadConversation() async {
+        do {
+            let userId = try interactor.getAuthId()
+            conversation = try await interactor.getConversation(userId: userId)
+            print("Loading conversation SUCCESS")
+            print(conversation?.dateModified)
+
+        } catch {
+            print("Loading conversation FAILED")
+            print(error)
+        }
+    }
+    
     func messageIsCurrentUser(message: ConversationMessageModel) -> Bool {
         message.authorId == interactor.auth?.uid
     }
@@ -39,6 +51,13 @@ class ChatPresenter {
         let newConversation = ConversationModel.new(userId: userId)
         try await interactor.createNewConversation(conversation: newConversation)
         return newConversation
+    }
+    
+    func getChatId() throws -> String {
+        guard let conversation else {
+            throw ChatViewError.noChat
+        }
+        return conversation.id
     }
     
     func onSendMessagePressed() {

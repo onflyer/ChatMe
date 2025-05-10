@@ -40,6 +40,10 @@ struct CoreInteractor {
     func addConversationMessage(conversationId: String, message: ConversationMessageModel) async throws {
         try await conversationManager.addConversationMessage(conversationId: conversationId, message: message)
     }
+    
+    func getConversation(userId: String) async throws -> ConversationModel? {
+        try await conversationManager.getConversation(userId: userId)
+    }
 
     // MARK: AppState
     
