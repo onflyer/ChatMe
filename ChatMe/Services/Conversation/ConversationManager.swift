@@ -28,5 +28,9 @@ class ConversationManager {
     func getConversation(userId: String) async throws -> ConversationModel? {
         try await service.getConversation(userId: userId)
     }
+    
+    func streamConversationMessages(conversationId: String) -> AsyncThrowingStream<[ConversationMessageModel], Error> {
+        service.streamConversationMessages(conversationId: conversationId)
+    }
 
 }

@@ -20,6 +20,7 @@ struct ChatView: View {
         .toolbarTitleDisplayMode(.inline)
         .task {
             await presenter.loadConversation()
+            await presenter.listenForConversationMessages()
         }
         .onAppear {
             presenter.onViewAppear(delegate: delegate)

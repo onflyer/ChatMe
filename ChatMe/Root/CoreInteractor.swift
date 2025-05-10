@@ -44,6 +44,10 @@ struct CoreInteractor {
     func getConversation(userId: String) async throws -> ConversationModel? {
         try await conversationManager.getConversation(userId: userId)
     }
+    
+    func streamConversationMessages(conversationId: String) -> AsyncThrowingStream<[ConversationMessageModel], Error> {
+        conversationManager.streamConversationMessages(conversationId: conversationId)
+    }
 
     // MARK: AppState
     

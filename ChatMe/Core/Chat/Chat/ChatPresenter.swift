@@ -11,6 +11,7 @@ class ChatPresenter {
     private(set) var currentUser: UserModel?
     private(set) var conversation: ConversationModel?
     private(set) var isGeneratingResponse: Bool = false
+    private var streamMessagesListenerTask: Task<Void, Error>?
 
     var textFieldText: String = ""
     var scrollPosition: String?
@@ -27,15 +28,15 @@ class ChatPresenter {
     
     func onViewDisappear(delegate: ChatDelegate) {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
+        streamMessagesListenerTask?.cancel()
     }
     
     func loadConversation() async {
         do {
             let userId = try interactor.getAuthId()
             conversation = try await interactor.getConversation(userId: userId)
-            print("Loading conversation SUCCESS")
             print(conversation?.dateModified)
-
+            print("Loading conversation SUCCESS")
         } catch {
             print("Loading conversation FAILED")
             print(error)
@@ -50,10 +51,34 @@ class ChatPresenter {
         // create new conversation
         let newConversation = ConversationModel.new(userId: userId)
         try await interactor.createNewConversation(conversation: newConversation)
+        
+        defer {
+            Task {
+                await listenForConversationMessages()
+            }
+        }
         return newConversation
     }
     
-    func getChatId() throws -> String {
+    func listenForConversationMessages() async {
+        
+        do {
+            let conversationId = try getConversationId()
+            streamMessagesListenerTask?.cancel()
+            streamMessagesListenerTask = Task {
+                for try await value in interactor.streamConversationMessages(conversationId: conversationId) {
+                    chatMessages = value.sortedByKeyPath(keyPath: \.dateCreatedCalculated, ascending: true)
+                    print("Stream listener successs")
+                    scrollPosition = chatMessages.last?.id
+                }
+            }
+        } catch {
+            print(error)
+            print("STREAM FAILED")
+        }
+    }
+    
+    func getConversationId() throws -> String {
         guard let conversation else {
             throw ChatViewError.noChat
         }
@@ -84,15 +109,12 @@ class ChatPresenter {
                 
                 //Upload user chat
                 try await interactor.addConversationMessage(conversationId: conversation.id, message: message)
-                chatMessages.append(message)
                 
-                //clear textfield and scroll to bottom
-                scrollPosition = message.id
                 textFieldText = ""
                 
                 // generate AI response
                 isGeneratingResponse = true
-                let aiChats = chatMessages.compactMap({ $0.content })
+                var aiChats = chatMessages.compactMap({ $0.content })
                 let response = try await interactor.generateText(chats: aiChats)
                 
                 // create new AI message
@@ -100,8 +122,7 @@ class ChatPresenter {
                 
                 //upload new AI message
                 try await interactor.addConversationMessage(conversationId: conversation.id, message: newAIMessage)
-                chatMessages.append(newAIMessage)
-
+                
             } catch {
                 router.showAlert(error: error)
             }

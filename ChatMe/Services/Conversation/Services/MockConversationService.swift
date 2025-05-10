@@ -20,4 +20,10 @@ struct MockConversationService: ConversationService {
         ConversationModel.mock
     }
     
+    func streamConversationMessages(conversationId: String) -> AsyncThrowingStream<[ConversationMessageModel], Error> {
+        AsyncThrowingStream { continuation in
+            
+        }
+    }
+    
 }
