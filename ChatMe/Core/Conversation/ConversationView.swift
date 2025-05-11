@@ -12,16 +12,18 @@ struct ConversationView: View {
     let delegate: ConversationDelegate
     
     var body: some View {
-        VStack {
+        List {
             ForEach(presenter.conversations) { conversation in
-                Text(conversation.id)
-                Text(presenter.lastMessage ?? "no message")
+                ConversationRowView(headline: conversation.id, subheadline: presenter.lastMessage, hasNewChat: false)
                     .task {
                         await presenter.loadLastMessage(conversationId: conversation.id)
                     }
             }
+            .removeListRowFormatting()
+            
            
         }
+        .navigationTitle("Conversations")
         .task {
             await presenter.loadChats()
         }
