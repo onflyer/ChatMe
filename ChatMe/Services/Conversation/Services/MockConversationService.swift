@@ -26,4 +26,13 @@ struct MockConversationService: ConversationService {
         }
     }
     
+    func getAllConversationsForUser(userId: String) async throws -> [ConversationModel] {
+        ConversationModel.mocks
+    }
+    
+    func getLastConversationMessage(conversationId: String) async throws -> ConversationMessageModel? {
+        ConversationMessageModel.mocks.randomElement()
+    }
+    
+    
 }

@@ -41,4 +41,18 @@ struct FirebaseConversationService: ConversationService {
         return result.first
     }
     
+    func getAllConversationsForUser(userId: String) async throws -> [ConversationModel] {
+        try await conversationsCollection.whereField(ConversationModel.CodingKeys.userId.rawValue, isEqualTo: userId)
+            .getAllDocuments()
+    }
+    
+    func getLastConversationMessage(conversationId: String) async throws -> ConversationMessageModel? {
+        let messages: [ConversationMessageModel] = try await messagesSubcollection(conversationId: conversationId)
+            .order(by: ConversationMessageModel.CodingKeys.dateCreated.rawValue, descending: true)
+            .limit(to: 1)
+            .getAllDocuments()
+            
+        return messages.first
+    }
+    
 }

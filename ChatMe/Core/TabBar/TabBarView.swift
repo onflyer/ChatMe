@@ -36,13 +36,13 @@ struct TabBarView: View {
 #Preview("Fake tabs") {
     TabBarView(tabs: [
         TabBarScreen(title: "Explore", systemImage: "eyes", screen: {
-            Color.red.any()
+            Color.blue.any()
         }),
         TabBarScreen(title: "Chats", systemImage: "bubble.left.and.bubble.right.fill", screen: {
             Color.blue.any()
         }),
         TabBarScreen(title: "Profile", systemImage: "person.fill", screen: {
-            Color.green.any()
+            Color.blue.any()
         })
     ])
 }

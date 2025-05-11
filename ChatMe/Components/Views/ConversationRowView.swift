@@ -12,7 +12,7 @@ struct ConversationRowView: View {
     @Environment(\.colorScheme) private var colorScheme
     
 //    var imageName: String? = Constants.randomImage
-    var headline: String? = "Alpha"
+    var headline: String? = "Name"
     var subheadline: String? = "This is the last message in the chat."
     var hasNewChat: Bool = true
     

@@ -12,13 +12,25 @@ struct ConversationView: View {
     let delegate: ConversationDelegate
     
     var body: some View {
-        Text("Conversation View")
-            .onAppear {
-                presenter.onViewAppear(delegate: delegate)
+        VStack {
+            ForEach(presenter.conversations) { conversation in
+                Text(conversation.id)
+                Text(presenter.lastMessage ?? "no message")
+                    .task {
+                        await presenter.loadLastMessage(conversationId: conversation.id)
+                    }
             }
-            .onDisappear {
-                presenter.onViewDisappear(delegate: delegate)
-            }
+           
+        }
+        .task {
+            await presenter.loadChats()
+        }
+        .onAppear {
+            presenter.onViewAppear(delegate: delegate)
+        }
+        .onDisappear {
+            presenter.onViewDisappear(delegate: delegate)
+        }
     }
 }
 

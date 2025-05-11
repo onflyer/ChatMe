@@ -35,7 +35,6 @@ class ChatPresenter {
         do {
             let userId = try interactor.getAuthId()
             conversation = try await interactor.getConversation(userId: userId)
-            print(conversation?.dateModified)
             print("Loading conversation SUCCESS")
         } catch {
             print("Loading conversation FAILED")
