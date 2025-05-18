@@ -16,7 +16,7 @@ struct MockConversationService: ConversationService {
         
     }
     
-    func getConversation(userId: String) async throws -> ConversationModel? {
+    func getMostRecentConversation(userId: String) async throws -> ConversationModel? {
         ConversationModel.mock
     }
     
