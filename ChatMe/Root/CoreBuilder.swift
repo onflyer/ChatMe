@@ -69,13 +69,13 @@ struct CoreBuilder {
     func tabbarView() -> some View {
         TabBarView(
             tabs: [
-                TabBarScreen(title: "Home", systemImage: "house.fill", screen: {
+                TabBarScreen(title: "Conversations", systemImage: "text.justify.left", screen: {
                     RouterView { router in
                         conversationView(router: router, delegate: ConversationDelegate())
                     }
                     .any()
                 }),
-                TabBarScreen(title: "Beta", systemImage: "bubble.left.and.bubble.right.fill", screen: {
+                TabBarScreen(title: "Chat", systemImage: "bubble.left.and.bubble.right.fill", screen: {
                     RouterView { router in
                         chatView(router: router, delegate: ChatDelegate())
                     }

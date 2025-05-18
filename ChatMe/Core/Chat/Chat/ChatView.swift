@@ -4,6 +4,8 @@ struct ChatDelegate {
     var eventParameters: [String: Any]? {
         nil
     }
+    
+    var conversation: ConversationModel = .mock
 }
 
 struct ChatView: View {

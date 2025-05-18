@@ -11,7 +11,7 @@ struct TabBarScreen: Identifiable {
     var id: String {
         title
     }
-    
+
     let title: String
     let systemImage: String
     @ViewBuilder var screen: () -> AnyView
@@ -19,15 +19,18 @@ struct TabBarScreen: Identifiable {
 
 struct TabBarView: View {
     
+    @State private var tabViewSelection = "Chat"
+    
     var tabs: [TabBarScreen]
 
     var body: some View {
-        TabView {
+        TabView(selection: $tabViewSelection) {
             ForEach(tabs) { tab in
                 tab.screen()
                     .tabItem {
                         Label(tab.title, systemImage: tab.systemImage)
                     }
+                    .tag(tab.id)
             }
         }
     }
@@ -38,7 +41,7 @@ struct TabBarView: View {
         TabBarScreen(title: "Explore", systemImage: "eyes", screen: {
             Color.blue.any()
         }),
-        TabBarScreen(title: "Chats", systemImage: "bubble.left.and.bubble.right.fill", screen: {
+        TabBarScreen(title: "Chat", systemImage: "bubble.left.and.bubble.right.fill", screen: {
             Color.blue.any()
         }),
         TabBarScreen(title: "Profile", systemImage: "person.fill", screen: {

@@ -31,7 +31,7 @@ struct FirebaseConversationService: ConversationService {
         ])
     }
     
-    func streamConversationMessages(conversationId: String) -> AsyncThrowingStream<[ConversationMessageModel], Error> {
+    func listenForNewMessages(conversationId: String) -> AsyncThrowingStream<[ConversationMessageModel], Error> {
         messagesSubcollection(conversationId: conversationId).streamAllDocuments()
     }
     

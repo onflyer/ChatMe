@@ -25,6 +25,11 @@ class ConversationPresenter {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
     }
     
+    func onConversationPressed(conversation: ConversationModel) {
+        let delegate = ChatDelegate(conversation: conversation)
+        router.showChatView(delegate: delegate)
+    }
+    
     func loadChats() async {
         do {
             let userId = try interactor.getAuthId()
