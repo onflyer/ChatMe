@@ -129,6 +129,24 @@ class ChatPresenter {
         }
     }
     
+    func messageIsDelayedTimestamp(message: ConversationMessageModel) -> Bool {
+        let currentMessageDate = message.dateCreatedCalculated
+        
+        guard
+            let index = chatMessages.firstIndex(where: { $0.id == message.id }),
+            chatMessages.indices.contains(index - 1)
+        else {
+            return false
+        }
+        
+        let previousMessageDate = chatMessages[index - 1].dateCreatedCalculated
+        let timeDiff = currentMessageDate.timeIntervalSince(previousMessageDate)
+        
+        // Threshold = 60 seconds * 45 minutes
+        let threshold: TimeInterval = 60 * 45
+        return timeDiff > threshold
+    }
+    
     enum ChatViewError: Error {
         case noChat
     }

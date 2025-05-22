@@ -36,6 +36,9 @@ struct ChatView: View {
         ScrollView {
             LazyVStack(spacing: 24) {
                 ForEach(presenter.chatMessages) { message in
+                    if presenter.messageIsDelayedTimestamp(message: message) {
+                        timestampView(date: message.dateCreatedCalculated)
+                    }
                     let isCurrentUser = presenter.messageIsCurrentUser(message: message)
                     ChatBubbleViewBuilder(
                         message: message,
@@ -89,6 +92,20 @@ struct ChatView: View {
             .padding(.horizontal, 12)
             .padding(.vertical, 6)
             .background(Color(uiColor: .secondarySystemBackground))
+    }
+    
+    private func timestampView(date: Date) -> some View {
+        Group {
+            Text(date.formatted(date: .abbreviated, time: .omitted))
+            +
+            Text(" • ")
+            +
+            Text(date.formatted(date: .omitted, time: .shortened))
+        }
+        .foregroundStyle(.secondary)
+        .font(.callout)
+        .lineLimit(1)
+        .minimumScaleFactor(0.3)
     }
 }
 
