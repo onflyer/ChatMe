@@ -68,8 +68,6 @@ class MockConversationService: ConversationService {
         }
      }
     
-   
-    
     func getLastConversationMessage(conversationId: String) async throws -> ConversationMessageModel? {
         try await Task.sleep(for: .seconds(delay))
         try tryShowError()
