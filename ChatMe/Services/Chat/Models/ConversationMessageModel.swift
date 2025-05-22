@@ -101,7 +101,7 @@ struct ConversationMessageModel: Identifiable, Codable, StringIdentifiable {
             ConversationMessageModel(
                 id: "msg2",
                 chatId: "2",
-                authorId: UserAuthInfo.mock().uid,
+                authorId: UUID().uuidString,
                 content: AIChatModel(role: .system, content: "I'm doing well, thanks for asking!"),
                 seenByIds: ["user1"],
                 dateCreated: now.addingTimeInterval(minutes: -5)
@@ -116,8 +116,8 @@ struct ConversationMessageModel: Identifiable, Codable, StringIdentifiable {
             ),
             ConversationMessageModel(
                 id: "msg4",
-                chatId: "1",
-                authorId: UserAuthInfo.mock().uid,
+                chatId: "4",
+                authorId: UUID().uuidString,
                 content: AIChatModel(role: .system, content: "Sure, count me in!"),
                 seenByIds: nil,
                 dateCreated: now.addingTimeInterval(hours: -2, minutes: -15)
