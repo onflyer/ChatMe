@@ -12,6 +12,7 @@ protocol ChatInteractor {
     func addConversationMessage(conversationId: String, message: ConversationMessageModel) async throws
     func getConversation(userId: String) async throws -> ConversationModel?
     func streamConversationMessages(conversationId: String) -> AsyncThrowingStream<[ConversationMessageModel], Error>
+    func deleteConversation(conversationId: String) async throws
 }
 
 extension CoreInteractor: ChatInteractor { }

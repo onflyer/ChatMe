@@ -20,6 +20,15 @@ struct ChatView: View {
         }
         .navigationTitle("Chat")
         .toolbarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                    Image(systemName: "ellipsis")
+                        .padding(8)
+                        .anyButton {
+                            presenter.onSettingsPressed()
+                        }
+            }
+        }
         .task {
             await presenter.loadConversation()
             await presenter.listenForConversationMessages()

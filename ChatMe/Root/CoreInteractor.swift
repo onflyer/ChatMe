@@ -56,6 +56,13 @@ struct CoreInteractor {
     func getLastConversationMessage(conversationId: String) async throws -> ConversationMessageModel? {
         try await conversationManager.getLastConversationMessage(conversationId: conversationId)
     }
+    
+    func deleteConversation(conversationId: String) async throws {
+        try await conversationManager.deleteConversation(conversationId: conversationId)
+    }
+    func deleteAllConversationsForUser(userId: String) async throws {
+        try await conversationManager.deleteAllConversationsForUser(userId: userId)
+    }
 
     // MARK: AppState
     

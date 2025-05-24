@@ -30,16 +30,29 @@ class ConversationPresenter {
         router.showChatView(delegate: delegate)
     }
     
+    func onConversationSettingsPressed() {
+        Task {
+            do {
+                let userId = try interactor.getAuthId()
+                try await interactor.deleteAllConversationsForUser(userId: userId)
+            } catch {
+                print("Failed to delete chats")
+                router.showAlert(error: error)
+            }
+        }
+    }
+    
+    
     func loadChats() async {
         do {
             let userId = try interactor.getAuthId()
             conversations = try await interactor.getAllConversationsForUser(userId: userId)
                 .sortedByKeyPath(keyPath: \.dateModified, ascending: false)
-            
-            print(conversations.count)
         } catch {
-            print(error)
             print("Failed to load chats")
+            router.showAlert(error: error)
+           
+
         }
     }
     

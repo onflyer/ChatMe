@@ -60,7 +60,8 @@ class MockConversationService: ConversationService {
        AsyncThrowingStream { continuation in
             continuation.yield(chatMessages)
            
-           Task {
+           streamMessagesListenerTask?.cancel()
+           streamMessagesListenerTask =  Task {
                for try await message in $chatMessages.values  {
                     continuation.yield(message)
                 }
@@ -74,5 +75,17 @@ class MockConversationService: ConversationService {
         return ConversationMessageModel.mocks.randomElement()
     }
     
+    
+    func deleteConversation(conversationId: String) async throws {
+        
+    }
+    
+    func deleteAllConversationsForUser(userId: String) async throws {
+        
+    }
+    
+//    func reportChat(report: ConversationModel) async throws {
+//
+//    }
     
 }

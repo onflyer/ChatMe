@@ -40,5 +40,13 @@ class ConversationManager {
     func getLastConversationMessage(conversationId: String) async throws -> ConversationMessageModel? {
         try await service.getLastConversationMessage(conversationId: conversationId)
     }
+    
+    func deleteConversation(conversationId: String) async throws {
+        try await service.deleteConversation(conversationId: conversationId)
+    }
+    
+    func deleteAllConversationsForUser(userId: String) async throws {
+        try await service.deleteAllConversationsForUser(userId: userId)
+    }
 
 }

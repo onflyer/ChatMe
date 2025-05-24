@@ -7,6 +7,8 @@ protocol ConversationInteractor {
     func getAllConversationsForUser(userId: String) async throws -> [ConversationModel]
     func getAuthId() throws -> String
     func getLastConversationMessage(conversationId: String) async throws -> ConversationMessageModel?
+    func deleteConversation(conversationId: String) async throws
+    func deleteAllConversationsForUser(userId: String) async throws
 }
 
 extension CoreInteractor: ConversationInteractor { }

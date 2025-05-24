@@ -55,4 +55,27 @@ struct FirebaseConversationService: ConversationService {
         return messages.first
     }
     
+    func deleteConversation(conversationId: String) async throws {
+        //deleting document DOES NOT delete subcollection...
+        async let deleteConversation: () =  conversationsCollection.deleteDocument(id: conversationId)
+        // so we need to delete subcollection
+        async let deleteConversationMessages: () =  messagesSubcollection(conversationId: conversationId).deleteAllDocuments()
+        
+        let (_, _) = await (try deleteConversation, try deleteConversationMessages )
+
+    }
+    
+    func deleteAllConversationsForUser(userId: String) async throws {
+        let conversations = try await getAllConversationsForUser(userId: userId)
+        
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            for item in conversations {
+                group.addTask {
+                    try await deleteConversation(conversationId: item.id)
+                }
+            }
+            
+            try await group.waitForAll()
+        }
+    }
 }

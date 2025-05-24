@@ -129,6 +129,40 @@ class ChatPresenter {
         }
     }
     
+    func onSettingsPressed() {
+        router.showAlert(.confirmationDialog, title: "", subtitle: "What would you like to do?") {
+            AnyView(
+                Group {
+                    Button("Report User / Chat", role: .destructive) {
+//                        self.onReportChatPressed()
+                    }
+                    Button("Delete Chat", role: .destructive) {
+                        self.onDeleteChatPressed()
+                    }
+                }
+            )
+        }
+    }
+    
+    func onDeleteChatPressed() {
+
+        Task {
+            do {
+                let conversationId = try getConversationId()
+                try await interactor.deleteConversation(conversationId: conversationId)
+                router.dismissScreen()
+            } catch {
+                print(error)
+                router.showAlert(
+                    .alert,
+                    title: "Something went wrong.",
+                    subtitle: "Please check your internet connection and try again \(error).",
+                    buttons: nil
+                )
+            }
+        }
+    }
+    
     func messageIsDelayedTimestamp(message: ConversationMessageModel) -> Bool {
         let currentMessageDate = message.dateCreatedCalculated
         

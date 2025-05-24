@@ -23,10 +23,22 @@ struct ConversationView: View {
                     }
             }
             .removeListRowFormatting()
-            
-           
         }
         .navigationTitle("Conversations")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+
+                Menu(content: {
+                    Text("Delete all")
+                        .anyButton {
+                            presenter.onConversationSettingsPressed()
+                        }
+                }, label: {
+                    Image(systemName: "ellipsis")
+                        .padding(8)
+                })
+            }
+        }
         .task {
             await presenter.loadChats()
         }

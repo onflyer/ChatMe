@@ -14,4 +14,6 @@ protocol ConversationService: Sendable {
     func streamConversationMessages(conversationId: String) -> AsyncThrowingStream<[ConversationMessageModel], Error>
     func getAllConversationsForUser(userId: String) async throws -> [ConversationModel]
     func getLastConversationMessage(conversationId: String) async throws -> ConversationMessageModel?
+    func deleteConversation(conversationId: String) async throws
+    func deleteAllConversationsForUser(userId: String) async throws
 }
