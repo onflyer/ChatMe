@@ -22,11 +22,11 @@ struct ChatView: View {
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                    Image(systemName: "ellipsis")
-                        .padding(8)
-                        .anyButton {
-                            presenter.onSettingsPressed()
-                        }
+                Image(systemName: "ellipsis")
+                    .padding(8)
+                    .anyButton {
+                        presenter.onSettingsPressed()
+                    }
             }
         }
         .task {
@@ -69,7 +69,7 @@ struct ChatView: View {
     }
     
     private var textFieldSection: some View {
-        TextField("Say something...", text: $presenter.textFieldText)
+        TextField("Ask anything...", text: $presenter.textFieldText)
             .keyboardType(.alphabet)
             .autocorrectionDisabled()
             .padding(12)
@@ -119,7 +119,7 @@ struct ChatView: View {
 }
 
 #Preview {
-    let container = DevPreview.shared.container() 
+    let container = DevPreview.shared.container()
     let interactor = CoreInteractor(container: container)
     let builder = CoreBuilder(interactor: interactor)
     let delegate = ChatDelegate()

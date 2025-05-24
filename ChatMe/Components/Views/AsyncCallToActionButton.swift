@@ -42,7 +42,7 @@ private struct PreviewView: View {
                 isLoading = true
                 
                 Task {
-                    try? await Task.sleep(for: .seconds(3))
+                    try? await Task.sleep(for: .seconds(1))
                     isLoading = false
                 }
             }
