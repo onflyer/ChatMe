@@ -119,7 +119,8 @@ struct CoreInteractor {
     }
     
     func deleteAccount() async throws {
-        _ = try authManager.getAuthId()
+        let userId = try authManager.getAuthId()
+        try await conversationManager.deleteAllConversationsForUser(userId: userId)
         try await userManager.deleteCurrentUser()
         try await authManager.deleteAccount()
 //        try await purchaseManager.logOut()
