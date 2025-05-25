@@ -31,6 +31,111 @@ class ChatPresenter {
         streamMessagesListenerTask?.cancel()
     }
     
+    func onSendMessagePressed() {
+        
+        let content = textFieldText
+        
+        Task {
+            do {
+                //Get userId
+                let userId = try interactor.getAuthId()
+                
+                //If chat is nil, then create a new chat
+                if conversation == nil {
+                    conversation = try await createNewConversation(userId: userId)
+                }
+                
+                guard let conversation else {
+                    throw ChatViewError.noChat
+                }
+                
+                //Create user chat
+                let newChatMessage = AIChatModel(role: .user, content: content)
+                let message = ConversationMessageModel.newUserMessage(chatId: conversation.id, userId: userId, message: newChatMessage)
+                
+                //Upload user chat
+                try await interactor.addConversationMessage(conversationId: conversation.id, message: message)
+                
+                textFieldText = ""
+                
+                // generate AI response
+                isGeneratingResponse = true
+                let aiChats = chatMessages.compactMap({ $0.content })
+                let response = try await interactor.generateText(chats: aiChats)
+                
+                // create new AI message
+                let newAIMessage = ConversationMessageModel.newAIMessage(chatId: conversation.id, message: response)
+                
+                //upload new AI message
+                try await interactor.addConversationMessage(conversationId: conversation.id, message: newAIMessage)
+                
+            } catch {
+                router.showAlert(error: error)
+            }
+            isGeneratingResponse = false
+        }
+    }
+    
+    func onSettingsPressed() {
+        router.showAlert(.confirmationDialog, title: "", subtitle: "What would you like to do?") {
+            AnyView(
+                Group {
+                    Button("Report User / Chat", role: .destructive) {
+                        self.onReportChatPressed()
+                    }
+                    Button("Delete Chat", role: .destructive) {
+                        self.onDeleteChatPressed()
+                    }
+                }
+            )
+        }
+    }
+    
+    
+    func onDeleteChatPressed() {
+
+        Task {
+            do {
+                let conversationId = try getConversationId()
+                try await interactor.deleteConversation(conversationId: conversationId)
+                router.dismissScreen()
+            } catch {
+                print(error)
+                router.showAlert(
+                    .alert,
+                    title: "Something went wrong.",
+                    subtitle: "Please check your internet connection and try again \(error).",
+                    buttons: nil
+                )
+            }
+        }
+    }
+    
+    func onReportChatPressed() {
+        Task {
+            do {
+                let userId = try interactor.getAuthId()
+                let conversationId = try getConversationId()
+                try await interactor.reportChat(conversationId: conversationId, userId: userId)
+
+                router.showAlert(
+                    .alert,
+                    title: "🚨 Reported 🚨",
+                    subtitle: "We will review the chat shortly. You may leave the chat at any time. Thanks for bringing this to our attention!",
+                    buttons: nil
+                )
+            } catch {
+                router.showAlert(
+                    .alert,
+                    title: "Something went wrong.",
+                    subtitle: "Please check your internet connection and try again.",
+                    buttons: nil
+                )
+            }
+        }
+    }
+
+    
     func loadConversation() async {
         do {
             let userId = try interactor.getAuthId()
@@ -84,84 +189,6 @@ class ChatPresenter {
         return conversation.id
     }
     
-    func onSendMessagePressed() {
-        
-        let content = textFieldText
-        
-        Task {
-            do {
-                //Get userId
-                let userId = try interactor.getAuthId()
-                
-                //If chat is nil, then create a new chat
-                if conversation == nil {
-                    conversation = try await createNewConversation(userId: userId)
-                }
-                
-                guard let conversation else {
-                    throw ChatViewError.noChat
-                }
-                
-                //Create user chat
-                let newChatMessage = AIChatModel(role: .user, content: content)
-                let message = ConversationMessageModel.newUserMessage(chatId: conversation.id, userId: userId, message: newChatMessage)
-                
-                //Upload user chat
-                try await interactor.addConversationMessage(conversationId: conversation.id, message: message)
-                
-                textFieldText = ""
-                
-                // generate AI response
-                isGeneratingResponse = true
-                var aiChats = chatMessages.compactMap({ $0.content })
-                let response = try await interactor.generateText(chats: aiChats)
-                
-                // create new AI message
-                let newAIMessage = ConversationMessageModel.newAIMessage(chatId: conversation.id, message: response)
-                
-                //upload new AI message
-                try await interactor.addConversationMessage(conversationId: conversation.id, message: newAIMessage)
-                
-            } catch {
-                router.showAlert(error: error)
-            }
-            isGeneratingResponse = false
-        }
-    }
-    
-    func onSettingsPressed() {
-        router.showAlert(.confirmationDialog, title: "", subtitle: "What would you like to do?") {
-            AnyView(
-                Group {
-                    Button("Report User / Chat", role: .destructive) {
-//                        self.onReportChatPressed()
-                    }
-                    Button("Delete Chat", role: .destructive) {
-                        self.onDeleteChatPressed()
-                    }
-                }
-            )
-        }
-    }
-    
-    func onDeleteChatPressed() {
-
-        Task {
-            do {
-                let conversationId = try getConversationId()
-                try await interactor.deleteConversation(conversationId: conversationId)
-                router.dismissScreen()
-            } catch {
-                print(error)
-                router.showAlert(
-                    .alert,
-                    title: "Something went wrong.",
-                    subtitle: "Please check your internet connection and try again \(error).",
-                    buttons: nil
-                )
-            }
-        }
-    }
     
     func messageIsDelayedTimestamp(message: ConversationMessageModel) -> Bool {
         let currentMessageDate = message.dateCreatedCalculated

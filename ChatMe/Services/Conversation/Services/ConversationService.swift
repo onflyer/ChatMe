@@ -16,4 +16,5 @@ protocol ConversationService: Sendable {
     func getLastConversationMessage(conversationId: String) async throws -> ConversationMessageModel?
     func deleteConversation(conversationId: String) async throws
     func deleteAllConversationsForUser(userId: String) async throws
+    func reportChat(report: ConversationReportModel) async throws
 }

@@ -48,5 +48,9 @@ class ConversationManager {
     func deleteAllConversationsForUser(userId: String) async throws {
         try await service.deleteAllConversationsForUser(userId: userId)
     }
-
+    
+    func reportChat(conversationId: String, userId: String) async throws {
+        let report = ConversationReportModel.new(conversationId: conversationId, userId: userId)
+        try await service.reportChat(report: report)
+    }
 }

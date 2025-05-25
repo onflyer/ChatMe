@@ -18,6 +18,10 @@ struct FirebaseConversationService: ConversationService {
         conversationsCollection.document(conversationId).collection("messages")
     }
     
+    private var conversationReportsCollection: CollectionReference {
+        Firestore.firestore().collection("conversation_reports")
+    }
+    
     func createNewConversation(conversation: ConversationModel) async throws {
         try conversationsCollection.document(conversation.id).setData(from: conversation, merge: true)
     }
@@ -77,5 +81,9 @@ struct FirebaseConversationService: ConversationService {
             
             try await group.waitForAll()
         }
+    }
+    
+    func reportChat(report: ConversationReportModel) async throws {
+        try await conversationReportsCollection.setDocument(document: report)
     }
 }

@@ -84,8 +84,8 @@ class MockConversationService: ConversationService {
         
     }
     
-//    func reportChat(report: ConversationModel) async throws {
-//
-//    }
+    func reportChat(report: ConversationReportModel) async throws {
+
+    }
     
 }

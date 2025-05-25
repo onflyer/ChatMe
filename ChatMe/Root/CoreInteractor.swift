@@ -60,8 +60,13 @@ struct CoreInteractor {
     func deleteConversation(conversationId: String) async throws {
         try await conversationManager.deleteConversation(conversationId: conversationId)
     }
+    
     func deleteAllConversationsForUser(userId: String) async throws {
         try await conversationManager.deleteAllConversationsForUser(userId: userId)
+    }
+    
+    func reportChat(conversationId: String, userId: String) async throws {
+        try await conversationManager.reportChat(conversationId: conversationId, userId: userId)
     }
 
     // MARK: AppState
