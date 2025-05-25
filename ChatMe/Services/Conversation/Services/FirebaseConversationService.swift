@@ -39,6 +39,13 @@ struct FirebaseConversationService: ConversationService {
         messagesSubcollection(conversationId: conversationId).streamAllDocuments()
     }
     
+    //make a stream for collection filtered for userId
+    func streamConversations(userId: String) async throws -> AsyncThrowingStream<[ConversationModel], Error> {
+       let query = conversationsCollection.whereField(ConversationModel.CodingKeys.userId.rawValue, isEqualTo: userId)
+       return query.addSnapshotStream(as: [ConversationModel].self)
+    
+    }
+    
     func getMostRecentConversation(userId: String) async throws -> ConversationModel? {
         let result: [ConversationModel] = try await conversationsCollection.whereField(ConversationModel.CodingKeys.userId.rawValue, isEqualTo: userId)
             .order(by: ConversationModel.CodingKeys.dateModified.rawValue, descending: true).getDocuments(as: [ConversationModel].self)

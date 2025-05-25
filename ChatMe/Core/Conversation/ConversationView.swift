@@ -8,6 +8,8 @@ struct ConversationDelegate {
 
 struct ConversationView: View {
     
+    @Namespace private var namespace
+    
     @State var presenter: ConversationPresenter
     let delegate: ConversationDelegate
     
@@ -40,7 +42,7 @@ struct ConversationView: View {
             }
         }
         .task {
-            await presenter.loadChats()
+            await presenter.listenForConversations()
         }
         .onAppear {
             presenter.onViewAppear(delegate: delegate)

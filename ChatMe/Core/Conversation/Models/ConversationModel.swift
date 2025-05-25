@@ -43,6 +43,11 @@ struct ConversationModel: Identifiable, Codable, Hashable, StringIdentifiable {
         )
     }
     
+    var dateCreatedCalculated: Date {
+        dateCreated 
+    }
+    
+    
     static var mock: Self {
         mocks[0]
     }

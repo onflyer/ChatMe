@@ -11,6 +11,8 @@ class ConversationPresenter {
     private(set) var lastMessageModel: ConversationMessageModel?
     private(set) var lastMessage: String?
     private(set) var isLoadingChats: Bool = true
+    private var conversationsListenerTask: Task<Void, Error>?
+
     
     init(interactor: ConversationInteractor, router: ConversationRouter) {
         self.interactor = interactor
@@ -23,6 +25,8 @@ class ConversationPresenter {
     
     func onViewDisappear(delegate: ConversationDelegate) {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
+        conversationsListenerTask?.cancel()
+
     }
     
     func onConversationPressed(conversation: ConversationModel) {
@@ -39,6 +43,23 @@ class ConversationPresenter {
                 print("Failed to delete chats")
                 router.showAlert(error: error)
             }
+        }
+    }
+    
+    func listenForConversations() async {
+        
+        do {
+            let userId = try interactor.getAuthId()
+            conversationsListenerTask?.cancel()
+            conversationsListenerTask = Task {
+                for try await value in try await interactor.streamConversations(userId: userId) {
+                    conversations = value.sortedByKeyPath(keyPath: \.dateCreatedCalculated, ascending: true)
+                    print("Stream conversations success")
+                }
+            }
+        } catch {
+            print(error)
+            print("STREAM FAILED")
         }
     }
     

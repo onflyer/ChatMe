@@ -33,6 +33,10 @@ class ConversationManager {
         service.streamConversationMessages(conversationId: conversationId)
     }
     
+    func streamConversations(userId: String) async throws -> AsyncThrowingStream<[ConversationModel], Error> {
+        try await service.streamConversations(userId: userId)
+    }
+    
     func getAllConversationsForUser(userId: String) async throws -> [ConversationModel] {
         try await service.getAllConversationsForUser(userId: userId)
     }

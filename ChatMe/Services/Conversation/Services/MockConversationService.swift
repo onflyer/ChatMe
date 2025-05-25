@@ -10,11 +10,12 @@ import Foundation
 @MainActor
 class MockConversationService: ConversationService {
     
-    let conversations: [ConversationModel]
+    @Published var conversations: [ConversationModel]
     @Published var chatMessages: [ConversationMessageModel]
     let delay: Double
     let showError: Bool
     private var streamMessagesListenerTask: Task<Void, Error>?
+    private var streamConversationsListenerTask: Task<Void, Error>?
     
     init(
         conversations: [ConversationModel] = ConversationModel.mocks,
@@ -68,6 +69,19 @@ class MockConversationService: ConversationService {
             }
         }
      }
+    
+    func streamConversations(userId: String) async throws -> AsyncThrowingStream<[ConversationModel], Error> {
+        AsyncThrowingStream { continuation in
+            continuation.yield(conversations)
+            
+            streamConversationsListenerTask?.cancel()
+            streamConversationsListenerTask = Task {
+                for try await item in $conversations.values {
+                    continuation.yield(item)
+                }
+            }
+        }
+    }
     
     func getLastConversationMessage(conversationId: String) async throws -> ConversationMessageModel? {
         try await Task.sleep(for: .seconds(delay))
