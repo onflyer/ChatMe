@@ -70,6 +70,10 @@ struct FirebaseConversationService: ConversationService {
         return messages.first
     }
     
+    func getConversationMessagesForSummary(conversationId: String) async throws -> [ConversationMessageModel] {
+        return try await messagesSubcollection(conversationId: conversationId).getAllDocuments()
+    }
+    
     func deleteConversation(conversationId: String) async throws {
         //deleting document DOES NOT delete subcollection...
         async let deleteConversation: () =  conversationsCollection.deleteDocument(id: conversationId)

@@ -12,6 +12,8 @@ protocol ConversationInteractor {
     func streamConversations(userId: String) async throws -> AsyncThrowingStream<[ConversationModel], Error>
     func getMostRecentConversation(userId: String) async throws -> ConversationModel?
     func getConversation(conversationId: String) async throws -> ConversationModel?
+    func generateText(chats: [AIChatModel]) async throws -> AIChatModel
+    func getConversationMessagesForSummary(conversationId: String) async throws -> [ConversationMessageModel]
 
     
 }

@@ -32,6 +32,7 @@ class ChatPresenter {
         chatMessages.removeAll()
     }
     
+    
     func onSendMessagePressed() {
         
         let content = textFieldText

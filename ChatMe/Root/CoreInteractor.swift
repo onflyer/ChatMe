@@ -76,6 +76,10 @@ struct CoreInteractor {
     func reportChat(conversationId: String, userId: String) async throws {
         try await conversationManager.reportChat(conversationId: conversationId, userId: userId)
     }
+    
+    func getConversationMessagesForSummary(conversationId: String) async throws -> [ConversationMessageModel] {
+        try await conversationManager.getConversationMessagesForSummary(conversationId: conversationId)
+    }
 
     // MARK: AppState
     

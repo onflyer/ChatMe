@@ -19,4 +19,5 @@ protocol ConversationService: Sendable {
     func reportChat(report: ConversationReportModel) async throws
     func streamConversations(userId: String) async throws -> AsyncThrowingStream<[ConversationModel], Error>
     func getConversation(conversatonId: String) async throws -> ConversationModel?
+    func getConversationMessagesForSummary(conversationId: String) async throws -> [ConversationMessageModel]
 }

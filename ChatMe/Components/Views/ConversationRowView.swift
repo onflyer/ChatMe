@@ -12,10 +12,11 @@ struct ConversationRowView: View {
     @Environment(\.colorScheme) private var colorScheme
     
 //    var imageName: String? = Constants.randomImage
-    var headline: String? = "Name"
+    @State var headline: String? = "This is the title"
     var hasNewChat: Bool = true
     @State var subheadline: String? = "This is the last message in the chat."
     var getLastMessage: (() async -> String)?
+    var getTitle: (() async -> String)?
     
     var body: some View {
         HStack(spacing: 8) {
@@ -59,6 +60,11 @@ struct ConversationRowView: View {
         .task {
             if let getLastMessage {
                 self.subheadline = await getLastMessage()
+            }
+        }
+        .task {
+            if let getTitle {
+                self.headline = await getTitle()
             }
         }
         .frame(minHeight: 50)

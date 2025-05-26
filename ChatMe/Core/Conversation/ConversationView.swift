@@ -16,6 +16,8 @@ struct ConversationView: View {
             ForEach(presenter.conversations) { conversation in
                 ConversationRowView(headline: conversation.id, hasNewChat: false, subheadline: "Subheadline", getLastMessage: {
                     await presenter.loadLastMessage(conversationId: conversation.id)
+                }, getTitle: {
+                    await presenter.loadConversationsTitleSummary(conversationId: conversation.id)
                 })
                 .anyButton {
                     presenter.onConversationPressed(conversationId: conversation.id)

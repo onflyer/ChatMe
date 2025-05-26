@@ -108,4 +108,10 @@ class MockConversationService: ConversationService {
         }
     }
     
+    func getConversationMessagesForSummary(conversationId: String) async throws -> [ConversationMessageModel] {
+        try await Task.sleep(for: .seconds(delay))
+        try tryShowError()
+        return chatMessages
+    }
+    
 }

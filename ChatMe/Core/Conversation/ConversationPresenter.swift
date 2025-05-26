@@ -9,7 +9,7 @@ class ConversationPresenter {
     
     private(set) var conversations: [ConversationModel] = []
     private(set) var lastMessageModel: ConversationMessageModel?
-    private(set) var lastMessage: String?
+    private(set) var titleSummary: ConversationMessageModel?
     private(set) var isLoadingChats: Bool = true
     private var conversationsListenerTask: Task<Void, Error>?
 
@@ -84,6 +84,23 @@ class ConversationPresenter {
            
 
         }
+    }
+    
+    func loadConversationsTitleSummary(conversationId: String) async -> String {
+        do {
+            let userId = try interactor.getAuthId()
+            var text = try await interactor.getConversationMessagesForSummary(conversationId: conversationId)
+            let prompt = AIChatModel(role: .user, content: "Make a summary of this text in one short sentence")
+            let message = ConversationMessageModel.newUserMessage(chatId: conversationId, userId: userId, message: prompt)
+            text.append(message)
+            let aiChats = text.compactMap({$0.content})
+            let response = try await interactor.generateText(chats: aiChats)
+            let newAIMessage = ConversationMessageModel.newAIMessage(chatId: conversationId, message: response)
+            titleSummary = newAIMessage
+        } catch {
+            print(error)
+        }
+        return titleSummary?.content?.message ?? "No Title"
     }
     
     func loadLastMessage(conversationId: String) async -> String {

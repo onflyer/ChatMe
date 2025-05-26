@@ -61,4 +61,8 @@ class ConversationManager {
         let report = ConversationReportModel.new(conversationId: conversationId, userId: userId)
         try await service.reportChat(report: report)
     }
+    
+    func getConversationMessagesForSummary(conversationId: String) async throws -> [ConversationMessageModel] {
+        try await service.getConversationMessagesForSummary(conversationId: conversationId)
+    }
 }
