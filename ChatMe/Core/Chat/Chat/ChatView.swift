@@ -49,7 +49,7 @@ struct ChatView: View {
                     if presenter.messageIsDelayedTimestamp(message: message) {
                         timestampView(date: message.dateCreatedCalculated)
                     }
-                    let isCurrentUser = presenter.messageIsCurrentUser(message: message)
+                    let isCurrentUser = presenter.messageIsCurrentUser(message: message) 
                     ChatBubbleViewBuilder(
                         message: message,
                         isCurrentUser: isCurrentUser,

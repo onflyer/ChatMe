@@ -10,6 +10,7 @@
 		3065A1DE2D987EBE003AD583 /* SwiftfulRouting in Frameworks */ = {isa = PBXBuildFile; productRef = 3065A1DD2D987EBE003AD583 /* SwiftfulRouting */; };
 		3065A4DC2D98830A003AD583 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3065A4DB2D98830A003AD583 /* SDWebImageSwiftUI */; };
 		3065A4E62D98858D003AD583 /* SwiftfulLogging in Frameworks */ = {isa = PBXBuildFile; productRef = 3065A4E52D98858D003AD583 /* SwiftfulLogging */; };
+		307A03072DE4F48D00381296 /* SwiftfulLoadingIndicators in Frameworks */ = {isa = PBXBuildFile; productRef = 307A03062DE4F48D00381296 /* SwiftfulLoadingIndicators */; };
 		309FCF722D97136500BBFB09 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 309FCF712D97136500BBFB09 /* Config.xcconfig */; };
 		30AD47262DA28DBD0072EF22 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 30AD47252DA28DBD0072EF22 /* FirebaseAuth */; };
 		30AD47562DA31E9C0072EF22 /* SwiftfulUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 30AD47552DA31E9C0072EF22 /* SwiftfulUtilities */; };
@@ -80,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				307A03072DE4F48D00381296 /* SwiftfulLoadingIndicators in Frameworks */,
 				30AD47B32DA7C8AA0072EF22 /* GoogleSignInSwift in Frameworks */,
 				30AD47562DA31E9C0072EF22 /* SwiftfulUtilities in Frameworks */,
 				30AD47B12DA7C8AA0072EF22 /* GoogleSignIn in Frameworks */,
@@ -169,6 +171,7 @@
 				30AD47B02DA7C8AA0072EF22 /* GoogleSignIn */,
 				30AD47B22DA7C8AA0072EF22 /* GoogleSignInSwift */,
 				30AD4B7C2DAD703D0072EF22 /* GoogleGenerativeAI */,
+				307A03062DE4F48D00381296 /* SwiftfulLoadingIndicators */,
 			);
 			productName = ChatMe;
 			productReference = 309FCF3E2D97129000BBFB09 /* ChatMe.app */;
@@ -260,6 +263,7 @@
 				30AD47542DA31E9C0072EF22 /* XCRemoteSwiftPackageReference "SwiftfulUtilities" */,
 				30AD47AF2DA7C8AA0072EF22 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				30AD4B7B2DAD703D0072EF22 /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
+				307A03052DE4F48D00381296 /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 309FCF3F2D97129000BBFB09 /* Products */;
@@ -656,6 +660,14 @@
 				minimumVersion = 1.1.2;
 			};
 		};
+		307A03052DE4F48D00381296 /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftfulThinking/SwiftfulLoadingIndicators";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.4;
+			};
+		};
 		30AD47242DA28DBD0072EF22 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -705,6 +717,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3065A4E42D98858D003AD583 /* XCRemoteSwiftPackageReference "SwiftfulLogging" */;
 			productName = SwiftfulLogging;
+		};
+		307A03062DE4F48D00381296 /* SwiftfulLoadingIndicators */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 307A03052DE4F48D00381296 /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */;
+			productName = SwiftfulLoadingIndicators;
 		};
 		30AD47252DA28DBD0072EF22 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

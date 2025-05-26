@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftfulLoadingIndicators
 
 struct ChatBubbleViewBuilder: View {
     
@@ -17,17 +18,27 @@ struct ChatBubbleViewBuilder: View {
     var onImagePressed: (() -> Void)?
 
     var body: some View {
-        ChatBubbleView(
-            text: message.content?.message ?? "",
-            textColor: isCurrentUser ? .white : .primary,
-            backgroundColor: isCurrentUser ? currentUserProfileColor : Color(uiColor: .systemGray6),
-            showImage: !isCurrentUser,
-            imageName: imageName,
-            onImagePressed: onImagePressed
-        )
-        .frame(maxWidth: .infinity, alignment: isCurrentUser ? .trailing : .leading)
-        .padding(.leading, isCurrentUser ? 50 : 0)
-        .padding(.trailing, isCurrentUser ? 0 : 50)
+        ZStack {
+            ChatBubbleView(
+                text: message.content?.message ?? "",
+                textColor: isCurrentUser ? .white : .primary,
+                backgroundColor: isCurrentUser ? currentUserProfileColor : Color(uiColor: .systemGray6),
+                showImage: !isCurrentUser,
+                imageName: imageName,
+                onImagePressed: onImagePressed
+            )
+            .overlay {
+                if isLoading && !isCurrentUser {
+                    LoadingIndicator(animation: .threeBalls, color: .secondary)
+                        .padding(.leading, 50)
+                        .padding(.bottom, 20)
+                        
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: isCurrentUser ? .trailing : .leading)
+            .padding(.leading, isCurrentUser ? 50 : 0)
+            .padding(.trailing, isCurrentUser ? 0 : 50)
+        }
     }
 }
 
