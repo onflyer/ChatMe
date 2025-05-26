@@ -7,7 +7,7 @@ struct ConversationDelegate {
 }
 
 struct ConversationView: View {
-        
+    
     @State var presenter: ConversationPresenter
     let delegate: ConversationDelegate
     
@@ -17,22 +17,20 @@ struct ConversationView: View {
                 ConversationRowView(headline: conversation.id, hasNewChat: false, subheadline: "Subheadline", getLastMessage: {
                     await presenter.loadLastMessage(conversationId: conversation.id)
                 })
-                    .anyButton {
-                        presenter.onConversationPressed(conversationId: conversation.id) 
-                    }
-//                    .task {
-//                        await presenter.loadLastMessage(conversationId: conversation.id)
-//                    }
+                .anyButton {
+                    presenter.onConversationPressed(conversationId: conversation.id)
+                }
             }
             .onDelete(perform: { index in
                 presenter.onSwipeToDeleteAction(at: index)
             })
             .removeListRowFormatting()
         }
+        .animation(.default, value: presenter.conversations)
         .navigationTitle("Conversations")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-
+                
                 Menu(content: {
                     Text("Delete all")
                         .anyButton {
