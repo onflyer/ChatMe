@@ -34,15 +34,6 @@ class ConversationPresenter {
         router.showChatView(delegate: delegate)
     }
     
-    func deleteConversation(conversationId: String) async {
-        do {
-            try await interactor.deleteConversation(conversationId: conversationId)
-        } catch {
-            print(error)
-            router.showAlert(error: error)
-        }
-    }
-    
     func onConversationSettingsPressed() {
         Task {
             do {
@@ -90,7 +81,7 @@ class ConversationPresenter {
         do {
             let userId = try interactor.getAuthId()
             var text = try await interactor.getConversationMessagesForSummary(conversationId: conversationId)
-            let prompt = AIChatModel(role: .user, content: "Make a summary of the current conversation in one short sentence")
+            let prompt = AIChatModel(role: .user, content: "Make a summary of the current conversation in just a couple of words")
             let message = ConversationMessageModel.newUserMessage(chatId: conversationId, userId: userId, message: prompt)
             text.append(message)
             let aiChats = text.compactMap({$0.content})
@@ -111,6 +102,15 @@ class ConversationPresenter {
             print("Failed to load last message")
         }
         return lastMessageModel?.content?.message ?? "No message"
+    }
+    
+    func deleteConversation(conversationId: String) async {
+        do {
+            try await interactor.deleteConversation(conversationId: conversationId)
+        } catch {
+            print(error)
+            router.showAlert(error: error)
+        }
     }
     
     func onSwipeToDeleteAction(at offsets: IndexSet) {
