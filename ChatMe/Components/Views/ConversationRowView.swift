@@ -35,8 +35,8 @@ struct ConversationRowView: View {
                 if let headline {
                     Text(headline)
                         .font(.headline)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
+                        .minimumScaleFactor(1)
                 }
                 if let subheadline {
                     Text(subheadline)
