@@ -7,9 +7,7 @@ struct ConversationDelegate {
 }
 
 struct ConversationView: View {
-    
-    @Namespace private var namespace
-    
+        
     @State var presenter: ConversationPresenter
     let delegate: ConversationDelegate
     
@@ -25,7 +23,7 @@ struct ConversationView: View {
                     }
             }
             .onDelete(perform: { index in
-                presenter.onSwipeToDeleteAction(at: index) 
+                presenter.onSwipeToDeleteAction(at: index)
             })
             .removeListRowFormatting()
         }
