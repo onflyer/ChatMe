@@ -52,6 +52,10 @@ struct FirebaseConversationService: ConversationService {
         return result.first
     }
     
+    func getConversation(conversatonId: String) async throws -> ConversationModel? {
+        try await conversationsCollection.getDocument(id: conversatonId)
+    }
+    
     func getAllConversationsForUser(userId: String) async throws -> [ConversationModel] {
         try await conversationsCollection.whereField(ConversationModel.CodingKeys.userId.rawValue, isEqualTo: userId)
             .getAllDocuments()

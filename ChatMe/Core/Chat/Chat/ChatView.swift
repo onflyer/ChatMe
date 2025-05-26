@@ -5,7 +5,7 @@ struct ChatDelegate {
         nil
     }
     
-    var conversation: ConversationModel = .mock
+    var conversationId: String = ConversationModel.mock.id
 }
 
 struct ChatView: View {
@@ -30,7 +30,7 @@ struct ChatView: View {
             }
         }
         .task {
-            await presenter.loadConversation()
+            await presenter.loadConversation(conversationId: delegate.conversationId)
             await presenter.listenForConversationMessages()
         }
         .onAppear {

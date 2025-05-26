@@ -136,10 +136,9 @@ class ChatPresenter {
     }
 
     
-    func loadConversation() async {
+    func loadConversation(conversationId: String) async {
         do {
-            let userId = try interactor.getAuthId()
-            conversation = try await interactor.getConversation(userId: userId)
+            conversation = try await interactor.getConversation(conversationId: conversationId)
             print("Loading conversation SUCCESS")
         } catch {
             print("Loading conversation FAILED")

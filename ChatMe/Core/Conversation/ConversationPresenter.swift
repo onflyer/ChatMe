@@ -29,8 +29,8 @@ class ConversationPresenter {
 
     }
     
-    func onConversationPressed(conversation: ConversationModel) {
-        let delegate = ChatDelegate(conversation: conversation)
+    func onConversationPressed(conversationId: String) {
+        let delegate = ChatDelegate(conversationId: conversationId)
         router.showChatView(delegate: delegate)
     }
     

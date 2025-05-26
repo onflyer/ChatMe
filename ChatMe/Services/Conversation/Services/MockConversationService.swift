@@ -102,4 +102,10 @@ class MockConversationService: ConversationService {
 
     }
     
+    func getConversation(conversatonId: String) async throws -> ConversationModel? {
+        return conversations.first { conversation in
+            conversation.id == conversatonId
+        }
+    }
+    
 }
