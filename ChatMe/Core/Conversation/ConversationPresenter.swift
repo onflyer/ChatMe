@@ -90,7 +90,7 @@ class ConversationPresenter {
         do {
             let userId = try interactor.getAuthId()
             var text = try await interactor.getConversationMessagesForSummary(conversationId: conversationId)
-            let prompt = AIChatModel(role: .user, content: "Make a summary of this text in one short sentence")
+            let prompt = AIChatModel(role: .user, content: "Make a summary of the current conversation in one short sentence")
             let message = ConversationMessageModel.newUserMessage(chatId: conversationId, userId: userId, message: prompt)
             text.append(message)
             let aiChats = text.compactMap({$0.content})
