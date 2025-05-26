@@ -12,7 +12,7 @@ class ChatPresenter {
     private(set) var conversation: ConversationModel?
     private(set) var isGeneratingResponse: Bool = false
     private var streamMessagesListenerTask: Task<Void, Error>?
-
+    
     var textFieldText: String = ""
     var scrollPosition: String?
     
@@ -65,7 +65,7 @@ class ChatPresenter {
                 
                 //Typing indicator
                 if isGeneratingResponse {
-                    chatMessages.append(ConversationMessageModel(id: "forTypingIndicator", chatId: "forTypingIndicator", content: AIChatModel(role: .assistant, content: "     ")))
+                    chatMessages.append(ConversationMessageModel(id: "forTypingIndicator", chatId: "forTypingIndicator", content: AIChatModel(role: .assistant, content: "           ")))
                 }
                 let aiChats = chatMessages.compactMap({ $0.content })
                 let response = try await interactor.generateText(chats: aiChats)
@@ -123,7 +123,7 @@ class ChatPresenter {
                 let userId = try interactor.getAuthId()
                 let conversationId = try getConversationId()
                 try await interactor.reportChat(conversationId: conversationId, userId: userId)
-
+                
                 router.showAlert(
                     .alert,
                     title: "🚨 Reported 🚨",
@@ -140,7 +140,7 @@ class ChatPresenter {
             }
         }
     }
-
+    
     
     func loadConversation(conversationId: String) async {
         do {
@@ -226,7 +226,7 @@ extension ChatPresenter {
     enum Event: LoggableEvent {
         case onAppear(delegate: ChatDelegate)
         case onDisappear(delegate: ChatDelegate)
-
+        
         var eventName: String {
             switch self {
             case .onAppear:                 return "ChatView_Appear"
@@ -238,8 +238,8 @@ extension ChatPresenter {
             switch self {
             case .onAppear(delegate: let delegate), .onDisappear(delegate: let delegate):
                 return delegate.eventParameters
-//            default:
-//                return nil
+                //            default:
+                //                return nil
             }
         }
         
@@ -250,5 +250,5 @@ extension ChatPresenter {
             }
         }
     }
-
+    
 }
