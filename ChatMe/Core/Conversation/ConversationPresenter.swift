@@ -34,6 +34,15 @@ class ConversationPresenter {
         router.showChatView(delegate: delegate)
     }
     
+    func deleteConversation(conversationId: String) async {
+        do {
+            try await interactor.deleteConversation(conversationId: conversationId)
+        } catch {
+            print(error)
+            router.showAlert(error: error)
+        }
+    }
+    
     func onConversationSettingsPressed() {
         Task {
             do {
@@ -84,6 +93,15 @@ class ConversationPresenter {
         } catch {
             print(error)
             print("Failed to load last message")
+        }
+    }
+    
+    func onSwipeToDeleteAction(at offsets: IndexSet) {
+        offsets.forEach { index in
+            let conversation = conversations[index]
+            Task {
+                await deleteConversation(conversationId: conversation.id)
+            }
         }
     }
     

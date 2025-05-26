@@ -24,9 +24,9 @@ struct ConversationView: View {
                         await presenter.loadLastMessage(conversationId: conversation.id)
                     }
             }
-            .onDelete { conversation in
-                
-            }
+            .onDelete(perform: { index in
+                presenter.onSwipeToDeleteAction(at: index) 
+            })
             .removeListRowFormatting()
         }
         .navigationTitle("Conversations")
