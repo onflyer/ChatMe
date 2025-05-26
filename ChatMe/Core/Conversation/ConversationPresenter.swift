@@ -86,14 +86,14 @@ class ConversationPresenter {
         }
     }
     
-    func loadLastMessage(conversationId: String) async {
+    func loadLastMessage(conversationId: String) async -> String {
         do {
             lastMessageModel = try await interactor.getLastConversationMessage(conversationId: conversationId)
-            lastMessage = lastMessageModel?.content?.message ?? "No message"
         } catch {
             print(error)
             print("Failed to load last message")
         }
+        return lastMessageModel?.content?.message ?? "No message"
     }
     
     func onSwipeToDeleteAction(at offsets: IndexSet) {

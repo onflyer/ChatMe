@@ -14,13 +14,15 @@ struct ConversationView: View {
     var body: some View {
         List {
             ForEach(presenter.conversations) { conversation in
-                ConversationRowView(headline: conversation.id, subheadline: presenter.lastMessage, hasNewChat: false)
+                ConversationRowView(headline: conversation.id, hasNewChat: false, subheadline: "Subheadline", getLastMessage: {
+                    await presenter.loadLastMessage(conversationId: conversation.id)
+                })
                     .anyButton {
                         presenter.onConversationPressed(conversationId: conversation.id) 
                     }
-                    .task {
-                        await presenter.loadLastMessage(conversationId: conversation.id)
-                    }
+//                    .task {
+//                        await presenter.loadLastMessage(conversationId: conversation.id)
+//                    }
             }
             .onDelete(perform: { index in
                 presenter.onSwipeToDeleteAction(at: index)

@@ -13,8 +13,9 @@ struct ConversationRowView: View {
     
 //    var imageName: String? = Constants.randomImage
     var headline: String? = "Name"
-    var subheadline: String? = "This is the last message in the chat."
     var hasNewChat: Bool = true
+    @State var subheadline: String? = "This is the last message in the chat."
+    var getLastMessage: (() async -> String)?
     
     var body: some View {
         HStack(spacing: 8) {
@@ -55,6 +56,11 @@ struct ConversationRowView: View {
                     .frame(maxWidth: 50)
             }
         }
+        .task {
+            if let getLastMessage {
+                self.subheadline = await getLastMessage()
+            }
+        }
         .frame(minHeight: 50)
         .padding(.vertical, 12)
         .padding(.horizontal, 8)
@@ -75,7 +81,7 @@ struct ConversationRowView: View {
                 .removeListRowFormatting()
             ConversationRowView(headline: nil, hasNewChat: false)
                 .removeListRowFormatting()
-            ConversationRowView(subheadline: nil, hasNewChat: false)
+            ConversationRowView(hasNewChat: false, subheadline: nil)
                 .removeListRowFormatting()
         }
     }
