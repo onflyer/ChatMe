@@ -13,6 +13,7 @@ struct ChatBubbleViewBuilder: View {
     var isCurrentUser: Bool = false
     var currentUserProfileColor: Color = .blue
     var imageName: String?
+    var isLoading: Bool = false
     var onImagePressed: (() -> Void)?
 
     var body: some View {

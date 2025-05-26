@@ -62,6 +62,8 @@ class ChatPresenter {
                 
                 // generate AI response
                 isGeneratingResponse = true
+                chatMessages.append(ConversationMessageModel(id: "forTypingIndicator", chatId: "forTypingIndicator", content: AIChatModel(role: .assistant, content: "Typing...")))
+                
                 let aiChats = chatMessages.compactMap({ $0.content })
                 let response = try await interactor.generateText(chats: aiChats)
                 
@@ -95,7 +97,6 @@ class ChatPresenter {
     
     
     func onDeleteChatPressed() {
-
         Task {
             do {
                 let conversationId = try getConversationId()

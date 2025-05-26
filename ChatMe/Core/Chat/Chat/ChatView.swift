@@ -54,6 +54,7 @@ struct ChatView: View {
                         message: message,
                         isCurrentUser: isCurrentUser,
                         imageName: nil,
+                        isLoading: presenter.isGeneratingResponse,
                         onImagePressed: nil
                     )
                     .id(message.id)
