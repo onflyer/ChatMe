@@ -25,8 +25,8 @@ struct ChatBubbleViewBuilder: View {
             onImagePressed: onImagePressed
         )
         .frame(maxWidth: .infinity, alignment: isCurrentUser ? .trailing : .leading)
-        .padding(.leading, isCurrentUser ? 75 : 0)
-        .padding(.trailing, isCurrentUser ? 0 : 75)
+        .padding(.leading, isCurrentUser ? 50 : 0)
+        .padding(.trailing, isCurrentUser ? 0 : 50)
     }
 }
 

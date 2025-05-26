@@ -29,6 +29,7 @@ class ChatPresenter {
     func onViewDisappear(delegate: ChatDelegate) {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
         streamMessagesListenerTask?.cancel()
+        chatMessages.removeAll()
     }
     
     func onSendMessagePressed() {
@@ -171,13 +172,13 @@ class ChatPresenter {
             streamMessagesListenerTask = Task {
                 for try await value in interactor.streamConversationMessages(conversationId: conversationId) {
                     chatMessages = value.sortedByKeyPath(keyPath: \.dateCreatedCalculated, ascending: true)
-                    print("Stream listener successs")
+                    print("messages listener success")
                     scrollPosition = chatMessages.last?.id
                 }
             }
         } catch {
             print(error)
-            print("STREAM FAILED")
+            print("listener for conversation messages failed")
         }
     }
     
@@ -188,6 +189,9 @@ class ChatPresenter {
         return conversation.id
     }
     
+    func resetConversation() {
+        conversation = nil
+    }
     
     func messageIsDelayedTimestamp(message: ConversationMessageModel) -> Bool {
         let currentMessageDate = message.dateCreatedCalculated

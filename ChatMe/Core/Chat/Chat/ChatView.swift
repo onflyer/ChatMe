@@ -38,6 +38,7 @@ struct ChatView: View {
         }
         .onDisappear {
             presenter.onViewDisappear(delegate: delegate)
+            
         }
     }
     
