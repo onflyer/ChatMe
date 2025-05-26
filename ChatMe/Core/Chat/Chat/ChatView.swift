@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftfulLoadingIndicators
 
 struct ChatDelegate {
     var eventParameters: [String: Any]? {
@@ -49,12 +50,11 @@ struct ChatView: View {
                     if presenter.messageIsDelayedTimestamp(message: message) {
                         timestampView(date: message.dateCreatedCalculated)
                     }
-                    let isCurrentUser = presenter.messageIsCurrentUser(message: message) 
+                    let isCurrentUser = presenter.messageIsCurrentUser(message: message)
                     ChatBubbleViewBuilder(
                         message: message,
                         isCurrentUser: isCurrentUser,
                         imageName: nil,
-                        isLoading: presenter.isGeneratingResponse,
                         onImagePressed: nil
                     )
                     .id(message.id)

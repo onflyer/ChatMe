@@ -14,7 +14,6 @@ struct ChatBubbleViewBuilder: View {
     var isCurrentUser: Bool = false
     var currentUserProfileColor: Color = .blue
     var imageName: String?
-    var isLoading: Bool = false
     var onImagePressed: (() -> Void)?
 
     var body: some View {
@@ -27,14 +26,6 @@ struct ChatBubbleViewBuilder: View {
                 imageName: imageName,
                 onImagePressed: onImagePressed
             )
-            .overlay {
-                if isLoading && !isCurrentUser {
-                    LoadingIndicator(animation: .threeBalls, color: .secondary)
-                        .padding(.leading, 50)
-                        .padding(.bottom, 20)
-                        
-                }
-            }
             .frame(maxWidth: .infinity, alignment: isCurrentUser ? .trailing : .leading)
             .padding(.leading, isCurrentUser ? 50 : 0)
             .padding(.trailing, isCurrentUser ? 0 : 50)
