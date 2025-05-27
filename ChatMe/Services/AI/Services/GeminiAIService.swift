@@ -24,4 +24,21 @@ struct GeminiAIService: AIService {
         return model
     }
     
+    func generateTextStream(chats: [AIChatModel]) async throws -> AsyncThrowingStream<AIChatModel, Error> {
+        let chats = chats.compactMap {$0.toModelContent()}
+        
+        let responseStream = model.generateContentStream(chats)
+
+        let stream = AsyncThrowingStream<AIChatModel, Error> { continuation in
+            responseStream.compactMap { modelContent in
+                guard let text = modelContent.text else {
+                    throw URLError(.badServerResponse)
+                }
+                let text1 = AIChatModel(role: .assistant, content: text)
+                continuation.yield(text1)
+            }
+        }
+        return stream
+    }
+    
 }
