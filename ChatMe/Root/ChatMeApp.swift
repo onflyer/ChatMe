@@ -17,21 +17,20 @@ struct ChatMeApp: App {
 //        print(response!.message)
 //    }
     
-        static func main() async {
-            let instance = GeminiAIService()
-            let chat = [AIChatModel(role: .user, content: "Hello how are you"),AIChatModel(role: .user, content: "Have you ever been in italy"), AIChatModel(role: .user, content: "whats the capital") ]
-            let stream = try? await instance.generateTextStream(chats: chat)
-            
-            var texts: [AIChatModel] = []
-            
-            Task {
-                for try await text in stream.unsafelyUnwrapped {
-                    texts.append(text)
-                    
-                }
-            }
-            print(texts)
-        }
+//    static func main() async {
+//        let instance = GeminiAIService()
+//        let chat = [AIChatModel(role: .user, content: "Hello how are you"),AIChatModel(role: .user, content: "Have you ever been in italy"), AIChatModel(role: .user, content: "Tell me more about it")]
+//        
+//        let stream = try? await instance.generateTextStream(chats: chat)
+//        
+//        do {
+//            for try await value in stream.unsafelyUnwrapped {
+//                print(value.message)
+//            }
+//        } catch {
+//            print(error)
+//        }
+//    }
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
