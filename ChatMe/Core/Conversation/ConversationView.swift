@@ -15,10 +15,9 @@ struct ConversationView: View {
         List {
             ForEach(presenter.conversations) { conversation in
                 ConversationRowView(
-                    headline: conversation.id,
+                    headline: presenter.titleSummary?.content?.message,
                     hasNewChat: false,
-                    subheadline: "Subheadline",
-                    
+                    subheadline: presenter.lastMessageModel?.content?.message,
                     getLastMessage: {
                         await presenter.loadLastMessage(
                             conversationId: conversation.id
