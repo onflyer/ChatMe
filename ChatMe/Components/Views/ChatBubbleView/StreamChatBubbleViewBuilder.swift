@@ -10,10 +10,11 @@ import SwiftUI
 struct StreamChatBubbleViewBuilder: View {
     
     var message: ConversationMessageModel = .mock
+    @State var streamedMessage: String = "Streamed message"
     var isCurrentUser: Bool = false
     var currentUserProfileColor: Color = .blue
     var imageName: String?
-    var onImagePressed: (() -> Void)?
+    var handleTextStream: (() async -> Void)?
 
     var body: some View {
         ZStack {
@@ -23,9 +24,7 @@ struct StreamChatBubbleViewBuilder: View {
                 backgroundColor: isCurrentUser ? currentUserProfileColor : Color(uiColor: .systemGray6),
                 showImage: !isCurrentUser,
                 imageName: imageName,
-                handleTextStream: {
-                    
-                }
+                handleTextStream: handleTextStream
             )
             .frame(maxWidth: .infinity, alignment: isCurrentUser ? .trailing : .leading)
             .padding(.leading, isCurrentUser ? 50 : 0)

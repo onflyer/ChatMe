@@ -25,6 +25,10 @@ class ConversationManager {
         try await service.addConversationMessage(conversationId: conversationId, message: message)
     }
     
+    func updateMessageForStream(conversationId: String, messageId: String, message: AIChatModel) async throws {
+        try await service.updateMessageForStream(conversationId: conversationId, messageId: messageId, message: message)
+    }
+    
     func getMostRecentConversation(userId: String) async throws -> ConversationModel? {
         try await service.getMostRecentConversation(userId: userId)
     }

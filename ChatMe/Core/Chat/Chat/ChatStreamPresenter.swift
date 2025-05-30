@@ -83,19 +83,17 @@ class ChatStreamPresenter {
                                 
                 let aiChats = chatMessages.compactMap({ $0.content })
                 let responseStream = try await interactor.generateTextStream(chats: aiChats)
-                
+                let newAIMessage = ConversationMessageModel.newAIMessage(chatId: conversation.id, message: AIChatModel(role: .assistant, content: streamTextResponse))
+                try await interactor.addConversationMessage(conversationId: conversation.id, message: newAIMessage)
+
                 do {
                     for try await message in responseStream {
-                    streamTextResponse += message.message
+                        try await interactor.updateMessageForStream(conversationId: conversation.id, messageId: newAIMessage.id, message: message)
                     }
                 } catch {
                     print(error)
                     router.showAlert(error: error)
                 }
-                let newAIMessage = ConversationMessageModel.newAIMessage(chatId: conversation.id, message: AIChatModel(role: .assistant, content: streamTextResponse))
-                
-                //upload new AI message
-                try await interactor.addConversationMessage(conversationId: conversation.id, message: newAIMessage)
             } catch {
                 router.showAlert(error: error)
             }

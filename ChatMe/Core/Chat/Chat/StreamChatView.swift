@@ -58,11 +58,15 @@ struct StreamChatView: View {
                         timestampView(date: message.dateCreatedCalculated)
                     }
                     let isCurrentUser = presenter.messageIsCurrentUser(message: message)
-                    StreamChatBubbleViewBuilder(
-                        message: message,
-                        isCurrentUser: isCurrentUser,
-                        imageName: nil
-                    )
+                        StreamChatBubbleViewBuilder(
+                            message: message,
+                            isCurrentUser: isCurrentUser,
+                            imageName: nil,
+                            handleTextStream: {
+                            }
+                        )
+                    
+
                     .id(message.id)
                 }
             }

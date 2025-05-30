@@ -35,6 +35,14 @@ struct FirebaseConversationService: ConversationService {
         ])
     }
     
+    func updateMessageForStream(conversationId: String, messageId: String, message: AIChatModel) async throws {
+        let data = try Firestore.Encoder().encode(message)
+        try await messagesSubcollection(conversationId: conversationId).document(messageId).updateData([
+            
+            ConversationMessageModel.CodingKeys.content.rawValue: data
+        ])
+    }
+    
     func streamConversationMessages(conversationId: String) -> AsyncThrowingStream<[ConversationMessageModel], Error> {
         messagesSubcollection(conversationId: conversationId).streamAllDocuments()
     }

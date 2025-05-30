@@ -15,6 +15,7 @@ protocol ChatInteractor {
     func deleteConversation(conversationId: String) async throws
     func reportChat(conversationId: String, userId: String) async throws
     func getConversation(conversationId: String) async throws -> ConversationModel?
+    func updateMessageForStream(conversationId: String, messageId: String, message: AIChatModel) async throws 
 
 }
 

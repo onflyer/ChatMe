@@ -45,6 +45,10 @@ struct CoreInteractor {
         try await conversationManager.addConversationMessage(conversationId: conversationId, message: message)
     }
     
+    func updateMessageForStream(conversationId: String, messageId: String, message: AIChatModel) async throws {
+        try await conversationManager.updateMessageForStream(conversationId: conversationId, messageId: messageId, message: message)
+    }
+    
     func getMostRecentConversation(userId: String) async throws -> ConversationModel? {
         try await conversationManager.getMostRecentConversation(userId: userId)
     }

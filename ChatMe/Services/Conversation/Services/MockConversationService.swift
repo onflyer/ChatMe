@@ -114,4 +114,8 @@ class MockConversationService: ConversationService {
         return chatMessages
     }
     
+    func updateMessageForStream(conversationId: String, messageId: String, message: AIChatModel) async throws {
+        
+    }
+    
 }
