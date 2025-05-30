@@ -9,7 +9,6 @@ class ConversationPresenter {
     
     private(set) var conversations: [ConversationModel] = []
     private(set) var lastMessageModel: ConversationMessageModel?
-    private(set) var titleSummary: ConversationMessageModel?
     private(set) var isLoadingChats: Bool = true
     private var conversationsListenerTask: Task<Void, Error>?
 
