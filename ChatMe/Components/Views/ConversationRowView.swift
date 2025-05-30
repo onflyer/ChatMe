@@ -16,7 +16,7 @@ struct ConversationRowView: View {
     var hasNewChat: Bool = true
     @State var subheadline: String? = "This is the last message in the chat."
     var getLastMessage: (() async -> String)?
-    var getTitle: (() async -> String)?
+    var getTitle: (() async -> Void)?
     
     var body: some View {
         HStack(spacing: 8) {
@@ -64,7 +64,7 @@ struct ConversationRowView: View {
         }
         .task {
             if let getTitle {
-                self.headline = await getTitle()
+                await getTitle()
             }
         }
         .frame(minHeight: 50)

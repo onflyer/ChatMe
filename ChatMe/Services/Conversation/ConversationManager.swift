@@ -29,6 +29,10 @@ class ConversationManager {
         try await service.updateMessageForStream(conversationId: conversationId, messageId: messageId, message: message)
     }
     
+    func addTitleSummaryForConversation(conversationId: String, title: String) async throws {
+        try await service.addTitleSummaryForConversation(conversationId: conversationId, title: title)
+    }
+    
     func getMostRecentConversation(userId: String) async throws -> ConversationModel? {
         try await service.getMostRecentConversation(userId: userId)
     }

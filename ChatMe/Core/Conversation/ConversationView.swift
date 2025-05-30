@@ -15,7 +15,7 @@ struct ConversationView: View {
         List {
             ForEach(presenter.conversations) { conversation in
                 ConversationRowView(
-                    headline: presenter.titleSummary?.content?.message,
+                    headline: conversation.title,
                     hasNewChat: false,
                     subheadline: presenter.lastMessageModel?.content?.message,
                     getLastMessage: {
@@ -24,12 +24,15 @@ struct ConversationView: View {
                         )
                     },
                     getTitle: {
-                        await presenter.loadConversationsTitleSummary(
-                            conversationId: conversation.id
-                        )
+                        
                 })
                 .anyButton {
                     presenter.onConversationPressed(conversationId: conversation.id)
+                }
+                .onFirstAppear {
+                    Task {
+                        await presenter.updateConversationsTitleSummary(conversationId: conversation.id)
+                    }
                 }
             }
             .onDelete(perform: { index in

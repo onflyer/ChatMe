@@ -77,7 +77,7 @@ class ConversationPresenter {
         }
     }
     
-    func loadConversationsTitleSummary(conversationId: String) async -> String {
+    func updateConversationsTitleSummary(conversationId: String) async {
         do {
             let userId = try interactor.getAuthId()
             var text = try await interactor.getConversationMessagesForSummary(conversationId: conversationId)
@@ -87,11 +87,10 @@ class ConversationPresenter {
             let aiChats = text.compactMap({$0.content})
             let response = try await interactor.generateText(chats: aiChats)
             let newAIMessage = ConversationMessageModel.newAIMessage(chatId: conversationId, message: response)
-            titleSummary = newAIMessage
+            try await interactor.addTitleSummaryForConversation(conversationId: conversationId, title: newAIMessage.content?.message ?? "No title")
         } catch {
             print(error)
         }
-        return titleSummary?.content?.message ?? "No Title"
     }
     
     func loadLastMessage(conversationId: String) async -> String {

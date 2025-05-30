@@ -44,7 +44,7 @@ struct FirebaseConversationService: ConversationService {
     
     func addTitleSummaryForConversation(conversationId: String, title: String) async throws {
         try await conversationsCollection.document(conversationId).updateData([
-            ConversationModel.CodingKeys.title: title
+            ConversationModel.CodingKeys.title.rawValue: title
         ])
     }
     
