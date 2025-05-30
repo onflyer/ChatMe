@@ -57,14 +57,14 @@ struct ConversationModel: Identifiable, Codable, Hashable, StringIdentifiable {
             ConversationModel(
                 id: "mock_chat_1",
                 userId: UserAuthInfo.mock().uid,
-                title: nil,
+                title: "Title 1",
                 dateCreated: now,
                 dateModified: now
             ),
             ConversationModel(
                 id: "mock_chat_2",
                 userId: UserAuthInfo.mock().uid,
-                title: nil,
+                title: "Title 2",
                 dateCreated: now.addingTimeInterval(
                     hours: -1
                 ),
@@ -75,7 +75,7 @@ struct ConversationModel: Identifiable, Codable, Hashable, StringIdentifiable {
             ConversationModel(
                 id: "mock_chat_3",
                 userId: UserAuthInfo.mock().uid,
-                title: nil,
+                title: "Title 3",
                 dateCreated: now.addingTimeInterval(
                     hours: -2
                 ),
@@ -86,7 +86,7 @@ struct ConversationModel: Identifiable, Codable, Hashable, StringIdentifiable {
             ConversationModel(
                 id: "mock_chat_4",
                 userId: UserAuthInfo.mock().uid,
-                title: nil,
+                title: "Title 4",
                 dateCreated: now.addingTimeInterval(
                     days: -1
                 ),

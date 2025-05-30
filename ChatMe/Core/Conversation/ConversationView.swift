@@ -31,7 +31,7 @@ struct ConversationView: View {
                 }
                 .onFirstAppear {
                     Task {
-                        await presenter.updateConversationsTitleSummary(conversationId: conversation.id)
+                        await presenter.updateConversationsTitleSummary(conversationId: conversation.id) 
                     }
                 }
             }
