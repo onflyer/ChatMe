@@ -1,5 +1,5 @@
 //
-//  AsyncThrowingStream + EXT.swift
+//  AsyncSequence + EXT.swift
 //  ChatMe
 //
 //  Created by Aleksandar Milidrag on 27. 5. 2025..
@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension AsyncThrowingStream {
+extension AsyncSequence {
     
     @discardableResult
     func mapAsyncThrowingStream<Input, Output>(
