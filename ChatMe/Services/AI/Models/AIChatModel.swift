@@ -10,7 +10,7 @@ import GoogleGenerativeAI
 
 struct AIChatModel: Codable {
     let role: AIChatRole
-    let message: String
+    var message: String
     
     init(role: AIChatRole, content: String) {
         self.role = role

@@ -21,7 +21,7 @@ class ChatStreamPresenter {
     private var streamMessagesListenerTask: Task<Void, Error>?
     
     var textFieldText: String = ""
-    var streamTextResponse: String = ""
+    var streamTextResponse: AIChatModel = .init(role: .assistant, content: "")
     var scrollPosition: String?
     
     init(interactor: ChatInteractor, router: ChatRouter) {
@@ -39,17 +39,6 @@ class ChatStreamPresenter {
         streamMessagesListenerTask?.cancel()
         chatMessages.removeAll()
     }
-    
-    func loadStreamResponse(stream: AsyncThrowingStream<AIChatModel, Error> ) async {
-        do {
-            for try await message in stream {
-                streamTextResponse += message.message
-            }
-        } catch {
-            print(error)
-        }
-    }
-    
     
     func onSendMessagePressed() {
         
@@ -83,13 +72,19 @@ class ChatStreamPresenter {
                                 
                 let aiChats = chatMessages.compactMap({ $0.content })
                 let responseStream = try await interactor.generateTextStream(chats: aiChats)
-                let newAIMessage = ConversationMessageModel.newAIMessage(chatId: conversation.id, message: AIChatModel(role: .assistant, content: streamTextResponse))
-                try await interactor.addConversationMessage(conversationId: conversation.id, message: newAIMessage)
-
+                let newAIMessage = ConversationMessageModel.newAIMessage(chatId: conversation.id, message: AIChatModel(role: .assistant, content: ""))
+                let nextMessage = ConversationMessageModel.newAIMessage(chatId: conversation.id, message: AIChatModel(role: .assistant, content: ""))
+                                
                 do {
+                    streamTextResponse.message.removeAll()
+                    try await interactor.addConversationMessage(conversationId: conversation.id, message: nextMessage)
+
                     for try await message in responseStream {
-                        try await interactor.updateMessageForStream(conversationId: conversation.id, messageId: newAIMessage.id, message: message)
+                        streamTextResponse.message.append(message.message)
+
+                        try await interactor.updateMessageForStream(conversationId: conversation.id, messageId: chatMessages.last!.id, message: streamTextResponse)
                     }
+               
                 } catch {
                     print(error)
                     router.showAlert(error: error)
@@ -98,7 +93,7 @@ class ChatStreamPresenter {
                 router.showAlert(error: error)
             }
             isGeneratingResponse = false
-//            streamTextResponse = ""
+            
         }
     }
     

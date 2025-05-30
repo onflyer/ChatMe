@@ -36,10 +36,10 @@ struct FirebaseConversationService: ConversationService {
     }
     
     func updateMessageForStream(conversationId: String, messageId: String, message: AIChatModel) async throws {
-        let data = try Firestore.Encoder().encode(message)
+//        let data = try Firestore.Encoder().encode(message)
         try await messagesSubcollection(conversationId: conversationId).document(messageId).updateData([
             
-            ConversationMessageModel.CodingKeys.content.rawValue: data
+            ConversationMessageModel.CodingKeys.content.rawValue: message.asJsonDictionary()
         ])
     }
     
