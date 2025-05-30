@@ -118,4 +118,8 @@ class MockConversationService: ConversationService {
         
     }
     
+    func addTitleSummaryForConversation(conversationId: String, title: String) async throws {
+        
+    }
+    
 }

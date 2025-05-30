@@ -10,14 +10,14 @@ import Foundation
 struct ConversationModel: Identifiable, Codable, Hashable, StringIdentifiable {
     let id: String
     let userId: String
-//    let avatarId: String
+    let title: String?
     let dateCreated: Date
     let dateModified: Date
         
     enum CodingKeys: String, CodingKey {
         case id
         case userId = "user_id"
-//        case avatarId = "avatar_id"
+        case title
         case dateCreated = "date_created"
         case dateModified = "date_modified"
     }
@@ -26,7 +26,6 @@ struct ConversationModel: Identifiable, Codable, Hashable, StringIdentifiable {
         let dict: [String: Any?] = [
             "chat_\(CodingKeys.id.rawValue)": id,
             "chat_\(CodingKeys.userId.rawValue)": userId,
-//            "chat_\(CodingKeys.avatarId.rawValue)": avatarId,
             "chat_\(CodingKeys.dateCreated.rawValue)": dateCreated,
             "chat_\(CodingKeys.dateModified.rawValue)": dateModified
         ]
@@ -37,7 +36,7 @@ struct ConversationModel: Identifiable, Codable, Hashable, StringIdentifiable {
         ConversationModel(
             id:  UUID().uuidString,
             userId: userId,
-//            avatarId: avatarId,
+            title: nil,
             dateCreated: .now,
             dateModified: .now
         )
@@ -58,14 +57,14 @@ struct ConversationModel: Identifiable, Codable, Hashable, StringIdentifiable {
             ConversationModel(
                 id: "mock_chat_1",
                 userId: UserAuthInfo.mock().uid,
-//                avatarId: AvatarModel.mocks.randomElement()!.avatarId,
+                title: nil,
                 dateCreated: now,
                 dateModified: now
             ),
             ConversationModel(
                 id: "mock_chat_2",
                 userId: UserAuthInfo.mock().uid,
-//                avatarId: AvatarModel.mocks.randomElement()!.avatarId,
+                title: nil,
                 dateCreated: now.addingTimeInterval(
                     hours: -1
                 ),
@@ -76,7 +75,7 @@ struct ConversationModel: Identifiable, Codable, Hashable, StringIdentifiable {
             ConversationModel(
                 id: "mock_chat_3",
                 userId: UserAuthInfo.mock().uid,
-//                avatarId: AvatarModel.mocks.randomElement()!.avatarId,
+                title: nil,
                 dateCreated: now.addingTimeInterval(
                     hours: -2
                 ),
@@ -87,7 +86,7 @@ struct ConversationModel: Identifiable, Codable, Hashable, StringIdentifiable {
             ConversationModel(
                 id: "mock_chat_4",
                 userId: UserAuthInfo.mock().uid,
-//                avatarId: AvatarModel.mocks.randomElement()!.avatarId,
+                title: nil,
                 dateCreated: now.addingTimeInterval(
                     days: -1
                 ),
