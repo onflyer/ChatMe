@@ -63,6 +63,12 @@ struct CoreRouter {
         }
     }
     
+    func showStreamChatView(delegate: StreamChatDelegate) {
+        router.showScreen(.push) { router in
+            builder.streamChatView(router: router, delegate: delegate)
+        }
+    }
+        
     //MARK: Alerts
     
     func showAlert(_ option: DialogOption, title: String, subtitle: String?, buttons: (@Sendable () -> AnyView)?) {

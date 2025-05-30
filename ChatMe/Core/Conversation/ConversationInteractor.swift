@@ -14,8 +14,6 @@ protocol ConversationInteractor {
     func getConversation(conversationId: String) async throws -> ConversationModel?
     func generateText(chats: [AIChatModel]) async throws -> AIChatModel
     func getConversationMessagesForSummary(conversationId: String) async throws -> [ConversationMessageModel]
-
-    
 }
 
 extension CoreInteractor: ConversationInteractor { }

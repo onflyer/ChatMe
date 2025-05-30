@@ -20,4 +20,9 @@ class AIManager {
     func generateText(chats: [AIChatModel]) async throws -> AIChatModel {
         try await service.generateText(chats: chats)
     }
+    
+    func generateTextStream(chats: [AIChatModel]) async throws -> AsyncThrowingStream<AIChatModel, Error> {
+        try await service.generateTextStream(chats: chats)
+    }
+
 }

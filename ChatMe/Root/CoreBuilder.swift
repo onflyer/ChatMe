@@ -130,5 +130,15 @@ struct CoreBuilder {
         )
     }
     
+    func streamChatView(router: AnyRouter, delegate: StreamChatDelegate) -> some View {
+        StreamChatView(
+            presenter: ChatStreamPresenter(
+                interactor: interactor,
+                router: CoreRouter(router: router, builder: self)
+            ),
+            delegate: delegate
+        )
+    }
+    
     
 }

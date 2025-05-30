@@ -10,10 +10,8 @@ import Foundation
 extension AsyncSequence {
     
     @discardableResult
-    func mapAsyncThrowingStream<Input, Output>(
-        _ inputStream: AsyncThrowingStream<Input, Error>,
-        transform: @escaping (Input) async throws -> Output
-    ) -> AsyncThrowingStream<Output, Error> {
+    func mapAsyncThrowingStream<Input, Output>(_ inputStream: AsyncThrowingStream<Input, Error>, transform: @escaping (Input) async throws -> Output)
+        -> AsyncThrowingStream<Output, Error> {
         return AsyncThrowingStream<Output, Error> { continuation in
             Task {
                 do {

@@ -30,8 +30,8 @@ class ConversationPresenter {
     }
     
     func onConversationPressed(conversationId: String) {
-        let delegate = ChatDelegate(conversationId: conversationId)
-        router.showChatView(delegate: delegate)
+        let delegate = StreamChatDelegate(conversationId: conversationId)
+        router.showStreamChatView(delegate: delegate)
     }
     
     func onConversationSettingsPressed() {

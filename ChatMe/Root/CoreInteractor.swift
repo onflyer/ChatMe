@@ -31,6 +31,10 @@ struct CoreInteractor {
         try await aiManager.generateText(chats: chats)
     }
     
+    func generateTextStream(chats: [AIChatModel]) async throws -> AsyncThrowingStream<AIChatModel, Error> {
+        try await aiManager.generateTextStream(chats: chats)
+    }
+
     // MARK: ConversationManager
     
     func createNewConversation(conversation: ConversationModel) async throws {
