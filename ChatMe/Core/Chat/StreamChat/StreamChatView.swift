@@ -29,11 +29,18 @@ struct StreamChatView: View {
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Image(systemName: "ellipsis")
-                    .padding(8)
-                    .anyButton {
-                        presenter.onSettingsPressed()
-                    }
+                HStack {
+                    Image(systemName: "square.and.pencil")
+                        .anyButton {
+                            presenter.onPencilPressed()
+                        }
+                    Image(systemName: "ellipsis")
+                        .padding(8)
+                        .anyButton {
+                            presenter.onSettingsPressed()
+                        }
+                }
+                
             }
         }
         .task {

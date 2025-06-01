@@ -37,7 +37,12 @@ class ChatStreamPresenter {
     func onViewDisappear(delegate: StreamChatDelegate) {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
         streamMessagesListenerTask?.cancel()
+        
+    }
+    
+    func onPencilPressed() {
         chatMessages.removeAll()
+        conversation = nil
     }
     
     func onSendMessagePressed() {
@@ -81,8 +86,8 @@ class ChatStreamPresenter {
 
                     for try await message in responseStream {
                         streamTextResponse.message.append(message.message)
-
-                        try await interactor.updateMessageForStream(conversationId: conversation.id, messageId: chatMessages.last?.id ?? "No ID", message: streamTextResponse)
+                        guard let last = chatMessages.last else {return}
+                        try await interactor.updateMessageForStream(conversationId: conversation.id, messageId: last.id, message: streamTextResponse)
                     }
                
                 } catch {
