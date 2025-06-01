@@ -45,6 +45,7 @@ struct StreamChatView: View {
         }
         .onDisappear {
             presenter.onViewDisappear(delegate: delegate)
+            presenter.updateConversationsTitleSummary(conversationId: delegate.conversationId)
             
         }
     }
@@ -60,9 +61,7 @@ struct StreamChatView: View {
                         StreamChatBubbleViewBuilder(
                             message: message,
                             isCurrentUser: isCurrentUser,
-                            imageName: nil,
-                            handleTextStream: {
-                            }
+                            imageName: nil
                         )
                     .id(message.id)
                 }

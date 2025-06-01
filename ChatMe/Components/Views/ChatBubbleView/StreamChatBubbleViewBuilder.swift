@@ -13,7 +13,6 @@ struct StreamChatBubbleViewBuilder: View {
     var isCurrentUser: Bool = false
     var currentUserProfileColor: Color = .blue
     var imageName: String?
-    var handleTextStream: (() async -> Void)?
 
     var body: some View {
         ZStack {
@@ -22,8 +21,7 @@ struct StreamChatBubbleViewBuilder: View {
                 textColor: isCurrentUser ? .white : .primary,
                 backgroundColor: isCurrentUser ? currentUserProfileColor : Color(uiColor: .systemGray6),
                 showImage: !isCurrentUser,
-                imageName: imageName,
-                handleTextStream: handleTextStream
+                imageName: imageName
             )
             .frame(maxWidth: .infinity, alignment: isCurrentUser ? .trailing : .leading)
             .padding(.leading, isCurrentUser ? 50 : 0)

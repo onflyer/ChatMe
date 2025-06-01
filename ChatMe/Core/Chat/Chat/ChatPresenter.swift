@@ -198,22 +198,6 @@ class ChatPresenter {
         conversation = nil
     }
     
-    func updateConversationsTitleSummary(conversationId: String) async {
-        do {
-            let userId = try interactor.getAuthId()
-            var text = try await interactor.getConversationMessagesForSummary(conversationId: conversationId)
-            let prompt = AIChatModel(role: .user, content: "Make a summary of the current conversation in just a couple of words")
-            let message = ConversationMessageModel.newUserMessage(chatId: conversationId, userId: userId, message: prompt)
-            text.append(message)
-            let aiChats = text.compactMap({$0.content})
-            let response = try await interactor.generateText(chats: aiChats)
-            let newAIMessage = ConversationMessageModel.newAIMessage(chatId: conversationId, message: response)
-            try await interactor.addTitleSummaryForConversation(conversationId: conversationId, title: newAIMessage.content?.message ?? "No title")
-        } catch {
-            print(error)
-        }
-    }
-    
     func messageIsDelayedTimestamp(message: ConversationMessageModel) -> Bool {
         let currentMessageDate = message.dateCreatedCalculated
         

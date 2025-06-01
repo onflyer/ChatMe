@@ -8,9 +8,13 @@ class ConversationPresenter {
     private let router: ConversationRouter
     
     private(set) var conversations: [ConversationModel] = []
+    private(set) var conversation: ConversationModel?
     private(set) var lastMessageModel: ConversationMessageModel?
     private(set) var isLoadingChats: Bool = true
-    private var conversationsListenerTask: Task<Void, Error>?
+    private var conversationsCollectionListenerTask: Task<Void, Error>?
+    private var conversationsDocumentListenerTask: Task<Void, Error>?
+
+    
 
     
     init(interactor: ConversationInteractor, router: ConversationRouter) {
@@ -24,7 +28,7 @@ class ConversationPresenter {
     
     func onViewDisappear(delegate: ConversationDelegate) {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
-        conversationsListenerTask?.cancel()
+        conversationsCollectionListenerTask?.cancel()
 
     }
     
@@ -46,11 +50,10 @@ class ConversationPresenter {
     }
     
     func listenForConversations() async {
-        
         do {
             let userId = try interactor.getAuthId()
-            conversationsListenerTask?.cancel()
-            conversationsListenerTask = Task {
+            conversationsCollectionListenerTask?.cancel()
+            conversationsCollectionListenerTask = Task {
                 for try await value in try await interactor.streamConversations(userId: userId) {
                     conversations = value.sortedByKeyPath(keyPath: \.dateCreatedCalculated, ascending: true)
                     print("Stream conversations success")
@@ -59,6 +62,19 @@ class ConversationPresenter {
         } catch {
             print(error)
             print("STREAM FAILED")
+        }
+    }
+    
+    func listenForSingleConversation(conversationId: String) async {
+        do {
+            conversationsDocumentListenerTask?.cancel()
+            conversationsDocumentListenerTask = Task {
+                for try await value in try await interactor.listenForChangeInSingleConversation(conversationId: conversationId) {
+                    conversation = value
+                }
+            }
+        } catch {
+            
         }
     }
     

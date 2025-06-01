@@ -72,7 +72,7 @@ class ChatStreamPresenter {
                                 
                 let aiChats = chatMessages.compactMap({ $0.content })
                 let responseStream = try await interactor.generateTextStream(chats: aiChats)
-                let newAIMessage = ConversationMessageModel.newAIMessage(chatId: conversation.id, message: AIChatModel(role: .assistant, content: ""))
+//                let newAIMessage = ConversationMessageModel.newAIMessage(chatId: conversation.id, message: AIChatModel(role: .assistant, content: ""))
                 let nextMessage = ConversationMessageModel.newAIMessage(chatId: conversation.id, message: AIChatModel(role: .assistant, content: ""))
                                 
                 do {
@@ -82,7 +82,7 @@ class ChatStreamPresenter {
                     for try await message in responseStream {
                         streamTextResponse.message.append(message.message)
 
-                        try await interactor.updateMessageForStream(conversationId: conversation.id, messageId: chatMessages.last!.id, message: streamTextResponse)
+                        try await interactor.updateMessageForStream(conversationId: conversation.id, messageId: chatMessages.last?.id ?? "No ID", message: streamTextResponse)
                     }
                
                 } catch {
@@ -210,6 +210,24 @@ class ChatStreamPresenter {
     
     func resetConversation() {
         conversation = nil
+    }
+    
+    func updateConversationsTitleSummary(conversationId: String) {
+        Task {
+            do {
+                let userId = try interactor.getAuthId()
+                var text = try await interactor.getConversationMessagesForSummary(conversationId: conversationId)
+                let prompt = AIChatModel(role: .user, content: "Make a summary of the current conversation in just a couple of words")
+                let message = ConversationMessageModel.newUserMessage(chatId: conversationId, userId: userId, message: prompt)
+                text.append(message)
+                let aiChats = text.compactMap({$0.content})
+                let response = try await interactor.generateText(chats: aiChats)
+                let newAIMessage = ConversationMessageModel.newAIMessage(chatId: conversationId, message: response)
+                try await interactor.addTitleSummaryForConversation(conversationId: conversationId, title: newAIMessage.content?.message ?? "No title")
+            } catch {
+                print(error)
+            }
+        }
     }
     
     func messageIsDelayedTimestamp(message: ConversationMessageModel) -> Bool {

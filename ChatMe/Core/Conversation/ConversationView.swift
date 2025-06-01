@@ -24,7 +24,7 @@ struct ConversationView: View {
                         )
                     },
                     getTitle: {
-                        
+                        await presenter.listenForSingleConversation(conversationId: conversation.id)
                 })
                 .anyButton {
                     presenter.onConversationPressed(conversationId: conversation.id)

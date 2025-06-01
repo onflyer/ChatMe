@@ -122,4 +122,11 @@ class MockConversationService: ConversationService {
         
     }
     
+    func listenForChangeInSingleConversation(conversationId: String) -> AsyncThrowingStream<ConversationModel, any Error> {
+        AsyncThrowingStream { continuation in
+            continuation.yield(conversations.randomElement()!)
+            
+        }
+    }
+    
 }

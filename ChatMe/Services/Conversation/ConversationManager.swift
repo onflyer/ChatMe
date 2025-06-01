@@ -49,6 +49,10 @@ class ConversationManager {
         try await service.streamConversations(userId: userId)
     }
     
+    func listenForChangeInSingleConversation(conversationId: String) async throws -> AsyncThrowingStream<ConversationModel, Error> {
+        service.listenForChangeInSingleConversation(conversationId: conversationId)
+    }
+
     func getAllConversationsForUser(userId: String) async throws -> [ConversationModel] {
         try await service.getAllConversationsForUser(userId: userId)
     }

@@ -10,7 +10,7 @@ import Foundation
 struct ConversationModel: Identifiable, Codable, Hashable, StringIdentifiable {
     let id: String
     let userId: String
-    let title: String?
+    let title: String
     let dateCreated: Date
     let dateModified: Date
         
@@ -36,7 +36,7 @@ struct ConversationModel: Identifiable, Codable, Hashable, StringIdentifiable {
         ConversationModel(
             id:  UUID().uuidString,
             userId: userId,
-            title: nil,
+            title: "Placeholder title",
             dateCreated: .now,
             dateModified: .now
         )

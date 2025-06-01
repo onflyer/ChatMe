@@ -14,7 +14,6 @@ struct StreamChatBubbleView: View {
     var backgroundColor: Color = Color(uiColor: .systemGray6)
     var showImage: Bool = true
     var imageName: String?
-    var handleTextStream: (() async -> Void)?
     
     let offset: CGFloat = 14
     
