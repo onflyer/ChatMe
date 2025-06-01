@@ -77,7 +77,7 @@ struct CoreBuilder {
                 }),
                 TabBarScreen(title: "Chat", systemImage: "bubble.left.and.bubble.right.fill", screen: {
                     RouterView { router in
-                        chatView(router: router, delegate: ChatDelegate())
+                        streamChatView(router: router, delegate: StreamChatDelegate())
                     }
                     .any()
                 }),

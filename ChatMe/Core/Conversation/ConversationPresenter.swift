@@ -8,14 +8,10 @@ class ConversationPresenter {
     private let router: ConversationRouter
     
     private(set) var conversations: [ConversationModel] = []
-    private(set) var conversation: ConversationModel?
+    private(set) var conversationModel: ConversationModel?
     private(set) var lastMessageModel: ConversationMessageModel?
     private(set) var isLoadingChats: Bool = true
     private var conversationsCollectionListenerTask: Task<Void, Error>?
-    private var conversationsDocumentListenerTask: Task<Void, Error>?
-
-    
-
     
     init(interactor: ConversationInteractor, router: ConversationRouter) {
         self.interactor = interactor
@@ -65,48 +61,14 @@ class ConversationPresenter {
         }
     }
     
-    func listenForSingleConversation(conversationId: String) async {
+    func loadConversationTitle(conversationId: String) async -> String {
         do {
-            conversationsDocumentListenerTask?.cancel()
-            conversationsDocumentListenerTask = Task {
-                for try await value in try await interactor.listenForChangeInSingleConversation(conversationId: conversationId) {
-                    conversation = value
-                }
-            }
+            conversationModel = try await interactor.getConversation(conversationId: conversationId)
         } catch {
-            
+            print(error)
         }
+        return conversationModel?.title ?? "No title"
     }
-    
-    
-    func loadChats() async {
-        do {
-            let userId = try interactor.getAuthId()
-            conversations = try await interactor.getAllConversationsForUser(userId: userId)
-                .sortedByKeyPath(keyPath: \.dateModified, ascending: false)
-        } catch {
-            print("Failed to load chats")
-            router.showAlert(error: error)
-           
-
-        }
-    }
-    
-//    func updateConversationsTitleSummary(conversationId: String) async {
-//        do {
-//            let userId = try interactor.getAuthId()
-//            var text = try await interactor.getConversationMessagesForSummary(conversationId: conversationId)
-//            let prompt = AIChatModel(role: .user, content: "Make a summary of the current conversation in just a couple of words")
-//            let message = ConversationMessageModel.newUserMessage(chatId: conversationId, userId: userId, message: prompt)
-//            text.append(message)
-//            let aiChats = text.compactMap({$0.content})
-//            let response = try await interactor.generateText(chats: aiChats)
-//            let newAIMessage = ConversationMessageModel.newAIMessage(chatId: conversationId, message: response)
-//            try await interactor.addTitleSummaryForConversation(conversationId: conversationId, title: newAIMessage.content?.message ?? "No title")
-//        } catch {
-//            print(error)
-//        }
-//    }
     
     func loadLastMessage(conversationId: String) async -> String {
         do {

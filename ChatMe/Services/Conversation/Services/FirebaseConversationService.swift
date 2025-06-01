@@ -56,11 +56,6 @@ struct FirebaseConversationService: ConversationService {
     func streamConversations(userId: String) async throws -> AsyncThrowingStream<[ConversationModel], Error> {
        let query = conversationsCollection.whereField(ConversationModel.CodingKeys.userId.rawValue, isEqualTo: userId)
        return query.addSnapshotStream(as: [ConversationModel].self)
-    
-    }
-    
-    func listenForChangeInSingleConversation(conversationId: String) -> AsyncThrowingStream<ConversationModel, Error> {
-        conversationsCollection.document(conversationId).addSnapshotStream(as: ConversationModel.self)
     }
     
     func getMostRecentConversation(userId: String) async throws -> ConversationModel? {

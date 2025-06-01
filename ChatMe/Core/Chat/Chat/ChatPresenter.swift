@@ -67,6 +67,7 @@ class ChatPresenter {
                 if isGeneratingResponse {
                     chatMessages.append(ConversationMessageModel(id: "forTypingIndicator", chatId: "forTypingIndicator", content: AIChatModel(role: .assistant, content: "typing...")))
                 }
+                
                 let aiChats = chatMessages.compactMap({ $0.content })
                 let response = try await interactor.generateText(chats: aiChats)
                 

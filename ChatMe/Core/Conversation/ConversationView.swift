@@ -15,17 +15,15 @@ struct ConversationView: View {
         List {
             ForEach(presenter.conversations) { conversation in
                 ConversationRowView(
-                    headline: conversation.title,
+                    headline: presenter.conversationModel?.title,
                     hasNewChat: false,
                     subheadline: presenter.lastMessageModel?.content?.message,
                     getLastMessage: {
-                        await presenter.loadLastMessage(
-                            conversationId: conversation.id
-                        )
+                        await presenter.loadLastMessage(conversationId: conversation.id)
                     },
                     getTitle: {
-                        await presenter.listenForSingleConversation(conversationId: conversation.id)
-                })
+                        await presenter.loadConversationTitle(conversationId: conversation.id)
+                    })
                 .anyButton {
                     presenter.onConversationPressed(conversationId: conversation.id)
                 }
