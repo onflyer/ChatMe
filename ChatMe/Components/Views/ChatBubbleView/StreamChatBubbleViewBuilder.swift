@@ -10,7 +10,6 @@ import SwiftUI
 struct StreamChatBubbleViewBuilder: View {
     
     var message: ConversationMessageModel = .mock
-    @State var streamedMessage: String = "Streamed message"
     var isCurrentUser: Bool = false
     var currentUserProfileColor: Color = .blue
     var imageName: String?

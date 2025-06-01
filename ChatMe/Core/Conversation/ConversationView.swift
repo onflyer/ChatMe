@@ -29,11 +29,6 @@ struct ConversationView: View {
                 .anyButton {
                     presenter.onConversationPressed(conversationId: conversation.id)
                 }
-                .onFirstAppear {
-                    Task {
-                        await presenter.updateConversationsTitleSummary(conversationId: conversation.id) 
-                    }
-                }
             }
             .onDelete(perform: { index in
                 presenter.onSwipeToDeleteAction(at: index)

@@ -29,6 +29,8 @@ struct StreamChatBubbleView: View {
                 .cornerRadius(6)
         }
         .padding(.bottom, showImage ? offset : 0)
+        .animation(.default, value: text)
+
     }
 }
 
