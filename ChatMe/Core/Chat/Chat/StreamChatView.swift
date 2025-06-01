@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftfulLoadingIndicators
 
 struct StreamChatDelegate {
     var eventParameters: [String: Any]? {
@@ -65,8 +64,6 @@ struct StreamChatView: View {
                             handleTextStream: {
                             }
                         )
-                    
-
                     .id(message.id)
                 }
             }

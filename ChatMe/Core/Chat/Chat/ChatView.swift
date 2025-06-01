@@ -1,5 +1,4 @@
 import SwiftUI
-import SwiftfulLoadingIndicators
 
 struct ChatDelegate {
     var eventParameters: [String: Any]? {

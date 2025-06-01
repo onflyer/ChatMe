@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftfulLoadingIndicators
 
 struct ChatBubbleViewBuilder: View {
     
