@@ -15,7 +15,7 @@ struct ConversationView: View {
         List {
             ForEach(presenter.conversations) { conversation in
                 ConversationRowView(
-                    headline: presenter.conversationModel?.title,
+                    headline: conversation.title,
                     hasNewChat: false,
                     subheadline: presenter.lastMessageModel?.content?.message,
                     getLastMessage: {
