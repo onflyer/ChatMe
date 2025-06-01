@@ -45,7 +45,7 @@ struct StreamChatView: View {
         }
         .onDisappear {
             presenter.onViewDisappear(delegate: delegate)
-            presenter.updateConversationsTitleSummary(conversationId: delegate.conversationId)
+            presenter.updateConversationsTitleSummary(conversationId: presenter.conversation?.id ?? "no id")
         }
     }
     
