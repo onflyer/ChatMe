@@ -10,6 +10,7 @@ import Foundation
 @MainActor
 class MockConversationService: ConversationService {
     
+    @Published var conversation: ConversationModel?
     @Published var conversations: [ConversationModel]
     @Published var chatMessages: [ConversationMessageModel]
     let delay: Double
@@ -18,6 +19,7 @@ class MockConversationService: ConversationService {
     private var streamConversationsListenerTask: Task<Void, Error>?
     
     init(
+        conversation: ConversationModel = ConversationModel.mock,
         conversations: [ConversationModel] = ConversationModel.mocks,
         chatMessages: [ConversationMessageModel] = ConversationMessageModel.mocks,
         delay: Double = 0.0,
@@ -126,6 +128,24 @@ class MockConversationService: ConversationService {
         try await Task.sleep(for: .seconds(delay))
         try tryShowError()
         return ConversationModel.mocks.randomElement()
+    }
+    
+    func streamConversation(conversatonId: String) -> AsyncThrowingStream<ConversationModel, Error> {
+        AsyncThrowingStream { continuation in
+            if let conversation {
+                continuation.yield(conversation)
+            }
+            
+            Task {
+                for await value in $conversation.values {
+                    if let value {
+                        continuation.yield(value)
+                    }
+                }
+            }
+            
+            
+        }
     }
     
 }

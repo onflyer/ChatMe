@@ -12,6 +12,7 @@ class ConversationPresenter {
     private(set) var lastMessageModel: ConversationMessageModel?
     private(set) var isLoadingChats: Bool = true
     private var conversationsCollectionListenerTask: Task<Void, Error>?
+    private var conversationListenerTask: Task<Void, Error>?
     
     init(interactor: ConversationInteractor, router: ConversationRouter) {
         self.interactor = interactor
@@ -25,7 +26,7 @@ class ConversationPresenter {
     func onViewDisappear(delegate: ConversationDelegate) {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
         conversationsCollectionListenerTask?.cancel()
-
+        
     }
     
     func onConversationPressed(conversationId: String) {
@@ -61,74 +62,92 @@ class ConversationPresenter {
         }
     }
     
+    func listenForConversation(conversationId: String) async {
+        conversationListenerTask?.cancel()
+        conversationListenerTask = Task {
+            do {
+                for try await value in interactor.streamConversation(conversatonId: conversationId) {
+                    self.conversationModel = value
+                    print("listener for 1 conversation success")
+                }
+            } catch {
+                print(error)
+            }
+        }
+        
+        
+    }
+    
     func loadConversationTitle(conversationId: String) async -> String {
         do {
             conversationModel = try await interactor.getConversation(conversationId: conversationId)
         } catch {
             print(error)
         }
+        
         return conversationModel?.title ?? "No title"
     }
     
-    func loadLastMessage(conversationId: String) async -> String {
-        do {
-            lastMessageModel = try await interactor.getLastConversationMessage(conversationId: conversationId)
-        } catch {
-            print(error)
-            print("Failed to load last message")
-        }
-        return lastMessageModel?.content?.message ?? "No message"
-    }
-    
-    func deleteConversation(conversationId: String) async {
-        do {
-            try await interactor.deleteConversation(conversationId: conversationId)
-        } catch {
-            print(error)
-            router.showAlert(error: error)
-        }
-    }
-    
-    func onSwipeToDeleteAction(at offsets: IndexSet) {
-        offsets.forEach { index in
-            let conversation = conversations[index]
-            Task {
-                await deleteConversation(conversationId: conversation.id)
+        func loadLastMessage(conversationId: String) async -> String {
+            do {
+                lastMessageModel = try await interactor.getLastConversationMessage(conversationId: conversationId)
+            } catch {
+                print(error)
+                print("Failed to load last message")
             }
+            return lastMessageModel?.content?.message ?? "No message"
         }
-    }
-    
-
-}
-
-extension ConversationPresenter {
-    
-    enum Event: LoggableEvent {
-        case onAppear(delegate: ConversationDelegate)
-        case onDisappear(delegate: ConversationDelegate)
-
-        var eventName: String {
-            switch self {
-            case .onAppear:                 return "ConversationView_Appear"
-            case .onDisappear:              return "ConversationView_Disappear"
+        
+        func deleteConversation(conversationId: String) async {
+            do {
+                try await interactor.deleteConversation(conversationId: conversationId)
+            } catch {
+                print(error)
+                router.showAlert(error: error)
             }
         }
         
-        var parameters: [String: Any]? {
-            switch self {
-            case .onAppear(delegate: let delegate), .onDisappear(delegate: let delegate):
-                return delegate.eventParameters
-//            default:
-//                return nil
+        func onSwipeToDeleteAction(at offsets: IndexSet) {
+            offsets.forEach { index in
+                let conversation = conversations[index]
+                Task {
+                    await deleteConversation(conversationId: conversation.id)
+                }
             }
         }
         
-        var type: LogType {
-            switch self {
-            default:
-                return .analytic
+        
+    }
+    
+    extension ConversationPresenter {
+        
+        enum Event: LoggableEvent {
+            case onAppear(delegate: ConversationDelegate)
+            case onDisappear(delegate: ConversationDelegate)
+            
+            var eventName: String {
+                switch self {
+                case .onAppear:                 return "ConversationView_Appear"
+                case .onDisappear:              return "ConversationView_Disappear"
+                }
+            }
+            
+            var parameters: [String: Any]? {
+                switch self {
+                case .onAppear(delegate: let delegate), .onDisappear(delegate: let delegate):
+                    return delegate.eventParameters
+                    //            default:
+                    //                return nil
+                }
+            }
+            
+            var type: LogType {
+                switch self {
+                default:
+                    return .analytic
+                }
             }
         }
+        
     }
-
-}
+    

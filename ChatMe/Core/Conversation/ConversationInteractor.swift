@@ -11,6 +11,7 @@ protocol ConversationInteractor {
     func deleteConversation(conversationId: String) async throws
     func deleteAllConversationsForUser(userId: String) async throws
     func streamConversations(userId: String) async throws -> AsyncThrowingStream<[ConversationModel], Error>
+    func streamConversation(conversatonId: String) -> AsyncThrowingStream<ConversationModel, Error>
     func getMostRecentConversation(userId: String) async throws -> ConversationModel?
     func getConversation(conversationId: String) async throws -> ConversationModel?
 
