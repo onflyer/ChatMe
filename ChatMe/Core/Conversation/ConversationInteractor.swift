@@ -5,7 +5,7 @@ protocol ConversationInteractor {
     func trackEvent(event: LoggableEvent)
     func trackScreenEvent(event: LoggableEvent)
     func generateText(chats: [AIChatModel]) async throws -> AIChatModel
-    func getAllConversationsForUser(userId: String) async throws -> [ConversationModel]
+//    func getAllConversationsForUser(userId: String) async throws -> [ConversationModel]
     func getAuthId() throws -> String
     func getLastConversationMessage(conversationId: String) async throws -> ConversationMessageModel?
     func deleteConversation(conversationId: String) async throws

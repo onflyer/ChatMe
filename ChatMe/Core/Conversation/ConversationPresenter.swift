@@ -62,20 +62,15 @@ class ConversationPresenter {
         }
     }
     
-    func listenForConversation(conversationId: String) async {
-        conversationListenerTask?.cancel()
-        conversationListenerTask = Task {
-            do {
+    func listenForConversation(conversationId: String) -> AsyncThrowingStream<String, Error> {
+        AsyncThrowingStream { continuation in
+            Task {
                 for try await value in interactor.streamConversation(conversatonId: conversationId) {
-                    self.conversationModel = value
-                    print("listener for 1 conversation success")
+                    continuation.yield(value.title)
+                    print("Title stream success")
                 }
-            } catch {
-                print(error)
             }
         }
-        
-        
     }
     
     func loadConversationTitle(conversationId: String) async -> String {

@@ -36,7 +36,7 @@ struct ConversationModel: Identifiable, Codable, Hashable, StringIdentifiable {
         ConversationModel(
             id:  UUID().uuidString,
             userId: userId,
-            title: "Placeholder title",
+            title: "New Conversation",
             dateCreated: .now,
             dateModified: .now
         )

@@ -29,7 +29,7 @@ struct ConversationView: View {
                         await presenter.loadLastMessage(conversationId: conversation.id)
                     },
                     getTitle: {
-                        await presenter.loadConversationTitle(conversationId: conversation.id)
+                        presenter.listenForConversation(conversationId: conversation.id)
                     })
                 .anyButton {
                     presenter.onConversationPressed(conversationId: conversation.id)
