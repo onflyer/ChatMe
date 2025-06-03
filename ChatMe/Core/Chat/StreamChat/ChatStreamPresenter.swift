@@ -37,7 +37,7 @@ class ChatStreamPresenter {
     func onViewDisappear(delegate: StreamChatDelegate) {
         interactor.trackEvent(event: Event.onDisappear(delegate: delegate))
         streamMessagesListenerTask?.cancel()
-        
+        chatMessages.removeAll()
     }
     
     func onPencilPressed() {
@@ -211,10 +211,6 @@ class ChatStreamPresenter {
             throw ChatViewError.noChat
         }
         return conversation.id
-    }
-    
-    func resetConversation() {
-        conversation = nil
     }
     
     func updateConversationsTitleSummary(conversationId: String) {
