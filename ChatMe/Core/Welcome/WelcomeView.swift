@@ -90,7 +90,6 @@ extension WelcomeView {
     private var getStartedButton: some View {
         VStack {
             Text("Get started as Guest")
-                .frame(height: 55)
                 .callToActionButton(forgroundStyle: .primary, background: .white, cornerRadius: 30)
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)

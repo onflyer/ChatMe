@@ -12,27 +12,31 @@ struct Onboarding1View: View {
     let delegate: Onboarding1ViewDelegate
     
     var body: some View {
-        VStack {
-            headerText
-            Spacer()
-            content
-            Spacer()
+        ZStack {
+            GradientBackgroundView()
+            VStack {
+                headerText
+                Spacer()
+                content
+                Spacer()
+                
+                Text("Continue")
+                    .callToActionButton(forgroundStyle: .primary, background: .white, cornerRadius: 30)
+                    .padding(.horizontal, 40)
+                    .anyButton(.press) {
+                        presenter.onContinueButtonPressed()
+                    }
+                    .accessibilityIdentifier("ContinueButton")
+            }
+            .padding(24)
+            .toolbar(.hidden, for: .navigationBar)
             
-            Text("Continue")
-                .callToActionButton()
-                .anyButton(.press) {
-                    presenter.onContinueButtonPressed()
-                }
-                .accessibilityIdentifier("ContinueButton")
-        }
-        .padding(24)
-        .toolbar(.hidden, for: .navigationBar)
-        
-        .onAppear {
-            presenter.onViewAppear(delegate: delegate)
-        }
-        .onDisappear {
-            presenter.onViewDisappear(delegate: delegate)
+            .onAppear {
+                presenter.onViewAppear(delegate: delegate)
+            }
+            .onDisappear {
+                presenter.onViewDisappear(delegate: delegate)
+            }
         }
     }
 }
@@ -51,7 +55,7 @@ struct Onboarding1View: View {
 
 extension Onboarding1View {
     var headerText: some View {
-        Text("First screen title")
+        Text("Welcome to ChatMe")
             .font(.largeTitle)
             .fontWeight(.bold)
             .padding(.vertical, 50)
@@ -70,16 +74,20 @@ extension Onboarding1View {
                         .foregroundColor(.primary)
                         .padding(.trailing, 15)
                         .padding(.vertical, 10)
+                        
                     
                     VStack(alignment: .leading) {
-                        Text("Title")
+                        Text("Meet my personal showcase project")
                             .fontWeight(.bold)
                             .font(.system(size: 16))
-                        Text("Description")
+                        Text("This is the my way of introducing my iOS development skills")
                             .font(.system(size: 15))
                     }
-                    Spacer()
+                    
+                    
                 }
+                
+               
             }
             .padding(.horizontal,20)
             .padding(.bottom, 20)
@@ -96,17 +104,20 @@ extension Onboarding1View {
                         .padding(.vertical, 10)
                     
                     VStack(alignment: .leading) {
-                        Text("Title")
+                        Text("This procect is built using Swift, SwiftUI and Firebase as a backend service")
                             .fontWeight(.bold)
                             .font(.system(size: 16))
-                        Text("Description")
+                        Text("It was built using modern VIPER architecture that supports decoupled routing in SwiftUI")
                             .font(.system(size: 15))
                     }
-                    Spacer()
+                    
                 }
+                
             }
             .padding(.horizontal,20)
             .padding(.bottom, 20)
+            
+
             
             VStack(alignment: .leading) {
                 HStack {
@@ -120,18 +131,17 @@ extension Onboarding1View {
                         .padding(.vertical, 10)
                     
                     VStack(alignment: .leading) {
-                        Text("Title")
+                        Text("It has most of the features required for most apps on the market")
                             .fontWeight(.bold)
                             .font(.system(size: 16))
-                        Text("Description")
+                        Text("Im supporting authentication with Apple and Google accounts, you can also login as Guest account and then save account with logging in on one of the providers")
                             .font(.system(size: 15))
                     }
-                    Spacer()
                 }
             }
             .padding(.horizontal,20)
             .padding(.bottom, 20)
-            
+            .frame(width: 400)
             
             
         }

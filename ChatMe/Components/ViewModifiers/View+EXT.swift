@@ -12,6 +12,7 @@ extension View {
     func callToActionButton(forgroundStyle: Color = .primary, background: Color = .accentColor, cornerRadius: CGFloat = 16) -> some View {
         self
             .font(.system(size: 18, weight: .regular, design: .default))
+            .frame(height: 55)
             .foregroundStyle(forgroundStyle)
             .frame(maxWidth: .infinity)
             .background(background)
