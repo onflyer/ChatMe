@@ -19,7 +19,7 @@ struct StreamChatBubbleViewBuilder: View {
             StreamChatBubbleView(
                 text: message.content?.message ?? "",
                 textColor: isCurrentUser ? .white : .primary,
-                backgroundColor: isCurrentUser ? currentUserProfileColor : Color(uiColor: .systemGray6),
+                backgroundColor: isCurrentUser ? .accent : Color.clear,
                 showImage: !isCurrentUser,
                 imageName: imageName
             )

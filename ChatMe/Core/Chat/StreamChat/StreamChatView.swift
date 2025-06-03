@@ -94,7 +94,7 @@ struct StreamChatView: View {
                     .padding(.vertical, 10)
                     .padding(.horizontal, 15)
                     .foregroundStyle(.white)
-                    .background(.blue)
+                    .background(.accent)
                     .clipShape(RoundedRectangle(cornerRadius: 25))
                     .padding(.horizontal, 5)
                     .anyButton(.plain, action: {

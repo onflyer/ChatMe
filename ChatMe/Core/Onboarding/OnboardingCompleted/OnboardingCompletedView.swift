@@ -12,33 +12,32 @@ struct OnboardingCompletedView: View {
     let delegate: OnboardingCompletedDelegate
     
     var body: some View {
-        VStack {
-            headerText
-            Spacer()
-            content
-            Spacer()
-                .safeAreaInset(edge: .bottom, content: {
-                    AsyncCallToActionButton(
-                        isLoading: presenter.isCompletingProfileSetup,
-                        title: "Finish",
-                        action: {
-                            presenter.onFinishButtonPressed()
-                        }
-                    )
-                    .accessibilityIdentifier("FinishButton")
-                })
+        ZStack {
+            GradientBackgroundView()
+            VStack {
+                headerText
+                Spacer()
+                content
+                Spacer()
+                
+                Text("Finish")
+                    .callToActionButton(forgroundStyle: .primary, background: .white, cornerRadius: 30)
+                    .padding(.horizontal, 40)
+                    .anyButton(.press) {
+                        presenter.onFinishButtonPressed()
+                    }
+                    .accessibilityIdentifier("ContinueButton")
+            }
+            .padding(24)
+            .toolbar(.hidden, for: .navigationBar)
             
-        }
-        .padding(24)
-        .toolbar(.hidden, for: .navigationBar)
-        
-        .onAppear {
-            presenter.onViewAppear(delegate: delegate)
-        }
-        .onDisappear {
-            presenter.onViewDisappear(delegate: delegate)
-        }
-    }
+            .onAppear {
+                presenter.onViewAppear(delegate: delegate)
+            }
+            .onDisappear {
+                presenter.onViewDisappear(delegate: delegate)
+            }
+        }    }
 }
 
 #Preview {
@@ -56,7 +55,7 @@ struct OnboardingCompletedView: View {
 
 extension OnboardingCompletedView {
     var headerText: some View {
-        Text("Finish setup screen title")
+        Text("Introduction completed")
             .font(.largeTitle)
             .fontWeight(.bold)
             .padding(.vertical, 50)
@@ -75,16 +74,20 @@ extension OnboardingCompletedView {
                         .foregroundColor(.primary)
                         .padding(.trailing, 15)
                         .padding(.vertical, 10)
+                        
                     
                     VStack(alignment: .leading) {
-                        Text("Title")
+                        Text("Click on Chat tab bar icon to start a conversation")
                             .fontWeight(.bold)
                             .font(.system(size: 16))
-                        Text("Description")
+                        Text("Click on the pencil in top trailing edge to start new conversation and save previous one")
                             .font(.system(size: 15))
                     }
-                    Spacer()
+                    
+                    
                 }
+                
+               
             }
             .padding(.horizontal,20)
             .padding(.bottom, 20)
@@ -101,17 +104,20 @@ extension OnboardingCompletedView {
                         .padding(.vertical, 10)
                     
                     VStack(alignment: .leading) {
-                        Text("Title")
+                        Text("Conversation tab bar contains all conversations")
                             .fontWeight(.bold)
                             .font(.system(size: 16))
-                        Text("Description")
+                        Text("Title of conversation is summary of the complete conversation and it updates on exit of the current conversation")
                             .font(.system(size: 15))
                     }
-                    Spacer()
+                    
                 }
+                
             }
             .padding(.horizontal,20)
             .padding(.bottom, 20)
+            
+
             
             VStack(alignment: .leading) {
                 HStack {
@@ -125,13 +131,12 @@ extension OnboardingCompletedView {
                         .padding(.vertical, 10)
                     
                     VStack(alignment: .leading) {
-                        Text("Title")
+                        Text("Messages subcollection")
                             .fontWeight(.bold)
                             .font(.system(size: 16))
-                        Text("Description")
+                        Text("Every message is saved to firestore separately as its own document, for better user experience i introduced async stream to recieve response in chunks")
                             .font(.system(size: 15))
                     }
-                    Spacer()
                 }
             }
             .padding(.horizontal,20)
