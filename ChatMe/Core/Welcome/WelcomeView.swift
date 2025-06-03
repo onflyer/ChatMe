@@ -15,9 +15,19 @@ struct WelcomeView: View {
     var body: some View {
         ZStack {
             GradientBackgroundView()
-            VStack {
+            VStack(spacing: 0) {
+                Image("logo")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 250, height: 250)
+                   
                 titleSection
+                
+                Spacer()
             }
+            .frame(maxHeight: .infinity)
+            .padding(.top, 50)
+        
             VStack {
                 
                 Spacer()
@@ -115,7 +125,7 @@ extension WelcomeView {
     private var titleSection: some View {
         VStack(spacing: 8) {
             Text("ChatMe")
-                .font(.largeTitle)
+                .font(.system(.largeTitle, design: .rounded, weight: .black))
                 .fontWeight(.semibold)
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
