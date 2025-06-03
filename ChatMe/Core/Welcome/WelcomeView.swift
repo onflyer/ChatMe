@@ -13,37 +13,50 @@ struct WelcomeView: View {
     let delegate: WelcomeDelegate
     
     var body: some View {
-        VStack {
-            SignInWithAppleButtonView(
-                type: .signIn,
-                style: .whiteOutline,
-                cornerRadius: 10
-            )
-            .frame(height: 55)
-            .frame(maxWidth: 400)
-            .anyButton(.press) {
-                presenter.onSignInApplePressed(delegate: delegate)
-            }
-            .frame(maxWidth: .infinity, alignment: .center)
-            
-            SignInGoogleButtonView(type: .signIn, backgroundColor: .white, foregroundColor: .primary, cornerRadius: 10)
+        ZStack {
+            GradientBackgroundView()
+            VStack {
+                titleSection
+                Spacer()
+                SignInWithAppleButtonView(
+                    type: .signIn,
+                    style: .white,
+                    cornerRadius: 18
+                )
                 .frame(height: 55)
                 .frame(maxWidth: 400)
                 .anyButton(.press) {
-                    presenter.onSignInGooglePressed(delegate: delegate)
+                    presenter.onSignInApplePressed(delegate: delegate)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
+                
+                SignInGoogleButtonView(type: .signIn, backgroundColor: .white, foregroundColor: .primary, cornerRadius: 30)
+                    .frame(height: 55)
+                    .frame(maxWidth: 400)
+                    .anyButton(.press) {
+                        presenter.onSignInGooglePressed(delegate: delegate)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                
+                Text("or")
+                
+                getStartedButton
+                
+                policyLinks
+                    .padding()
+            }
+            .padding(16)
+            .padding(.horizontal, 40)
             
-            getStartedButton
-        }
-        .padding(16)
-       
-        
-        .onAppear {
-            presenter.onViewAppear(delegate: delegate)
-        }
-        .onDisappear {
-            presenter.onViewDisappear(delegate: delegate)
+            
+            
+            
+            .onAppear {
+                presenter.onViewAppear(delegate: delegate)
+            }
+            .onDisappear {
+                presenter.onViewDisappear(delegate: delegate)
+            }
         }
     }
 }
@@ -63,14 +76,49 @@ extension WelcomeView {
     private var getStartedButton: some View {
         VStack(spacing: 8) {
             Text("Get started as Guest")
-                .callToActionButton()
+                .callToActionButton(forgroundStyle: .primary, background: .white, cornerRadius: 26)
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
                 .anyButton(.press, action: {
                     presenter.onGetStartedPressed()
                 })
                 .accessibilityIdentifier("StartButton")
-                .frame(maxWidth: 500)
+                .frame(maxWidth: 400)
+        }
+    }
+    
+    private var policyLinks: some View {
+        HStack(spacing: 8) {
+            Link(destination: URL(string: Constants.termsOfServiceUrl)!) {
+                Text("Terms of Service")
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+            }
+            Circle()
+                .fill(.blue)
+                .frame(width: 4, height: 4)
+            Link(destination: URL(string: Constants.privacyPolicyUrl)!) {
+                Text("Privacy Policy")
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+            }
+        }
+        .foregroundStyle(.primary)
+    }
+    
+    private var titleSection: some View {
+        VStack(spacing: 8) {
+            Text("ChatMe")
+                .font(.largeTitle)
+                .fontWeight(.semibold)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+            
+            Text("Github @onflyer")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
         }
     }
 }

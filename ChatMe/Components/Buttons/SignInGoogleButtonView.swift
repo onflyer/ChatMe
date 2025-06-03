@@ -36,7 +36,7 @@ public struct SignInGoogleButtonView: View {
     public init(
         type: ASAuthorizationAppleIDButton.ButtonType = .signIn,
         backgroundColor: Color = .googleRedd,
-        borderColor: Color = .black,
+        borderColor: Color = .white,
         foregroundColor: Color = .white,
         cornerRadius: CGFloat = 10
     ) {
