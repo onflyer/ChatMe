@@ -12,31 +12,35 @@ struct Onboarding2View: View {
     let delegate: Onboarding2ViewDelegate
     
     var body: some View {
-        VStack {
-            headerText
-            Spacer()
-            content
-            Spacer()
+        ZStack {
+            GradientBackgroundView()
+            VStack {
+                headerText
+                Spacer()
+                content
+                Spacer()
+                
+                Text("Continue")
+                    .callToActionButton(forgroundStyle: .primary, background: .white, cornerRadius: 30)
+                    .padding(.horizontal, 40)
+                    .anyButton(.press) {
+                        presenter.onContinueButtonPressed()
+                    }
+                    .accessibilityIdentifier("ContinueButton")
+            }
+            .padding(24)
+            .toolbar(.hidden, for: .navigationBar)
             
-            Text("Continue")
-                .callToActionButton()
-                .anyButton(.press) {
-                    presenter.onContinueButtonPressed()
-                }
-                .accessibilityIdentifier("ContinueButton")
+            .onAppear {
+                presenter.onViewAppear(delegate: delegate)
+            }
+            .onDisappear {
+                presenter.onViewDisappear(delegate: delegate)
+            }
         }
-        .padding(24)
-        .toolbar(.hidden, for: .navigationBar)
         
-        .onAppear {
-            presenter.onViewAppear(delegate: delegate)
-        }
-        .onDisappear {
-            presenter.onViewDisappear(delegate: delegate)
-        }
     }
 }
-
 #Preview {
     let container = DevPreview.shared.container()
     let interactor = CoreInteractor(container: container)
@@ -52,7 +56,7 @@ struct Onboarding2View: View {
 
 extension Onboarding2View {
     var headerText: some View {
-        Text("Second screen title")
+        Text("Core features")
             .font(.largeTitle)
             .fontWeight(.bold)
             .padding(.vertical, 50)
@@ -71,16 +75,20 @@ extension Onboarding2View {
                         .foregroundColor(.primary)
                         .padding(.trailing, 15)
                         .padding(.vertical, 10)
+                        
                     
                     VStack(alignment: .leading) {
-                        Text("Title")
+                        Text("Complete authentication and login flow")
                             .fontWeight(.bold)
                             .font(.system(size: 16))
-                        Text("Description")
+                        Text("User can create and login with multiple providers, like apple and google at the same time, login status is saved to user defaults and uploaded to firestore")
                             .font(.system(size: 15))
                     }
-                    Spacer()
+                    
+                    
                 }
+                
+               
             }
             .padding(.horizontal,20)
             .padding(.bottom, 20)
@@ -97,17 +105,20 @@ extension Onboarding2View {
                         .padding(.vertical, 10)
                     
                     VStack(alignment: .leading) {
-                        Text("Title")
+                        Text("Complete backend data syncronization")
                             .fontWeight(.bold)
                             .font(.system(size: 16))
-                        Text("Description")
+                        Text("Everything is saved to Firebase database, collections of users, conversations with AI, and every chat message in the subcollection with listeners attached for real time updates")
                             .font(.system(size: 15))
                     }
-                    Spacer()
+                    
                 }
+                
             }
             .padding(.horizontal,20)
             .padding(.bottom, 20)
+            
+
             
             VStack(alignment: .leading) {
                 HStack {
@@ -121,13 +132,12 @@ extension Onboarding2View {
                         .padding(.vertical, 10)
                     
                     VStack(alignment: .leading) {
-                        Text("Title")
+                        Text("Gemini AI API integration")
                             .fontWeight(.bold)
                             .font(.system(size: 16))
-                        Text("Description")
+                        Text("We can prompt the latest google LLMs and get blazing fast responses leveraging async stream for better user experience")
                             .font(.system(size: 15))
                     }
-                    Spacer()
                 }
             }
             .padding(.horizontal,20)
@@ -142,3 +152,4 @@ extension Onboarding2View {
     
     
 }
+

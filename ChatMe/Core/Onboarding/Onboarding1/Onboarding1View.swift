@@ -134,15 +134,13 @@ extension Onboarding1View {
                         Text("It has most of the features required for most apps on the market")
                             .fontWeight(.bold)
                             .font(.system(size: 16))
-                        Text("Im supporting authentication with Apple and Google accounts, you can also login as Guest account and then save account with logging in on one of the providers")
+                        Text("AI API integration, authentication, analytics,onboarding flow, scalable database and more features on the way like purchasing layer, unit testing and a/b testing")
                             .font(.system(size: 15))
                     }
                 }
             }
             .padding(.horizontal,20)
-            .padding(.bottom, 20)
-            .frame(width: 400)
-            
+            .padding(.bottom, 20)            
             
         }
         .padding(.bottom, 30)
