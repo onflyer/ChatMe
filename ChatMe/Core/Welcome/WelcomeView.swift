@@ -78,9 +78,10 @@ struct WelcomeView: View {
 
 extension WelcomeView {
     private var getStartedButton: some View {
-        VStack(spacing: 8) {
+        VStack {
             Text("Get started as Guest")
-                .callToActionButton(forgroundStyle: .primary, background: .white, cornerRadius: 26)
+                .frame(height: 55)
+                .callToActionButton(forgroundStyle: .primary, background: .white, cornerRadius: 30)
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
                 .anyButton(.press, action: {
@@ -88,6 +89,7 @@ extension WelcomeView {
                 })
                 .accessibilityIdentifier("StartButton")
                 .frame(maxWidth: 400)
+                
         }
     }
     
@@ -118,11 +120,15 @@ extension WelcomeView {
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
             
-            Text("Github @onflyer")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
+            Link(destination: URL(string: Constants.githubPage)!) {
+                Text("Github @onflyer")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+            }
+            .foregroundStyle(.secondary)
+           
         }
     }
 }

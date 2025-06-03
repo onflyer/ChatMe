@@ -11,12 +11,11 @@ extension View {
     
     func callToActionButton(forgroundStyle: Color = .primary, background: Color = .accentColor, cornerRadius: CGFloat = 16) -> some View {
         self
-            .font(.system(size: 21, weight: .medium, design: .default))
+            .font(.system(size: 18, weight: .regular, design: .default))
             .foregroundStyle(forgroundStyle)
             .frame(maxWidth: .infinity)
             .background(background)
             .cornerRadius(cornerRadius)
-            .frame(height: 55)
     }
     
     func badgeButton() -> some View {
