@@ -17,6 +17,9 @@ struct WelcomeView: View {
             GradientBackgroundView()
             VStack {
                 titleSection
+            }
+            VStack {
+                
                 Spacer()
                 SignInWithAppleButtonView(
                     type: .signIn,
@@ -43,7 +46,8 @@ struct WelcomeView: View {
                 getStartedButton
                 
                 policyLinks
-                    .padding()
+                    .padding(.top, 10)
+                    
             }
             .padding(16)
             .padding(.horizontal, 40)
@@ -95,7 +99,7 @@ extension WelcomeView {
                     .minimumScaleFactor(0.5)
             }
             Circle()
-                .fill(.blue)
+                .fill(.primary)
                 .frame(width: 4, height: 4)
             Link(destination: URL(string: Constants.privacyPolicyUrl)!) {
                 Text("Privacy Policy")

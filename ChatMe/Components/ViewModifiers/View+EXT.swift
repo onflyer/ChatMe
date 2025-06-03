@@ -14,9 +14,9 @@ extension View {
             .font(.system(size: 21, weight: .medium, design: .default))
             .foregroundStyle(forgroundStyle)
             .frame(maxWidth: .infinity)
-            .frame(height: 55)
             .background(background)
             .cornerRadius(cornerRadius)
+            .frame(height: 55)
     }
     
     func badgeButton() -> some View {
