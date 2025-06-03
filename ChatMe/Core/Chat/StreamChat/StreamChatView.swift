@@ -21,38 +21,42 @@ struct StreamChatView: View {
     let delegate: StreamChatDelegate
     
     var body: some View {
-        VStack(spacing: 0) {
-            scrollViewSection
-            textFieldSection
-        }
-        .navigationTitle("Chat")
-        .toolbarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                HStack {
-                    Image(systemName: "square.and.pencil")
-                        .anyButton {
-                            presenter.onPencilPressed()
-                        }
-                    Image(systemName: "ellipsis")
-                        .padding(8)
-                        .anyButton {
-                            presenter.onSettingsPressed()
-                        }
-                }
-                
+        ZStack {
+            GradientBackgroundView()
+                .ignoresSafeArea()
+            VStack(spacing: 0) {
+                scrollViewSection
+                textFieldSection
             }
-        }
-        .task {
-            await presenter.loadConversation(conversationId: delegate.conversationId)
-            await presenter.listenForConversationMessages()
-        }
-        .onAppear {
-            presenter.onViewAppear(delegate: delegate)
-        }
-        .onDisappear {
-            presenter.onViewDisappear(delegate: delegate)
-            presenter.updateConversationsTitleSummary(conversationId: presenter.conversation?.id ?? "no id")
+            .navigationTitle("Chat")
+            .toolbarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    HStack {
+                        Image(systemName: "square.and.pencil")
+                            .anyButton {
+                                presenter.onPencilPressed()
+                            }
+                        Image(systemName: "ellipsis")
+                            .padding(8)
+                            .anyButton {
+                                presenter.onSettingsPressed()
+                            }
+                    }
+                    
+                }
+            }
+            .task {
+                await presenter.loadConversation(conversationId: delegate.conversationId)
+                await presenter.listenForConversationMessages()
+            }
+            .onAppear {
+                presenter.onViewAppear(delegate: delegate)
+            }
+            .onDisappear {
+                presenter.onViewDisappear(delegate: delegate)
+                presenter.updateConversationsTitleSummary(conversationId: presenter.conversation?.id ?? "no id")
+            }
         }
     }
     
@@ -114,7 +118,7 @@ struct StreamChatView: View {
             )
             .padding(.horizontal, 12)
             .padding(.vertical, 6)
-            .background(Color(uiColor: .secondarySystemBackground))
+            
     }
     
     private func timestampView(date: Date) -> some View {
