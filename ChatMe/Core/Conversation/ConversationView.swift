@@ -12,7 +12,6 @@ struct ConversationView: View {
     let delegate: ConversationDelegate
     
     var body: some View {
-       
         List {
             if presenter.conversations.isEmpty {
                 ContentUnavailableView("Nothing here at the moment", systemImage: "doc.fill.badge.plus", description: Text("Please start a conversation"))
