@@ -31,7 +31,6 @@ struct ConversationView: View {
                     getTitle: {
                         presenter.listenForConversation(conversationId: conversation.id)
                     })
-                
                 .anyButton {
                     presenter.onConversationPressed(conversationId: conversation.id)
                 }
@@ -39,9 +38,8 @@ struct ConversationView: View {
             .onDelete(perform: { index in
                 presenter.onSwipeToDeleteAction(at: index)
             })
-            
-           
-        } 
+            .removeListRowFormatting()
+        }
         .scrollContentBackground(.hidden)
         .background {
             GradientBackgroundView()
