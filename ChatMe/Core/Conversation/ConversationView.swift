@@ -18,6 +18,7 @@ struct ConversationView: View {
                     .anyButton {
                         
                     }
+                    .removeListRowFormatting()
             }
             ForEach(presenter.conversations) { conversation in
                 ConversationRowView(

@@ -75,7 +75,7 @@ struct ConversationRowView: View {
         .frame(minHeight: 50)
         .padding(.vertical, 12)
         .padding(.horizontal, 8)
-        .background(colorScheme.backgroundPrimary)
+//        .background(colorScheme.backgroundPrimary)
     }
 }
 
