@@ -10,7 +10,7 @@ import SwiftfulRouting
 
 typealias RouterView = SwiftfulRouting.RouterView
 typealias AnyRouter = SwiftfulRouting.AnyRouter
-typealias DialogOption = SwiftfulRouting.DialogOption
+//typealias DialogOption = SwiftfulRouting.DialogOption
 
 @MainActor
 struct CoreRouter {
@@ -19,7 +19,7 @@ struct CoreRouter {
     let builder: CoreBuilder
     
     
-    func dismissModal(id: String?) {
+    func dismissModal(id: String) {
         router.dismissModal(id: id)
     }
     
@@ -71,21 +71,32 @@ struct CoreRouter {
         
     //MARK: Alerts
     
-    func showAlert(_ option: DialogOption, title: String, subtitle: String?, buttons: (@Sendable () -> AnyView)?) {
-        router.showAlert(option, title: title, subtitle: subtitle, alert: {
-            buttons?()
-        })
+    func showAlert(title: String, subtitle: String?, buttons: @escaping (@Sendable () -> AnyView)) {
+        router.showAlert(.alert, location: .currentScreen, title: title, subtitle: subtitle, buttons: buttons)
+        
     }
     
+    func showAlert(title: String, subtitle: String?) {
+        router.showAlert(.alert, location: .currentScreen, title: title, subtitle: subtitle)
+        
+    }
+    
+    func showConfirmationDialog(title: String, subtitle: String?, buttons: @escaping (@Sendable () -> AnyView)) {
+        router.showAlert(.confirmationDialog, location: .currentScreen, title: title, subtitle: subtitle, buttons: buttons )
+        
+    }
+    
+    
     func showSimpleAlert(title: String, subtitle: String?) {
-        router.showAlert(.alert, title: title, subtitle: subtitle, alert: { })
+        router.showAlert(.alert, title: title, subtitle: subtitle)
     }
     
     func showAlert(error: Error) {
-        router.showAlert(.alert, title: "Error", subtitle: error.localizedDescription, alert: { })
+        router.showAlert(.alert, title: "Error", subtitle: error.localizedDescription)
     }
     
     func dismissAlert() {
         router.dismissAlert()
     }
+    
 }

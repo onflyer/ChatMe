@@ -1,5 +1,5 @@
 {
-  "originHash" : "8fb83c931f87165730275067b66f929e349b01d1e77acfab169e795cf77ea80b",
+  "originHash" : "c6424d66252a9bdc7410731a6a8539d5b4a31b91b398a4cc4c8edee26497eb30",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -195,8 +195,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SwiftfulThinking/SwiftfulRouting",
       "state" : {
-        "revision" : "bf0a8b4628b0e24d60f090b382c15b96329ab92c",
-        "version" : "5.3.6"
+        "revision" : "d31344453843ac3472fae602a92fa396e182eda2",
+        "version" : "6.1.3"
       }
     },
     {

@@ -99,9 +99,12 @@ extension CoreBuilder {
 extension CoreRouter {
     
     func showCreateAccountView(delegate: CreateAccountDelegate, onDismiss: (() -> Void)? = nil) {
-        router.showResizableSheet(sheetDetents: [.medium], selection: nil, showDragIndicator: false, onDismiss: onDismiss) { router in
+        router.showScreen(.sheet, animates: true, onDismiss: onDismiss) { router in
             builder.createAccountView(router: router, delegate: delegate)
         }
+//        router.showResizableSheet(sheetDetents: [.medium], selection: nil, showDragIndicator: false, onDismiss: onDismiss) { router in
+//            
+//        }
     }
 
 }

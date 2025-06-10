@@ -70,19 +70,26 @@ class SettingsPresenter {
         
     func onDeleteAccountPressed() {
         interactor.trackEvent(event: Event.deleteAccountStart)
-
-        router.showAlert(
-            .alert,
-            title: "Delete Account?",
-            subtitle: "This action is permanent and cannot be undone. Your data will be deleted from our server forever.",
-            buttons: {
-                AnyView(
-                    Button("Delete", role: .destructive, action: {
-                        self.onDeleteAccountConfirmed()
-                    })
-                )
-            }
-        )
+        
+        router.showAlert(title: "Delete account?", subtitle: "This action is permanent and cannot be undone. Your data will be deleted from our server forever.") {
+            AnyView(
+                                Button("Delete", role: .destructive, action: {
+                                    self.onDeleteAccountConfirmed()
+                                })
+                            )
+        }
+//        router.showAlert(
+//            .alert,
+//            title: "Delete Account?",
+//            subtitle: "This action is permanent and cannot be undone. Your data will be deleted from our server forever.",
+//            buttons: {
+//                AnyView(
+//                    Button("Delete", role: .destructive, action: {
+//                        self.onDeleteAccountConfirmed()
+//                    })
+//                )
+//            }
+//        )
     }
     
     private func onDeleteAccountConfirmed() {

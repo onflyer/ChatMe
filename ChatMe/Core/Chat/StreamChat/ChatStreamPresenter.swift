@@ -103,7 +103,7 @@ class ChatStreamPresenter {
     }
     
     func onSettingsPressed() {
-        router.showAlert(.confirmationDialog, title: "", subtitle: "What would you like to do?") {
+        router.showConfirmationDialog(title: "", subtitle: "What would you like to do") {
             AnyView(
                 Group {
                     Button("Report User / Chat", role: .destructive) {
@@ -127,10 +127,8 @@ class ChatStreamPresenter {
             } catch {
                 print(error)
                 router.showAlert(
-                    .alert,
                     title: "Something went wrong.",
-                    subtitle: "Please check your internet connection and try again \(error).",
-                    buttons: nil
+                    subtitle: "Please check your internet connection and try again \(error)."
                 )
             }
         }
@@ -144,17 +142,13 @@ class ChatStreamPresenter {
                 try await interactor.reportChat(conversationId: conversationId, userId: userId)
                 
                 router.showAlert(
-                    .alert,
                     title: "🚨 Reported 🚨",
-                    subtitle: "We will review the chat shortly. You may leave the chat at any time. Thanks for bringing this to our attention!",
-                    buttons: nil
+                    subtitle: "We will review the chat shortly. You may leave the chat at any time. Thanks for bringing this to our attention!"
                 )
             } catch {
                 router.showAlert(
-                    .alert,
                     title: "Something went wrong.",
-                    subtitle: "Please check your internet connection and try again.",
-                    buttons: nil
+                    subtitle: "Please check your internet connection and try again."
                 )
             }
         }
