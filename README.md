@@ -16,4 +16,4 @@ Notable features:
 <img src="https://github.com/user-attachments/assets/9363659c-2234-4367-ada9-f85b0e55d82c" width="30%" height="30%">
 <img src="https://github.com/user-attachments/assets/0006647f-d4b1-4194-8d9e-812c7e456e9e" width="30%" height="30%">
 <img src="https://github.com/user-attachments/assets/4799ea34-4780-43ab-8f03-c5dcf54caca5" width="30%" height="30%">
-<vid src="https://github.com/user-attachments/assets/99bc6588-f26d-44de-8735-d7d8a568c62c" width="30%" height="30%">
+<video src="https://github.com/user-attachments/assets/99bc6588-f26d-44de-8735-d7d8a568c62c" width="30%" height="30%">
