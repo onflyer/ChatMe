@@ -1,6 +1,6 @@
-ChatMe
+ChatMe.
 
-a personal showcase project powered by Gemini AI api and Firebase
+A personal showcase project powered by Gemini AI api and Firebase
 
 Notable features: 
 1. Complete authentication
