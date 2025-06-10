@@ -77,20 +77,28 @@ extension Onboarding1View {
                         
                     
                     VStack(alignment: .leading) {
-                        Text("Meet my personal showcase project")
+                        Text("Welcome to my personal showcase project")
                             .fontWeight(.bold)
                             .font(.system(size: 16))
-                        Text("This is the my way of introducing my iOS development skills")
+                            
+                        Text("Please stay a few minutes and try it out :D")
                             .font(.system(size: 15))
+                            
                     }
                     
                     
+                    
+                    
+                    
+                    
                 }
+                
                 
                
             }
             .padding(.horizontal,20)
             .padding(.bottom, 20)
+            
             
             VStack(alignment: .leading) {
                 HStack {
@@ -104,7 +112,7 @@ extension Onboarding1View {
                         .padding(.vertical, 10)
                     
                     VStack(alignment: .leading) {
-                        Text("This procect is built using Swift, SwiftUI and Firebase as a backend service")
+                        Text("This project is built using Swift, SwiftUI and Firebase as a backend service")
                             .fontWeight(.bold)
                             .font(.system(size: 16))
                         Text("It was built using modern VIPER architecture that supports decoupled routing in SwiftUI")
