@@ -11,4 +11,4 @@ Notable features:
 
 
 
-<img src="https://github.com/user-attachments/assets/ba008cfe-d0ab-4d53-97b8-27a7524eb51c" width="100%" height="30%">
+<img src="https://github.com/user-attachments/assets/ba008cfe-d0ab-4d53-97b8-27a7524eb51c" width="30%" height="30%">
