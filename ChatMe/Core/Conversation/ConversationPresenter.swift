@@ -111,7 +111,11 @@ class ConversationPresenter {
             }
         }
         
-        
+    func onContextMenuDeletePressed(conversationId: String) {
+        Task {
+            await deleteConversation(conversationId: conversationId)
+        }
+    }
     }
     
     extension ConversationPresenter {

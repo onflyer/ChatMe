@@ -34,6 +34,11 @@ struct ConversationView: View {
                 .anyButton {
                     presenter.onConversationPressed(conversationId: conversation.id)
                 }
+                .contextMenu {
+                    Button("Delete") {
+                        presenter.onContextMenuDeletePressed(conversationId: conversation.id)
+                    }
+                }
             }
             .onDelete(perform: { index in
                 presenter.onSwipeToDeleteAction(at: index)
