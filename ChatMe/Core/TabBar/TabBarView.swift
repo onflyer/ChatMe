@@ -11,7 +11,6 @@ struct TabBarScreen: Identifiable {
     var id: String {
         title
     }
-
     let title: String
     let systemImage: String
     @ViewBuilder var screen: () -> AnyView

@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct StreamChatDelegate {
+    @Namespace var namespace
     var eventParameters: [String: Any]? {
         nil
     }
-    
     var conversationId: String = ConversationModel.mock.id
 }
 
 struct StreamChatView: View {
-    
+        
     @State var presenter: ChatStreamPresenter
     let delegate: StreamChatDelegate
     
@@ -58,6 +58,7 @@ struct StreamChatView: View {
                 presenter.updateConversationsTitleSummary(conversationId: presenter.conversation?.id ?? "no id")
             }
         }
+        .navigationTransition(.zoom(sourceID: delegate.conversationId, in: delegate.namespace))
     }
     
     private var scrollViewSection: some View {
@@ -142,7 +143,7 @@ struct StreamChatView: View {
     let builder = CoreBuilder(interactor: interactor)
     let delegate = StreamChatDelegate()
     
-    return RouterView { router in
+    RouterView { router in
         builder.streamChatView(router: router, delegate: delegate)
     }
 }

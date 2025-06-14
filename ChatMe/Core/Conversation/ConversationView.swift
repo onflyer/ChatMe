@@ -8,6 +8,8 @@ struct ConversationDelegate {
 
 struct ConversationView: View {
     
+    @Namespace private var namespace
+    
     @State var presenter: ConversationPresenter
     let delegate: ConversationDelegate
     
@@ -29,11 +31,13 @@ struct ConversationView: View {
                         await presenter.loadLastMessage(conversationId: conversation.id)
                     },
                     getTitle: {
-                        presenter.listenForConversation(conversationId: conversation.id)
+                        presenter.listenForConversation(conversationId: conversation.id) 
                     })
                 .anyButton {
                     presenter.onConversationPressed(conversationId: conversation.id)
+                        
                 }
+                .matchedTransitionSource(id: conversation.id, in: namespace)
                 .contextMenu {
                     Button("Delete") {
                         presenter.onContextMenuDeletePressed(conversationId: conversation.id)
