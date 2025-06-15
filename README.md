@@ -13,8 +13,8 @@ Notable features:
 
 
 <img src="https://github.com/user-attachments/assets/ba008cfe-d0ab-4d53-97b8-27a7524eb51c" width="30%" height="30%">
-<img src="https://github.com/user-attachments/assets/93f76981-5eae-40af-88f3-979a8ef0a5c1" width="30%" height="30%">
-<img src="https://github.com/user-attachments/assets/0006647f-d4b1-4194-8d9e-812c7e456e9e" width="30%" height="30%">
+<img src="https://github.com/user-attachments/assets/916bb788-c2d8-4b2a-8284-2eb6f68090ee" width="30%" height="30%">
+<img src="https://github.com/user-attachments/assets/ebe9046a-14b6-4904-b00e-a2d6562e0e04" width="30%" height="30%">
 <!-- <img src="https://github.com/user-attachments/assets/4799ea34-4780-43ab-8f03-c5dcf54caca5" width="30%" height="30%"> -->
 <!-- <video src="https://github.com/user-attachments/assets/99bc6588-f26d-44de-8735-d7d8a568c62c" width="30%" height="30%"> -->
 <video src="https://github.com/user-attachments/assets/72a29c4a-905b-4ba7-a2f2-c5d30e4cf1d4" width="30%" height="30%">
