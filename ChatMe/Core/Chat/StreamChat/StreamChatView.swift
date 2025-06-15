@@ -46,6 +46,10 @@ struct StreamChatView: View {
                     
                 }
             }
+            .toolbarBackgroundVisibility(.visible, for: .navigationBar)
+            .toolbarBackgroundVisibility(.visible, for: .tabBar)
+            .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
+            .toolbarBackground(.ultraThinMaterial, for: .tabBar)
             .task {
                 await presenter.loadConversation(conversationId: delegate.conversationId)
                 await presenter.listenForConversationMessages()
@@ -110,11 +114,12 @@ struct StreamChatView: View {
             )
             .background(
                 ZStack {
-                    RoundedRectangle(cornerRadius: 100)
-                        .fill(Color(uiColor: .systemBackground))
                     
                     RoundedRectangle(cornerRadius: 100)
+                        .fill(Color.white.opacity(0.3))
+                    RoundedRectangle(cornerRadius: 100)
                         .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                   
                 }
             )
             .padding(.horizontal, 12)

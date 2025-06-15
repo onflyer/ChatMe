@@ -70,6 +70,12 @@ struct ConversationView: View {
                 })
             }
         }
+        .toolbarBackgroundVisibility(.visible, for: .navigationBar)
+        .toolbarBackgroundVisibility(.visible, for: .tabBar)
+        .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
+        .toolbarBackground(.ultraThinMaterial, for: .tabBar)
+
+        
         .task {
             await presenter.listenForConversations()
         }
