@@ -48,6 +48,7 @@ class ChatStreamPresenter {
     func onSendMessagePressed() {
         
         let content = textFieldText
+        guard !content.isEmpty else {return}
         
         Task {
             do {
@@ -72,9 +73,7 @@ class ChatStreamPresenter {
                 
                 textFieldText = ""
                 
-                // generate AI response
-                isGeneratingResponse = true
-                                
+                // generate AI response                                
                 let aiChats = chatMessages.compactMap({ $0.content })
                 let responseStream = try await interactor.generateTextStream(chats: aiChats)
 //                let newAIMessage = ConversationMessageModel.newAIMessage(chatId: conversation.id, message: AIChatModel(role: .assistant, content: ""))
@@ -97,8 +96,6 @@ class ChatStreamPresenter {
             } catch {
                 router.showAlert(error: error)
             }
-            isGeneratingResponse = false
-            
         }
     }
     

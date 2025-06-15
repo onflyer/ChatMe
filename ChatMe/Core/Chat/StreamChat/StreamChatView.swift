@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StreamChatDelegate {
-    @Namespace var namespace
+    
     var eventParameters: [String: Any]? {
         nil
     }
@@ -16,7 +16,7 @@ struct StreamChatDelegate {
 }
 
 struct StreamChatView: View {
-        
+    @Namespace var namespace
     @State var presenter: ChatStreamPresenter
     let delegate: StreamChatDelegate
     
@@ -58,7 +58,7 @@ struct StreamChatView: View {
                 presenter.updateConversationsTitleSummary(conversationId: presenter.conversation?.id ?? "no id")
             }
         }
-        .navigationTransition(.zoom(sourceID: delegate.conversationId, in: delegate.namespace))
+        .navigationTransition(.zoom(sourceID: delegate.conversationId, in: namespace))
     }
     
     private var scrollViewSection: some View {
